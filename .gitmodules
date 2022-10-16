@@ -1,6 +1,6 @@
-[submodule "Kui-Namaplates/Kui_Nameplates/lib/LibStub"]
+[submodule "LibStub"]
 	path = Kui-Namaplates/Kui_Nameplates/lib/LibStub
 	url = https://github.com/laytya/LibStub
-[submodule "Kui-Namaplates/Kui_Nameplates/lib/CallbackHandler-1.0"]
+[submodule "CallbackHandler-1.0"]
 	path = Kui-Namaplates/Kui_Nameplates/lib/CallbackHandler-1.0
 	url = https://github.com/laytya/CallbackHandler-1.0
