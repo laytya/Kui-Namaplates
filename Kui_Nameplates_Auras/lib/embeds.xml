@@ -1,0 +1,8 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Include file="ParserLib\optimizer-enUS.lua"/>
+	<Include file="ParserLib\optimizer-koKR.lua"/>
+	<Include file="ParserLib\optimizer-ruRU.lua"/>
+	<Include file="ParserLib\optimizer-zhTW.lua"/>
+	<Include file="ParserLib\ParserLib.lua"/>
+	<Include file="KuiSpellList\KuiSpellList.lua"/>
+</Ui>
