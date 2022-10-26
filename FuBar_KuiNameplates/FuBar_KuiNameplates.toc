@@ -1,0 +1,16 @@
+## Interface: 11200
+## Title: FuBar - |cffffffffKui Nameplates|r|cff00ff00Fu|r
+## Notes: Adds an KNP button to FuBar.
+## Version 1.2
+## Dependencies: Kui_Nameplates, FuBar
+## Author: laytya
+## SavedVariables: FuBar_KuiNameplatesDB
+## X-Embeds: FuBarPlugin-2.0, Tablet-2.0, AceLocale-2.2, AceDB-2.0
+## X-Category: Map
+
+embeds.xml
+
+FuBar_KNPLocale-enUS.lua
+FuBar_KNPLocale-ruRU.lua
+FuBar_KuiNameplates.lua
+
