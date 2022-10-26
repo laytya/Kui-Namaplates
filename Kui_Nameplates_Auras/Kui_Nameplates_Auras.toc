@@ -7,4 +7,5 @@
 
 
 lib\embeds.xml
+data.lua
 auras.lua
