@@ -495,7 +495,7 @@ SLASH_KUINAMEPLATES2 = '/knp'
 
 function SlashCmdList.KUINAMEPLATES()
     -- twice to workaround an issue introduced with 5.3
-    self.acd:Open('kuinameplates')
+	addon.acd:Open('kuinameplates')
 		--addon.optionsPanel:Show()
 	--InterfaceOptionsFrame_OpenToCategory('Kui Nameplates')
     --InterfaceOptionsFrame_OpenToCategory('Kui Nameplates')
