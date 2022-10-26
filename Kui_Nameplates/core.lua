@@ -3,7 +3,7 @@
 -- By Kesava at curse.com
 -- All rights reserved
 ]]
-local addon = LibStub('AceAddon-3.0'):NewAddon('KuiNameplates', 'AceEvent-3.0', 'AceTimer-3.0',"AceHook-3.0")
+local addon = LibStub('AceAddon-3.0'):NewAddon('KuiNameplates', 'AceEvent-3.0', 'AceTimer-3.0', "AceHook-3.0")
 local kui = LibStub('Kui-1.0')
 local LSM = LibStub('LibSharedMedia-3.0')
 
@@ -135,10 +135,17 @@ do
             loadedGUIDs[f.guid] = f
         end
     end
+
+    function addon:GetKnownGUID(name)
+        return knownGUIDs[name]
+    end
+    
     function addon:StoreGUID(f, unit)
       --  Sea.io.print("unit=",unit)
 		if not unit then return end
 		local guid  = kui.UnitGUID(unit)
+        local _, classification = kui.UnitLevel(unit)
+
 		
         if not guid then return end
 		
@@ -152,7 +159,7 @@ do
         end
 		
         f.guid = guid
-		
+        f.classification = classification
 		
         loadedGUIDs[guid] = f
 
@@ -160,7 +167,15 @@ do
             -- we can probably assume this unit has a unique name
             -- nevertheless, overwrite this each time. just in case.
             knownGUIDs[f.name.text] = guid
+            local found = false
+            for _,v in pairs(knownIndex) do
+                if v == f.name.text then
+                    found = true
+                end 
+            end
+            if not found then
             tinsert(knownIndex, f.name.text)
+            end
 			local _
 			_, knownClass[guid] = UnitClass(unit)
 		
@@ -168,32 +183,37 @@ do
             -- and start purging > 100 names
             if getn(knownIndex) > 100 then
 				local dguid = tremove(knownIndex, 1)
+                local tguid = knownGUIDs[dguid]
+                knownClass[tguid] = nil
                 knownGUIDs[dguid] = nil
-				knownClass[dguid] = nil
             end
-			
         elseif loadedNames[f.name.text] == f then
             -- force the registered f for this name to change
             loadedNames[f.name.text] = nil
         end
     end
+
     function addon:StoreName(f)
         if not f.name.text or f.guid then return end
         if not loadedNames[f.name.text] then
             loadedNames[f.name.text] = f
         end
     end
+
     function addon:FrameHasName(f)
         return loadedNames[f.name.text] == f
     end
+
     function addon:FrameHasGUID(f)
         return loadedGUIDs[f.guid] == f
     end
+
     function addon:ClearName(f)
         if self:FrameHasName(f) then
             loadedNames[f.name.text] = nil
         end
     end
+
     function addon:ClearGUID(f)
 --        Sea.io.print(f.guid)
 		if self:FrameHasGUID(f) then
@@ -201,10 +221,12 @@ do
         end
         f.guid = nil
     end
+
 	function addon:GetClass(guid)
 --		Sea.io.print(knownClass[guid])
 		return knownClass[guid]
 	end
+
     function addon:GetNameplate(guid, name)
         local gf, nf = loadedGUIDs[guid], loadedNames[name]
 
@@ -216,21 +238,33 @@ do
             return nil
         end
     end
+
 	function addon:GetTargetNameplate()
-		for _,frame in pairs(addon.frameList) do
+        for _, frame in pairs(addon.frameList) do
 			if frame.kui.target then
 				return frame.kui
 			end
 		end
 	end
+
+    function addon:GetNameplates(name)
+        local frames = {}
+        for _, frame in pairs(addon.frameList) do
+            if frame.kui.name.text == name then
+                tinsert( frames, frame.kui)
+            end
+        end
+        return frames
+    end
+
 end
 ------------------------------------------------------------ helper functions --
 -- cycle all frames' fontstrings and reset the font
 local function UpdateAllFonts()
-    local _,frame
-    for _,frame in pairs(addon.frameList) do
-        local _,fs
-        for _,fs in pairs(frame.kui.fontObjects) do
+    local _, frame
+    for _, frame in pairs(addon.frameList) do
+        local _, fs
+        for _, fs in pairs(frame.kui.fontObjects) do
             local _, size, flags = fs:GetFont()
             fs:SetFont(addon.font, size, flags)
         end
@@ -239,8 +273,8 @@ end
 
 -- cycle all frames and reset the health and castbar status bar textures
 local function UpdateAllBars()
-    local _,frame
-    for _,frame in pairs(addon.frameList) do
+    local _, frame
+    for _, frame in pairs(addon.frameList) do
         if frame.kui.health then
             frame.kui.health:SetStatusBarTexture(addon.bartexture)
         end
@@ -307,13 +341,13 @@ addon.CreateFontString = CreateFontString
 -- scale a frame/font size to keep it relatively the same with any uiscale
 local function ScaleFrameSize(key)
     local size = addon.defaultSizes.frame[key]
-    addon.sizes.frame[key] = (addon.uiscale and floor(size/addon.uiscale) or size)
+    addon.sizes.frame[key] = (addon.uiscale and floor(size / addon.uiscale) or size)
 end
 
 local function ScaleTextureSize(key)
     -- texture sizes don't need to be rounded
     local size = addon.defaultSizes.tex[key]
-    addon.sizes.tex[key] = (addon.uiscale and size/addon.uiscale or size)
+    addon.sizes.tex[key] = (addon.uiscale and size / addon.uiscale or size)
 end
 
 local function ScaleFontSize(key)
@@ -333,15 +367,15 @@ local scaleFuncs = {
 }
 
 function addon:ScaleSizes(type)
-    local key,_
-    for key,_ in pairs(addon.defaultSizes[type]) do
+    local key, _
+    for key, _ in pairs(addon.defaultSizes[type]) do
         scaleFuncs[type](key)
     end
 end
 
 function addon:ScaleAllSizes()
-    local type,_
-    for type,_ in pairs(addon.defaultSizes) do
+    local type, _
+    for type, _ in pairs(addon.defaultSizes) do
         self:ScaleSizes(type)
     end
 end
@@ -354,6 +388,7 @@ function addon:RegisterSize(type, key, size)
     addon.defaultSizes[type][key] = size
     scaleFuncs[type](key)
 end
+
 ---------------------------------------------------- Post db change functions --
 -- n.b. this is absolutely terrible and horrible and i hate it
 addon.configChangedFuncs = { runOnce = {} }
@@ -426,7 +461,7 @@ addon.configChangedFuncs.targetglowcolour = function(frame, val)
     frame.targetGlow:SetVertexColor(unpack(val))
 end
 
-addon.configChangedFuncs.strata = function(frame,val)
+addon.configChangedFuncs.strata = function(frame, val)
     frame:SetFrameStrata(val)
 end
 ------------------------------------------- Listen for LibSharedMedia changes --
@@ -443,9 +478,11 @@ function addon:LSMMediaRegistered(msg, mediatype, key)
         end
     end
 end
+
 -------------------------------------------------- Listen for profile changes --
 function addon:ProfileChanged()
 end
+
 ------------------------------------------------------------------------ init --
 function addon:OnInitialize()
     self.db = LibStub('AceDB-3.0'):New('KuiNameplatesGDB', defaults)
@@ -453,7 +490,8 @@ function addon:OnInitialize()
 	self.acd = LibStub('AceConfigDialog-3.0')
     -- enable ace3 profiles
 	local optionstable = LibStub('AceDBOptions-3.0'):GetOptionsTable(self.db)
-    self.ac.RegisterOptionsTable(self, 'kuinameplates-profiles', optionstable)
+    addon:InitDBOptions(optionstable, "Profiles")
+    -- self.ac.RegisterOptionsTable(self, 'kuinameplates-profiles', optionstable)
    -- self.acd:AddToBlizOptions('kuinameplates-profiles', 'Profiles', 'Kui Nameplates')
     
     self.db.RegisterCallback(self, 'OnProfileChanged', 'ProfileChanged')
@@ -461,6 +499,7 @@ function addon:OnInitialize()
 
     addon:CreateConfigChangedListener(addon)
 end
+
 ---------------------------------------------------------------------- enable --
 function addon:OnEnable()
     -- get font and status bar texture from LSM
@@ -493,8 +532,8 @@ function addon:OnEnable()
     -------------------------------------- Health bar smooth update functions --
     -- (spoon-fed by oUF_Smooth)
     if self.db.profile.hp.smooth then
-        local f, smoothing, GetFramerate, min, max, abs
-            = CreateFrame('Frame'), {}, GetFramerate, math.min, math.max, math.abs
+        local f, smoothing, GetFramerate, min, max, abs = CreateFrame('Frame'), {}, GetFramerate, math.min, math.max,
+            math.abs
 
         function addon.SetValueSmooth(self, value)
             local _, maxv = self:GetMinMaxValues()
@@ -511,11 +550,11 @@ function addon:OnEnable()
         end
 
         f:SetScript('OnUpdate', function()
-            local limit = 30/GetFramerate()
+            local limit = 30 / GetFramerate()
             
             for bar, value in pairs(smoothing) do
                 local cur = bar:GetValue()
-                local new = cur + min((value-cur)/3, max(value-cur, limit))
+                local new = cur + min((value - cur) / 3, max(value - cur, limit))
 
                 if new ~= new then
                     new = value

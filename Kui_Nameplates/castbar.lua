@@ -10,7 +10,7 @@ end
 local kui = LibStub('Kui-1.0')
 local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
 local mod = addon:NewModule('CastBar', 'AceEvent-3.0')
-mod.uc = LibStub:GetLibrary("UnitCasting-1.0")
+mod.uc = LibStub:GetLibrary("UnitCasting-1.1")
 
 mod.uiName = 'Cast bars'
 
@@ -78,7 +78,7 @@ end
 
 local function OnCastbarHide(f)
 	--local f = self:GetParent():GetParent().kui
-	if f.castbar:IsShown() then
+	if f.castbar and f.castbar:IsShown() then
 		ResetFade(f)
 		
 --[[		kui.frameFade(f.castbar, {
@@ -106,12 +106,12 @@ local getTimerLeft = function(tEnd)
 end
 
 
-function mod:OnCastbarUpdate(self, f)
+function mod:OnCastbarUpdate(f, elapsed)
+	
 	if not mod.enabledState then return end
 
 	local v = mod.uc.GetCast(f.name.text)
 	local vv = mod.uc.GetHeal(f.name.text)
---Sea.io.print(f.name.text)
 	
 	if v == nil and vv ~= nil then
 		v = vv
@@ -144,6 +144,36 @@ function mod:OnCastbarUpdate(self, f)
 		OnCastbarHide(f)
 	end
 end
+
+local function OnStartCast(event, info)
+	
+	local frame
+	local guid = addon:GetKnownGUID(info.caster) -- Player
+
+	if guid then
+		frame = addon:GetNameplate(guid)
+	else
+		frame = addon:GetTargetNameplate()
+		if frame and frame.name.text ~= info.caster then
+			return
+		end
+	end
+
+	if frame and frame.castbar and ( not frame.castbar:IsShown() or frame.castbar.name:GetText() ~= info.skill) then 
+
+		mod:OnCastbarUpdate(frame)
+	end
+end
+
+local function OnEndCast(event, info)
+	local frames = addon:GetNameplates(info.caster)
+	for _, frame in pairs(frames) do
+		if frame and frame.castbar and ( frame.castbar:IsShown() and frame.castbar.name:GetText() == info.skill) then
+			OnCastbarHide(frame)
+		end
+	end
+end
+
 ---------------------------------------------------------------------- create --
 function mod:CreateCastbar(msg, frame)
 	if frame.castbar then return end
@@ -249,6 +279,9 @@ function mod:CreateCastbar(msg, frame)
 --	frame.oldCastbar:HookScript('OnShow', OnDefaultCastbarShow)
 --	frame.oldCastbar:HookScript('OnHide', OnDefaultCastbarHide)
 -- addon:HookScript -- frame.castbar:HookScript('OnUpdate', function() OnCastbarUpdate(this, elapsed) end)
+
+	frame.castbar:SetScript('OnUpdate', function() mod:OnCastbarUpdate(this:GetParent(), arg1) end)
+
 end
 ------------------------------------------------------------------------ Hide --
 function mod:HideCastbar(msg, frame)
@@ -256,14 +289,7 @@ function mod:HideCastbar(msg, frame)
     	ResetFade(frame)
     end
 end
---[[
-function mod:PLAYER_TARGET_CHANGED()
---	self:UNIT_AURA('UNIT_AURA', 'target')
-end
 
-function mod:OnFrameTarget(msg, frame)
-end
-]]
 ---------------------------------------------------- Post db change functions --
 mod.configChangedFuncs = { runOnce = {} }
 mod.configChangedFuncs.runOnce.enabled = function(val)
@@ -371,7 +397,11 @@ function mod:OnEnable()
 	self:RegisterMessage('KuiNameplates_PostHide', 'HideCastbar')
 --	self:RegisterMessage('KuiNameplates_PostTarget', 'OnFrameTarget')
 --	self:RegisterMessage('KuiNameplates_TargetUpdate', 'PLAYER_TARGET_CHANGED')
-	self:RegisterMessage('KuiNameplates_TargetUpdate', 'OnCastbarUpdate')
+	--self:RegisterMessage('KuiNameplates_TargetUpdate', 'OnCastbarUpdate')
+
+	mod.uc.RegisterCallback(self, "NewCast", OnStartCast)
+	mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndCast)
+
 	local _,frame
     for _, frame in pairs(addon.frameList) do
     	if not frame.kui or not frame.kui.castbar then

@@ -481,7 +481,11 @@ do
         }
     end
 
-    AceConfig.RegisterOptionsTable(addon,'kuinameplates', options, "knp")
+	function addon:InitDBOptions(dbOptions, name)
+		 options.args[name] = dbOptions
+	end
+
+    AceConfig.RegisterOptionsTable(addon, 'kuinameplates', options, "knp")
     --addon.optionsPanel = AceConfigDialog:AddToBlizOptions('kuinameplates', 'Kui Nameplates')
 end
 

@@ -14,7 +14,7 @@
    * fix horizontal text jitter
    * fix castbar fades out on newly shown frames
 ]]
-
+local _G = getfenv()
 local kui = LibStub('Kui-1.0')
 local LSM = LibStub('LibSharedMedia-3.0')
 local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
@@ -26,8 +26,8 @@ local wipe, truncate = AceCore.wipe, AceCore.truncate
 local strsplit = AceCore.strsplit
 
 --------------------------------------------------------------------- globals --
-local select, strfind, pairs, ipairs, unpack, tinsert, type, floor
-    = select, strfind, pairs, ipairs, unpack, tinsert, type, math.floor
+local select, strfind, pairs, ipairs, unpack, tinsert, type, floor, tonumber = select, strfind, pairs, ipairs, unpack,
+    tinsert, type, math.floor, tonumber
 local UnitExists=UnitExists
 local getn, setn = table.getn, table.setn
 ------------------------------------------------------------- Frame functions --
@@ -44,6 +44,7 @@ local function SetFrameCentre(f)
         f.y = floor((h / 2) - (addon.sizes.frame.height / 2))
     end
 end
+
 -- get default health bar colour, parse it into one of our custom colours
 -- and the reaction of the unit toward the player
 local function SetHealthColour(self,sticky,r,g,b)
@@ -75,7 +76,9 @@ local function SetHealthColour(self,sticky,r,g,b)
 		
 	if self.health.reset  or
        (not classcolor and  (r ~= self.health.r or  g ~= self.health.g or b ~= self.health.b)) or
-	   (classcolor and (classcolor.r ~= self.health.r or classcolor.g ~= self.health.g or classcolor.b ~= self.health.b))
+        (
+        classcolor and (classcolor.r ~= self.health.r or classcolor.g ~= self.health.g or classcolor.b ~= self.health.b)
+        )
     then
 		
         -- store the default colour
@@ -138,6 +141,7 @@ local function SetGlowColour(self, r, g, b, a)
 
     self.bg:SetVertexColor(r, g, b, a)
 end
+
 ---------------------------------------------------- Update health bar & text --
 local OnHealthValueChanged
 do
@@ -242,8 +246,6 @@ do
 end
 ------------------------------------------------------- Frame script handlers --
 local function OnFrameEnter(self)
---	Sea.io.print("mouseover")
---    addon:StoreGUID(self, 'mouseover')
     self.highlighted = true
 
     if self.highlight then
@@ -262,6 +264,7 @@ local function OnFrameEnter(self)
         if self.health.mo then self.health.mo:Show() end
     end
 end
+
 local function OnFrameLeave(self)
     self.highlighted = false
 
@@ -274,10 +277,11 @@ local function OnFrameLeave(self)
         if self.health.mo then self.health.mo:Hide() end
     end
 end
+
 local function OnFrameShow(self)
     self = self.kuiParent
     local f = self.kui
-    local trivial = f.firstChild:GetScale() < 1
+    --local trivial = f.firstChild:GetScale() < 1
 
     -- classifications
     if not trivial and f.level.enabled then
@@ -285,14 +289,6 @@ local function OnFrameShow(self)
             f.level:SetText('Boss')
             f.level:SetTextColor(1,.2,.2)
             f.level:Show()
- --[[   elseif f.state:IsVisible() then
-            if f.state:GetTexture() == "Interface\\Tooltips\\EliteNameplateIcon"
-            then
-                f.level:SetText(f.level:GetText()..'+')
-            else
-                f.level:SetText(f.level:GetText()..'r')
-            end
- ]]
         end
     else
         f.level:Hide()
@@ -306,12 +302,13 @@ local function OnFrameShow(self)
     ---------------------------------------------- Trivial sizing/positioning --
     if addon.uiscale then
         -- change our parent frame size if we're using fixaa..
-		f:SetWidth(self:GetWidth()/addon.uiscale); f:SetHeight( self:GetHeight()/addon.uiscale)
+        f:SetWidth(self:GetWidth() / addon.uiscale);
+        f:SetHeight(self:GetHeight() / addon.uiscale)
     end
     -- otherwise, size is changed automatically thanks to using SetAllPoints
 
     if trivial and not f.trivial or
-       not trivial and f.trivial or
+   --    not trivial and f.trivial or
        not f.doneFirstShow
     then
         f.trivial = trivial
@@ -328,6 +325,11 @@ local function OnFrameShow(self)
         f.doneFirstShow = true
     end
 
+    addon:StoreName(f)
+
+    -- reset/update health bar colour
+    f:SetHealthColour()
+
     -- run updates immediately after the frame is shown
     f.elapsed = 0
     f.critElap = 0
@@ -340,6 +342,7 @@ local function OnFrameShow(self)
     -- dispatch the PostShow message after the first UpdateFrame
     f.DispatchPostShow = true 
 end
+
 local function OnFrameHide(self)
     self = self.kuiParent
     local f = self.kui
@@ -368,11 +371,11 @@ local function OnFrameHide(self)
 	f.stickyHealthColour = nil
 
     -- unset stored health bar colours
-    f.health.r, f.health.g, f.health.b, f.health.reset
-        = nil, nil, nil, nil
+    f.health.r, f.health.g, f.health.b, f.health.reset = nil, nil, nil, nil
 
     addon:SendMessage('KuiNameplates_PostHide', 1,  f)
 end
+
 -- stuff that needs to be updated every frame
 local function OnFrameUpdate(fr, e)
 	local f = fr.kuiParent.kui
@@ -472,8 +475,6 @@ local function UpdateFrame(self)
     -- periodically update the name in order to purge Unknowns due to lag, etc
     self:SetName()
 
-	
-	
     -- ensure a frame is still stored for this name, as name conflicts cause
     -- it to be erased when another might still exist
     addon:StoreName(self)
@@ -496,6 +497,11 @@ local function UpdateFrame(self)
 				addon:StoreGUID(self, 'mouseover')
 	end
 	
+    if self.classification and self.classification ~= "" and tonumber(self.level:GetText()) ~= nil then
+        self.level:SetText(self.level:GetText() .. self.classification)
+    end
+
+
     if self.DispatchPostShow then
         -- force initial health update, which relies on health colour
         self:OnHealthValueChanged()
@@ -510,6 +516,7 @@ end
 
 -- stuff that needs to be updated often
 local function UpdateFrameCritical(self)
+
     ------------------------------------------------------------------ Threat --
     if self.glow:IsVisible() then
         self.glow.wasVisible = true
@@ -636,7 +643,8 @@ end
 function addon:IsNameplate(frame)
     
 	local overlayRegion = frame:GetRegions()
-	return (overlayRegion and overlayRegion:GetObjectType() == "Texture" and overlayRegion:GetTexture() == "Interface\\Tooltips\\Nameplate-Border")
+    return ( overlayRegion and overlayRegion:GetObjectType() == "Texture" and
+            overlayRegion:GetTexture() == "Interface\\Tooltips\\Nameplate-Border")
 	
 	--[[
 	if frame:GetName() and strfind(frame:GetName(), '^NamePlate%d') then
@@ -803,6 +811,7 @@ end
 function addon:PLAYER_REGEN_ENABLED()
    HideNameplates();
 end
+
 function addon:PLAYER_REGEN_DISABLED()
    ShowNameplates();
    HideFriendNameplates();

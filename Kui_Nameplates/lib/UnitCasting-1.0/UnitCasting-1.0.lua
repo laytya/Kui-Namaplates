@@ -23,9 +23,12 @@ end
 	
     -- written by kuurtzen (& modernist)
 
-    local Cast = {} 		local casts = {}
-    local Heal = {} 		local heals = {}
-	local InstaBuff = {} 	local iBuffs = {}
+local Cast = {}
+local casts = {}
+local Heal = {}
+local heals = {}
+local InstaBuff = {}
+local iBuffs = {}
     Cast.__index = modcast
     Heal.__index = Heal
 	InstaBuff.__index = InstaBuff
@@ -70,7 +73,9 @@ end
 
 	local tableMaintenance = function(reset)
 		if reset then
-			casts = {} heals = {} iBuffs = {}
+		casts = {}
+		heals = {}
+		iBuffs = {}
 		else
                 -- CASTS
 			local i = 1
@@ -226,10 +231,14 @@ end
 	end
 
 	local GainFadeAfflict = function(info)
-		local gain = '(.+) gains (.+).' 								local fgain = string.find(arg1, gain)
-		local fade = '(.+) fades from (.+).'							local ffade = string.find(arg1, fade)
-		local afflict = '(.+) is afflicted by (.+).' 					local fafflict = string.find(arg1, afflict)
-		local rem = '(.+)\'s (.+) is removed.'							local frem = string.find(arg1, rem)
+	local gain = '(.+) gains (.+).'
+	local fgain = string.find(arg1, gain)
+	local fade = '(.+) fades from (.+).'
+	local ffade = string.find(arg1, fade)
+	local afflict = '(.+) is afflicted by (.+).'
+	local fafflict = string.find(arg1, afflict)
+	local rem = '(.+)\'s (.+) is removed.'
+	local frem = string.find(arg1, rem)
 
 		-- start channeling based on buffs (evocation, first aid, ..)
 	--	if fgain then
@@ -407,7 +416,8 @@ end
 	end
 
 	local fear = function()
-		local fear = '(.+) attempts to run away in fear!'             local ffear = string.find(arg1, fear)
+	local fear = '(.+) attempts to run away in fear!'
+	local ffear = string.find(arg1, fear)
 		if ffear then
 			local t = arg2
 			forceHideTableItem(casts, t)

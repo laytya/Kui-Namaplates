@@ -1,5 +1,3 @@
-
-
     HEX_CLASS_COLORS = {
         ['DRUID']   = 'ff7d0a',
         ['HUNTER']  = 'abd473',

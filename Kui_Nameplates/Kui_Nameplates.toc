@@ -26,7 +26,7 @@ lib\AceLibrary\AceLibrary.lua
 lib\AceLocale-2.2\AceLocale-2.2.lua
 lib\Babble-Spell-2.3\Babble-Spell-2.3.lua
 lib\ParserLib\ParserLib.lua
-lib\UnitCasting-1.0\lib.xml
+lib\UnitCasting-1.1\lib.xml
 
 core.lua
 config.lua
