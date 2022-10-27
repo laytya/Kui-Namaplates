@@ -22,9 +22,7 @@ lib\Ace3\AceTimer-3.0\AceTimer-3.0.lua
 lib\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
 lib\Ace3\AceGUI-3.0-SharedMediaWidgets\widget.xml
 lib\Ace3\AceGUI-3.0\widgets\widgets.xml
-lib\AceLibrary\AceLibrary.lua
-lib\AceLocale-2.2\AceLocale-2.2.lua
-lib\Babble-Spell-2.3\Babble-Spell-2.3.lua
+lib\LibBabble-Spell-3.0\lib.xml
 lib\ParserLib\ParserLib.lua
 lib\UnitCasting-1.1\lib.xml
 

@@ -1,13 +1,27 @@
-local MAJOR, MINOR = 'UnitCasting-1.1', 1
+local MAJOR, MINOR = 'UnitCasting-1.1', 3
 local uc = LibStub:NewLibrary(MAJOR, MINOR)
 if not uc then
 	-- already registered
 	return
 end
-local BS = AceLibrary("Babble-Spell-2.3")
+local B = LibStub("LibBabble-Spell-3.0")
+local BS = B:GetLookupTable()
+--local BS = AceLibrary("Babble-Spell-2.3")
 uc.callbacks = uc.callbacks or LibStub("CallbackHandler-1.0"):New(uc)
 
 local f = CreateFrame 'Frame'
+----------------------------------------------- 
+-- Callbacks:
+-- EndDRBuff, Buff
+-- CastOrBuff, buff or cast
+-- NewCast, cast
+-- NewBuff, buff
+-- NewHeal, heal
+-- Hit, info
+-- Death, info
+-- Fear. -
+-------------------------------------------------
+
 
 
 uc.parser = ParserLib:GetInstance('1.1')
@@ -57,7 +71,7 @@ Cast.create = function(caster, spell, info, timeMod, time, inv)
 	setmetatable(acnt, spellCast)
 	acnt.caster    = caster
 	acnt.spell     = spell
-	acnt.icon      = BS:GetSpellIcon(spell)
+	acnt.icon      = B:GetSpellIcon(spell)
 	acnt.timeStart = time
 	acnt.timeEnd   = time + info['casttime'] * timeMod
 	acnt.tick      = info.tick and info.tick or 0
@@ -100,7 +114,7 @@ buff.create = function(tar, spell, s, buffType, factor, time)
 	acnt.caster    = tar -- facilitate entry removal
 	acnt.spell     = spell
 	acnt.stacks    = s
-	acnt.icon      = BS:GetSpellIcon(spell)
+	acnt.icon      = B:GetSpellIcon(spell)
 	acnt.timeStart = time
 	if not buffType.duration then print('buff with nil duration: ' .. spell) end
 	buffType.duration = buffType.duration and buffType.duration or 0
@@ -248,7 +262,6 @@ local newCast = function(caster, spell, channel)
 	local time = GetTime()
 	local info = nil
 
-	--if not uc.InstantSpellcastsToTrack[spell] then
 	if channel then
 		if uc.ChanneledHealsSpellcastsToTrack[spell] ~= nil then info = uc.ChanneledHealsSpellcastsToTrack[spell]
 		elseif uc.ChanneledSpellcastsToTrack[spell] ~= nil then info = uc.ChanneledSpellcastsToTrack[spell] end
@@ -266,22 +279,20 @@ local newCast = function(caster, spell, channel)
 			end
 		end
 	end
-	--else
-	--	removeDoubleCast(caster)
-	--end
 end
 
 local newHeal = function(n, no, crit)
 	local time = GetTime()
 	local h = Heal.create(n, no, crit, time)
 	table.insert(heals, h)
-	uc.callbacks:Fire("NewHeal", 1, n)
+	uc.callbacks:Fire("NewHeal", 1, h)
 end
 
 local newIBuff = function(caster, buff)
 	local time = GetTime()
 	local b = InstaBuff.create(caster, buff, uc.TimeModifierBuffsToTrack[buff], time)
 	table.insert(iBuffs, b)
+	uc.callbacks:Fire("NewBuff", 1, b)
 end
 
 local function manageDR(time, tar, b, castOn)
@@ -357,7 +368,7 @@ local function processQueuedBuff(tar, b)
 		if v.target == tar and v.buffName == b then
 			local n = buff.create(v.target, v.buffName, 1, v.buffData, 1, time)
 			table.insert(buffList, n)
-
+			uc.callbacks:Fire("NewBuff", 1, n)
 			table.remove(buffQueueList, k)
 	--		sendMSG('BF', v.target .. '/' .. v.buffName, v.buffData['duration'], IsInsideBG())
 			return
@@ -484,6 +495,8 @@ local hitCrits = function(info)
 	if uc.DebuffRefreshingSpells[info.skill] then
 		refreshBuff(victim, info.skill)
 	end
+
+	uc.callbacks:Fire("Hit",1,info)
 end
 
 local fear = function(msg, caster )
@@ -521,7 +534,7 @@ local playerDeath = function(info)
 	forceHideTableItem(casts, victim, nil)
 	forceHideTableItem(buffList, victim, nil)
 
-	uc.callbacks:Fire("Death", 1, victim)
+	uc.callbacks:Fire("Death", 1, info)
 end
 
 uc.OnEvent = function(event, info)

@@ -1,4 +1,6 @@
-local BS = AceLibrary("Babble-Spell-2.3")
+--local BS = AceLibrary("Babble-Spell-2.3")
+local B = LibStub("LibBabble-Spell-3.0")
+local BS = B:GetLookupTable()
 local uc = LibStub:GetLibrary("UnitCasting-1.1")
 
 ---------------------------------------------------------
