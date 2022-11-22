@@ -1,8 +1,8 @@
 ﻿if GetLocale() == "ruRU" then
 
 	local MAJOR_VERSION = "LibBabble-Spell-3.0"
-	local MINOR_VERSION = tonumber(string.sub("$Revision: 67249 $", 12, -3)) or 0
-
+	local MINOR_VERSION = tonumber(string.sub("$Revision: 67255 $", 12, -3)) or 0
+	local _G = getfenv()
 	if MINOR_VERSION > _G.LibBabble_Spell_3_0_MINOR then
 		_G.LibBabble_Spell_3_0_MINOR = MINOR_VERSION
 	end
@@ -12,6 +12,51 @@
 		_G.LibBabble_Spell_3_0_foundLocale = true
 
 		lib:SetCurrentTranslations {
+			["Backhand"] = "Оплеуха",
+			["Living Free Action"] = "Живая свобода действий",
+			["Creeping Mold"] = "Позучая плесень",
+			["Big Bronze Bomb"] = "Большая бронзовая бомба",
+			["Decayed Strength"] = "Ослабление силы",
+			["Banshee Wail"] = "Вой банши",
+			["Fire Shield II"] = "Огненный щит II",
+			["Dark Sludge"] = "Темная жижа",
+			["Curse of the Fallen Magram"] = "Проклятье павших Маграм",
+			["Hi-Explosive Bomb"] = "Фугасная бомба",
+			["Dark Mending"] = "Исцеление тьмой",
+			["Invulnerability"] = "Неуязвимость",
+			["Net-o-Matic"] = "Сетемет",
+			["Furbolg Form"] = "Образ фурболга",
+			["Crystal Flash"] = "Хрустальная вспышка",
+			["Dynamite"] = "Динамит",
+			["Unstable Concoction"] = "Ненадежное варево",
+			["Ward of the Eye"] = "Оберег от сглаза",
+			["Ultrasafe Transporter: Gadgetzan"] = "Сверхбезопасный транспортер: Прибамбасск",
+			["Mithril Frag Bomb"] = "Мифриловая осколочная бомба",
+			["Dimensional Ripper - Everlook"] = "Пространственный проходчик - Круговзор",
+			["Wing Buffet"] = "Рассечение крылом",
+			["Shadow Flame"] = "Теневое пламя",
+			["Boar Charge"] = "Атака вепря",
+			["Summon Ragnaros"] = "Призвание Рагнароса",
+			["Frost Reflector"] = "Зеркало Льда",
+			["Earthbind"] = "Оковы земли",
+			["Shadow Reflector"] = "Отражатель тьмы",
+			["Free Action"] = "Свобода действий",
+			["Large Copper Bomb"] = "Большая медная бомба",
+			["Weak Frostbolt"] = "Слабая ледяная стрела",
+			["Wither Touch"] = "Касание увядания",
+			["Plague Mind"] = "Мысленная чума",
+			["Curse of Mending"] = "Проклятие восстановления",
+			["Flee"] = "Бегство",
+			["Damage Absorb"] = "Поглощение урона",
+			["Crystal Gaze"] = "Хрустальный взгляд",
+			["Elemental Fire"] = "Первородный огонь",
+			["Nimble Reflexes"] = "Непревзойденная ловкость",
+			["Silithid Pox"] = "Силитидова чума",
+			["Grounding Totem Effect"] = "Эффект Тотема заземления",
+			["Fire Reflector"] = "Отражатель пламени",
+			["Earthgrab Totem"] = "Тотем хватки Земли",
+			["Big Iron Bomb"] = "Большая железная бомба",
+
 			["Abolish Disease"] = "Устранение болезни",
 		["Abolish Poison Effect"] = "Эффект устранения яда",
 		["Abolish Poison"] = "Устранение яда",
@@ -318,6 +363,7 @@
 		["Death Wish"] = "Жажда смерти",
 		["Deep Sleep"] = "Глубокий сон",
 		["Deep Slumber"] = "Глубокая дремота",
+		["Deep Wound"] = "Глубокaя ранa",
 		["Deep Wounds"] = "Глубокие раны",
 		["Defense"] = "Защита",
 		["Defensive Stance Passive"] = "Оборонительная стойка - пассивная",

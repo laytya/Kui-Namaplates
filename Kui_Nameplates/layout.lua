@@ -35,8 +35,11 @@ local function SetFrameCentre(f)
     -- using CENTER breaks pixel-perfectness with oddly sized frames
     -- .. so we have to align frames manually.
     local w,h = f:GetWidth(),f:GetHeight()
+    if f.IN_NAMEONLY then
+        f.x = floor((w / 2) - (addon.sizes.frame.twidth / 2))
+        f.y = floor((h / 2) - 1)
 
-    if f.trivial then
+    elseif f.trivial then
         f.x = floor((w / 2) - (addon.sizes.frame.twidth / 2))
         f.y = floor((h / 2) - (addon.sizes.frame.theight / 2))
     else
@@ -246,6 +249,24 @@ do
 end
 ------------------------------------------------------- Frame script handlers --
 local function OnFrameEnter(self)
+   -- self = self.kuiParent
+    --[[
+  local tt ={}
+    for i=1,GameTooltip:NumLines() do 
+        local mytext=_G["GameTooltipTextLeft"..i] 
+        local text=mytext:GetText()
+        tinsert(tt,text)
+    end
+    printT(tt)
+
+]]
+
+    if self.guid == nil and UnitName('mouseover') == self.name.text then
+        addon:StoreGUID(self, 'mouseover')        
+    end
+
+
+
     self.highlighted = true
 
     if self.highlight then
@@ -263,9 +284,14 @@ local function OnFrameEnter(self)
         self.health.p:Show()
         if self.health.mo then self.health.mo:Show() end
     end
+
+    addon:SendMessage('KuiNameplates_MouseEnter', 1, self)
+
 end
 
 local function OnFrameLeave(self)
+  --  self = self.kuiParent
+    if not self then return end
     self.highlighted = false
 
     if self.highlight then
@@ -325,10 +351,10 @@ local function OnFrameShow(self)
         f.doneFirstShow = true
     end
 
-    addon:StoreName(f)
+   -- addon:StoreName(f)
 
     -- reset/update health bar colour
-    f:SetHealthColour()
+   --f:SetHealthColour()
 
     -- run updates immediately after the frame is shown
     f.elapsed = 0
@@ -477,10 +503,10 @@ local function UpdateFrame(self)
 
     -- ensure a frame is still stored for this name, as name conflicts cause
     -- it to be erased when another might still exist
-    addon:StoreName(self)
+   -- addon:StoreName(self)
 
     -- reset/update health bar colour
-    self:SetHealthColour()
+    --self:SetHealthColour()
 	
 	if UnitName("target") == nil and self.guid == nil then 
 		--Set Name text and save it in a list
@@ -493,8 +519,7 @@ local function UpdateFrame(self)
 	end
 	
 	if UnitName("mouseover") == self.name.text and self.guid == nil then
-	--			Sea.io.print("-3-")
-				addon:StoreGUID(self, 'mouseover')
+	--	addon:StoreGUID(self, 'mouseover')
 	end
 	
     if self.classification and self.classification ~= "" and tonumber(self.level:GetText()) ~= nil then
@@ -508,6 +533,8 @@ local function UpdateFrame(self)
 
         -- return guid to an assumed unique name
         addon:GetGUID(self)
+
+        self:SetHealthColour()
 
         addon:SendMessage('KuiNameplates_PostShow', 1, self)
         self.DispatchPostShow = nil
@@ -572,7 +599,6 @@ local function UpdateFrameCritical(self)
                 self.target = true
                 self.targetDelay = nil
                 if self.guid == nil then
-		--			Sea.io.print("-2-")
                 addon:StoreGUID(self, 'target')
 				end
 
@@ -620,7 +646,7 @@ local function UpdateFrameCritical(self)
     end
 
     --------------------------------------------------------------- Mouseover --
- --[[ todo ]]
+    --[[ todo ]]
  
 	if MouseIsOver(self) then
         if not self.highlighted then
@@ -787,11 +813,12 @@ function addon:InitFrame(frame)
     -- used by these scripts
     f.oldHealth.kuiParent = frame
 
-    -- Don't hook these directly to the frame; workaround for issue caused by
-    -- current curse.com version of VialCooldowns.
     addon:HookScript(f.oldHealth,'OnShow', function() OnFrameShow(this) end)
     addon:HookScript(f.oldHealth,'OnHide', function() OnFrameHide(this) end)
     addon:HookScript(f.oldHealth,'OnUpdate',function() OnFrameUpdate(this, arg1) end)
+
+    --addon:HookScript(f.oldHealth, 'OnEnter', function() printT("OnEnter") OnFrameEnter(this, arg1) end)
+    --addon:HookScript(f.oldHealth, 'OnLeave', function() OnFrameLeave(this, arg1) end)
 
     addon:HookScript(f.oldHealth,'OnValueChanged', function() OnHealthValueChanged(this, arg1) end)
 

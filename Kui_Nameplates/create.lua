@@ -29,7 +29,10 @@ function addon:UpdateBackground(f, trivial)
     f.bg:ClearAllPoints()
     f.bg.fill:ClearAllPoints()
 
-    if trivial then
+    if f.IN_NAMEONLY then
+        f.bg:Hide() 
+        f.bg.fill:Hide()
+    elseif trivial then
         -- switch to trivial sizes
 		f.bg.fill:SetWidth(self.sizes.frame.twidth)
 		f.bg.fill:SetHeight(self.sizes.frame.theight)
@@ -41,6 +44,8 @@ function addon:UpdateBackground(f, trivial)
         f.bg:SetPoint('TOPRIGHT', f.bg.fill, 'TOPRIGHT',
             self.sizes.frame.bgOffset/2,
             self.sizes.frame.bgOffset/2)
+        f.bg:Show() 
+        f.bg.fill:Show()
     elseif not trivial then
         -- switch back to normal sizes
 	f.bg.fill:SetWidth(self.sizes.frame.width);
@@ -54,6 +59,8 @@ function addon:UpdateBackground(f, trivial)
         f.bg:SetPoint('TOPRIGHT', f.bg.fill, 'TOPRIGHT',
             self.sizes.frame.bgOffset,
             self.sizes.frame.bgOffset)
+        f.bg:Show() 
+        f.bg.fill:Show()
     end
 end
 ------------------------------------------------------------------ Health bar --
@@ -70,8 +77,11 @@ function addon:CreateHealthBar(frame, f)
 end
 function addon:UpdateHealthBar(f, trivial)
     f.health:ClearAllPoints()
-
-    if trivial then
+    if f.IN_NAMEONLY then
+        f.health:SetWidth(self.sizes.frame.twidth-2)
+	f.health:SetHeight(2)
+        f.health:SetPoint('BOTTOMLEFT', f.x+1, f.y+1)
+    elseif trivial then
 		f.health:SetWidth(self.sizes.frame.twidth-2)
 		f.health:SetHeight(self.sizes.frame.theight-2)
         f.health:SetPoint('BOTTOMLEFT', f.x+1, f.y+1)
@@ -111,7 +121,7 @@ function addon:CreateHealthText(frame, f)
     end
 end
 function addon:UpdateHealthText(f, trivial)
-    if trivial then
+    if trivial or f.IN_NAMEONLY then
         f.health.p:Hide()
     else
         if not self.db.profile.hp.mouseover then
@@ -141,7 +151,7 @@ function addon:CreateAltHealthText(frame, f)
     end
 end
 function addon:UpdateAltHealthText(f, trivial)
-    if not f.health.mo then return end
+    if not f.health.mo or f.IN_NAMEONLY then return end
     if trivial then
         f.health.mo:Hide()
     else
@@ -176,7 +186,7 @@ function addon:CreateLevel(frame, f)
     f.level.enabled = true
 end
 function addon:UpdateLevel(f, trivial)
-    if not f.level.enabled then
+    if not f.level.enabled or f.IN_NAMEONLY then
         f.level:Hide()
         return
     end
@@ -237,7 +247,10 @@ function addon:CreateTargetGlow(f)
 end
 function addon:UpdateTargetGlow(f, trivial)
     if not f.targetGlow then return end
-    if trivial then
+    if f.IN_NAMEONLY then
+        f.targetGlow:SetWidth(self.sizes.tex.ttargetGlowW)
+        f.targetGlow:SetHeight(self.sizes.tex.targetGlowH)
+    elseif trivial then
 		f.targetGlow:SetWidth(self.sizes.tex.ttargetGlowW)
 		f.targetGlow:SetHeight(self.sizes.tex.targetGlowH)
     else

@@ -37,10 +37,15 @@ function KNPFu:OnMenuRequest(level,value)
 				'icon', KNPFu.hasIcon,
 				'desc', L["Open Kui-Nameplates Options"],
 				'func', (function() 
-						if AceConfigDialog.OpenFrames['kuinameplates'] ~= nil then
+						--[[if AceConfigDialog.OpenFrames['kuinameplates'] ~= nil then
 							AceConfigDialog:Close('kuinameplates')
 						else
 							AceConfigDialog:Open('kuinameplates')
+						end ]]
+							if AddonConfigFrame then
+								AddonConfigFrame:Hide()
+							else
+								InterfaceOptionsFrame_OpenToCategory('kuinameplates')
 						end 
 				  end),
 				
@@ -56,7 +61,8 @@ function KNPFu:OnMenuRequest(level,value)
 		)
 		
 		
-	elseif level == 2 and value == "fubar" then
+	elseif level > 1 and (value == "fubar" or value == "position") then
+		level = value == "position" and 2 or level
 		self:AddImpliedMenuOptions(level )	
 	end
 end
@@ -90,9 +96,14 @@ end
 
 -- when Clicked do this
 function KNPFu:OnClick()
-	if AceConfigDialog.OpenFrames['kuinameplates'] ~= nil then
+	--[[if AceConfigDialog.OpenFrames[kuinameplates] ~= nil then
 		AceConfigDialog:Close('kuinameplates')
 	else
 		AceConfigDialog:Open('kuinameplates')
+	end]]
+	if AddonConfigFrame then
+		AddonConfigFrame:Hide()
+	else
+		InterfaceOptionsFrame_OpenToCategory('kuinameplates')
 	end
 end

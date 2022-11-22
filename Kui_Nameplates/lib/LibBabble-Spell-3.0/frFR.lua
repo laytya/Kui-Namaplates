@@ -1,8 +1,8 @@
 if GetLocale() == "frFR" then
 
 	local MAJOR_VERSION = "LibBabble-Spell-3.0"
-	local MINOR_VERSION = tonumber(("$Revision: 66818 $"):match("%d+")) or 0
-
+	local MINOR_VERSION = tonumber(("$Revision: 66820 $"):match("%d+")) or 0
+	local _G = getfenv()
 	if MINOR_VERSION > _G.LibBabble_Spell_3_0_MINOR then
 		_G.LibBabble_Spell_3_0_MINOR = MINOR_VERSION
 	end
@@ -319,6 +319,7 @@ if GetLocale() == "frFR" then
 			["Deadly Throw"] = "Deadly Throw", --  Need to translated
 			["Death Coil"] = "Voile mortel",
 			["Death Wish"] = "Souhait mortel",
+			["Deep Wound"] = "Blessure profonde",
 			["Deep Wounds"] = "Blessures profondes",
 			["Defense"] = "D\195\169fense",
 			["Defensive Stance Passive"] = "Posture d\195\169fensive",

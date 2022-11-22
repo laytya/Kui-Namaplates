@@ -1,4 +1,4 @@
-local MAJOR, MINOR = 'UnitCasting-1.1', 3
+local MAJOR, MINOR = 'UnitCasting-1.1', 6
 local uc = LibStub:NewLibrary(MAJOR, MINOR)
 if not uc then
 	-- already registered
@@ -8,6 +8,17 @@ local B = LibStub("LibBabble-Spell-3.0")
 local BS = B:GetLookupTable()
 --local BS = AceLibrary("Babble-Spell-2.3")
 uc.callbacks = uc.callbacks or LibStub("CallbackHandler-1.0"):New(uc)
+LibStub("AceTimer-3.0"):Embed(uc)
+LibStub("AceHook-3.0"):Embed(uc)
+
+local ttName = "UnitCastingTT"
+local tt = CreateFrame("GameTooltip", ttName, nil, "GameTooltipTemplate")
+tt:SetOwner(WorldFrame, "ANCHOR_NONE")
+tt:SetScript("OnHide", function()
+	this:SetOwner(WorldFrame, "ANCHOR_NONE")
+end)
+uc.tt = tt
+
 
 local f = CreateFrame 'Frame'
 ----------------------------------------------- 
@@ -42,6 +53,7 @@ uc.DebuffRefreshingSpells = {}
 uc.InstantSpellcastsToTrack = {}
 uc.RootSnares = {}
 uc.InterruptBuffsToTrack = {}
+uc.UniqueDebuffs = {}
 
 -- written by kuurtzen (& modernist)
 
@@ -136,7 +148,7 @@ buffQueue.create = function(tar, spell, buffType, d, time)
 	acnt.buffData        = buffType
 	--acnt.duration	=
 	acnt.timeStart       = time
-	acnt.timeEnd         = time + 1
+	acnt.timeEnd         = time + 3.5
 	return acnt
 end
 
@@ -329,11 +341,14 @@ local function newbuff(tar, b, s, castOn)
 	if checkQueueBuff(tar, b) then return end
 
 	local drf = manageDR(time, tar, b, castOn)
-
-	if drf > 0 then
+	local endBuff = time + uc.BuffsToTrack[b].duration
+	--if drf > 0 then
 		-- remove buff if it exists
 		for k, v in pairs(buffList) do
 			if v.caster == tar and v.spell == b then
+				if v.timeEnd >= endBuff then
+					return
+				end
 				table.remove(buffList, k)
 			end
 		end
@@ -341,7 +356,7 @@ local function newbuff(tar, b, s, castOn)
 		local n = buff.create(tar, b, s, uc.BuffsToTrack[b], drf, time)
 		table.insert(buffList, n)
 		uc.callbacks:Fire("NewBuff", 1, n)
-	end
+	--end
 end
 
 local function refreshBuff(tar, b, s)
@@ -362,16 +377,19 @@ local function queueBuff(tar, spell, b, d)
 	table.insert(buffQueueList, bq)
 end
 
-local function processQueuedBuff(tar, b)
+local function processQueuedBuff(tar, b, start)
 	local time = GetTime()
 	for k, v in pairs(buffQueueList) do
 		if v.target == tar and v.buffName == b then
-			local n = buff.create(v.target, v.buffName, 1, v.buffData, 1, time)
+			--printT({"processQueuedBuff",v})
+			local drf = manageDR(time, v.target, v.buffName, false)
+			local n = buff.create(v.target, v.buffName, 1, v.buffData, drf, time)
 			table.insert(buffList, n)
+			if start then
 			uc.callbacks:Fire("NewBuff", 1, n)
+			end
 			table.remove(buffQueueList, k)
-	--		sendMSG('BF', v.target .. '/' .. v.buffName, v.buffData['duration'], IsInsideBG())
-			return
+			return n
 		end
 	end
 end
@@ -455,7 +473,7 @@ local gainDebuff = function(info)
 		refreshBuff(victim, info.skill)
 	end
 	-- process debuffs in queueBuff
-	processQueuedBuff(victim, info.skill)
+	processQueuedBuff(victim, info.skill, true)
 end
 
 local fadeRem = function(info)
@@ -492,7 +510,7 @@ local hitCrits = function(info)
 	end
 
 	-- spells that refresh debuffs
-	if uc.DebuffRefreshingSpells[info.skill] then
+	if uc.DebuffRefreshingSpells[info.skill] and not info.isDOT then
 		refreshBuff(victim, info.skill)
 	end
 
@@ -554,6 +572,122 @@ uc.OnEvent = function(event, info)
 		directInterrupt(info)
 	elseif info.type == "death" then
 		playerDeath(info)
+	elseif info.type == "miss" then
+		--printT({"OnEvent", event, info})
+	end
+end
+
+local function catchSpellcast(spell, rank, onself)
+
+	local unit, duration
+	local target = ""
+	local info = uc.UniqueDebuffs[spell]
+	if info then
+
+		if info.cp then
+			duration = info.cp[GetComboPoints()]
+		elseif rank and info.r then
+			if rank == "Max" then
+				rank = table.getn(info.r)
+			else
+				rank = tonumber((string.gsub(rank, RANK, ""))) or 0 
+			end
+			duration = info.r[rank]
+		else
+			duration = info.duration
+		end
+		if UnitExists("target") then
+			target = GetUnitName("target")
+		end
+		queueBuff(target, spell, info, duration)
+	end
+end
+
+function uc:UseAction(slot, clicked, onself)
+	if not GetActionText(slot) and HasAction(slot) then
+		self.tt:ClearLines()
+		getglobal(ttName .. "TextRight1"):SetText()
+		self.tt:SetAction(slot)
+		local spell = getglobal(ttName .. "TextLeft1"):GetText()
+		local rank = getglobal(ttName .. "TextRight1"):GetText()
+		uc.tt:Hide()
+		catchSpellcast(spell, rank, onself)
+	end
+end
+
+function uc:CastSpell(index, booktype)
+	local spell, rank = GetSpellName(index, booktype)
+	catchSpellcast(spell, rank)
+end
+
+function uc:CastSpellByName(text, onself)
+	local _, _, spell, rank = string.find(text, '(.+)%((.+)%)')
+    local spell = spell or text
+    local rank = rank or "Max"
+	local spell = string.gsub(text, "%(.-%)$", "")
+	catchSpellcast(spell, rank, onself)
+end
+
+function uc:SpellTargetUnit(unit)
+	for k, v in pairs(buffQueueList) do
+		if v.target == "" then
+			v.target = UnitName(unit)
+		end
+	end
+end
+
+function uc:TargetUnit(unit)
+	for k, v in pairs(buffQueueList) do
+		if v.target == "" then
+			v.target = UnitName(unit)
+		end
+	end
+end
+
+function uc:OnMouseDown()
+	for k, v in pairs(buffQueueList) do
+		if v.target == "" and arg1 == "LeftButton" and UnitExists("mouseover") then
+			v.target = UnitName("mouseover")
+		end
+	end
+end
+
+function uc:SPELLCAST_STOP()
+	local b = buffQueueList[1]
+	if b then
+		local info = processQueuedBuff(b.target, b.buffName, false)
+		self:ScheduleTimer("CompleteCast", 0.5, 1, info)
+	end
+end
+
+function uc:CompleteCast(info)
+
+	uc.callbacks:Fire("NewBuff", 1, info)
+end
+
+
+function uc:SpellStopCasting()
+	local i = 1
+	for k, v in pairs(buffQueueList) do
+		table.remove(buffQueueList, i)
+		i = i + 1
+	end
+end
+
+function uc:SpellStopTargeting()
+	local i = 1
+	for k, v in pairs(buffQueueList) do
+		table.remove(buffQueueList, i)
+		i = i + 1
+	end
+end
+
+uc.SPELL_FAILED = function(event, info)
+	for k, v in pairs(buffQueueList) do
+		if v.buffName == info.skill then
+			table.remove(buffQueueList, k)
+			break
+		end
 	end
 end
 
@@ -620,13 +754,7 @@ uc.RefreshBuff = function(t, b, s)
 	end
 end
 
-uc.QueueBuff = function(t, s, d)
-	if SPELLINFO_UNIQUE_DEBUFFS[s] then
-		queueBuff(t, s, SPELLINFO_UNIQUE_DEBUFFS[s], SPELLINFO_UNIQUE_DEBUFFS[s]['cp'][d])
-		return true
-	end
-	return false
-end
+
 
 uc.AddBuff = function(t, s, d)
 	if SPELLINFO_UNIQUE_DEBUFFS[s] then
@@ -681,6 +809,20 @@ uc.parser:RegisterEvent("UnitCasting", "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS",
 uc.parser:RegisterEvent("UnitCasting", "CHAT_MSG_COMBAT_FRIENDLY_DEATH", uc.OnEvent)
 uc.parser:RegisterEvent("UnitCasting", "CHAT_MSG_COMBAT_HOSTILE_DEATH", uc.OnEvent)
 
+-- Spellcast handling
+
+uc:Hook("UseAction")
+uc:Hook("CastSpell")
+uc:Hook("CastSpellByName")
+uc:Hook("SpellTargetUnit")
+uc:Hook("TargetUnit")
+uc:Hook("SpellStopTargeting")
+uc:Hook("SpellStopCasting")
+uc:HookScript(WorldFrame, "OnMouseDown")
+
+f:RegisterEvent("SPELLCAST_STOP")
+uc.parser:RegisterEvent("UnitCasting", "CHAT_MSG_SPELL_FAILED_LOCALPLAYER", uc.SPELL_FAILED)
+
 f:RegisterEvent 'PLAYER_ENTERING_WORLD'
 f:RegisterEvent 'CHAT_MSG_MONSTER_EMOTE'
 f:SetScript('OnEvent', function()
@@ -688,6 +830,8 @@ f:SetScript('OnEvent', function()
 		tableMaintenance(true)
 	elseif event == 'CHAT_MSG_MONSTER_EMOTE' then
 		fear(arg1, arg2)
+	elseif event == 'SPELLCAST_STOP' then
+		uc:SPELLCAST_STOP()
 	end
 end)
 

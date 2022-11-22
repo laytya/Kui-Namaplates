@@ -247,6 +247,15 @@ do
 		end
 	end
 
+    function addon:GetMouseoverNameplate()
+		for _,frame in pairs(addon.frameList) do
+			if frame.kui.highlighted then
+				return frame.kui
+			end
+		end
+	end
+
+    
     function addon:GetNameplates(name)
         local frames = {}
         for _, frame in pairs(addon.frameList) do
@@ -492,7 +501,7 @@ function addon:OnInitialize()
 	local optionstable = LibStub('AceDBOptions-3.0'):GetOptionsTable(self.db)
     addon:InitDBOptions(optionstable, "Profiles")
     -- self.ac.RegisterOptionsTable(self, 'kuinameplates-profiles', optionstable)
-   -- self.acd:AddToBlizOptions('kuinameplates-profiles', 'Profiles', 'Kui Nameplates')
+   --self.acd:AddToBlizOptions('kuinameplates','Profiles', 'kuinameplates', 'Profiles')
     
     self.db.RegisterCallback(self, 'OnProfileChanged', 'ProfileChanged')
     LSM.RegisterCallback(self, 'LibSharedMedia_Registered', 'LSMMediaRegistered')

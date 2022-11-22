@@ -486,7 +486,7 @@ do
 	end
 
     AceConfig.RegisterOptionsTable(addon, 'kuinameplates', options, "knp")
-    --addon.optionsPanel = AceConfigDialog:AddToBlizOptions('kuinameplates', 'Kui Nameplates')
+    addon.optionsPanel = AceConfigDialog:AddToBlizOptions('kuinameplates', 'Kui Nameplates')
 end
 
 --------------------------------------------------------------- Slash command --
@@ -494,9 +494,9 @@ SLASH_KUINAMEPLATES1 = '/kuinameplates'
 SLASH_KUINAMEPLATES2 = '/knp'
 
 function SlashCmdList.KUINAMEPLATES()
-    -- twice to workaround an issue introduced with 5.3
-	addon.acd:Open('kuinameplates')
-		--addon.optionsPanel:Show()
-	--InterfaceOptionsFrame_OpenToCategory('Kui Nameplates')
-    --InterfaceOptionsFrame_OpenToCategory('Kui Nameplates')
+    
+    --addon.acd:Open('kuinameplates')
+	
+	InterfaceOptionsFrame_OpenToCategory('kuinameplates')
+
 end

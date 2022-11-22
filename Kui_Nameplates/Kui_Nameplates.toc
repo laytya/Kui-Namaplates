@@ -1,6 +1,7 @@
 ## Interface: 11200
 ## Author: Kesava, ported by laytya
 ## Title: Kui |cff9966ffNameplates|r
+## Version: beta0.4
 ## Notes: Prettier, lightweight, configurable nameplates.
 ## SavedVariables: KuiNameplatesGDB
 
@@ -13,6 +14,7 @@ lib\Ace3\AceCore-3.0\AceCore-3.0.lua
 lib\Ace3\AceAddon-3.0\AceAddon-3.0.lua
 lib\Ace3\AceEvent-3.0\AceEvent-3.0.lua
 lib\Ace3\AceHook-3.0\AceHook-3.0.lua
+lib\Ace3\AceTimer-3.0\AceTimer-3.0.xml
 lib\Ace3\AceConsole-3.0\AceConsole-3.0.lua
 lib\Ace3\AceDB-3.0\AceDB-3.0.lua
 lib\Ace3\AceDBOptions-3.0\AceDBOptions-3.0.lua
@@ -36,4 +38,5 @@ castbar.lua
 castwarnings.lua
 combopoints.lua
 
+critters.lua
 custom.lua

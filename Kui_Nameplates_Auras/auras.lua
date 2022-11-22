@@ -215,11 +215,7 @@ local function getChronometerTimer(debuffname, target)
 end
 
 local function GetAuraButton(self, spellId, count, duration, expirationTime)
-
-	--	Sea.io.printTable2({self=self, spellId=spellId, count=count, duration=duration, expirationTime=expirationTime},"",2)
-
 	local button
-
 	duration = duration or 0
 	expirationTime = expirationTime or 0
 	count = count or 0
@@ -346,12 +342,16 @@ function mod:Create(msg, frame)
 end
 
 local function IsTotem(name)
+--[[
 	for k, v in pairs(KUI_TOTEMS) do
 		if find(name, k) then
 			return v
 		end
 	end
-	return nil
+
+]]
+
+	return KUI_TOTEMS[name]
 end
 
 function mod:Show(msg, frame)
@@ -443,7 +443,7 @@ function mod:COMBAT_LOG_EVENT(event, info)
 	--print(event..' from '..name..' on '..targetName)
 
 	-- fetch the subject's nameplate
-	--	Sea.io.printTable2(info)
+
 	if info.type ~= 'buff' or info.type ~= 'debuff' then return end
 
 	if UnitExists("target") and not UnitIsDeadOrGhost("target")
@@ -465,36 +465,53 @@ function mod:COMBAT_LOG_EVENT(event, info)
 	--	end
 end
 
-function mod:PLAYER_TARGET_CHANGED()
-	self:UNIT_AURA('UNIT_AURA', 'target')
+function mod:PLAYER_TARGET_CHANGED(event, frame)
+	--printT({"PLAYER_TARGET_CHANGED", event, UnitName('target'), frame.name.text})
+	self:UNIT_AURA('UNIT_AURA', 'target', frame)
 end
 
-function mod:UPDATE_MOUSEOVER_UNIT()
-	if UnitIsPlayer("mouseover") then
-		self:UNIT_AURA('UNIT_AURA', 'mouseover')
+function mod:UPDATE_MOUSEOVER_UNIT(event,frame)
+	--if UnitIsPlayer("mouseover") then
+	self:UNIT_AURA('UNIT_AURA', 'mouseover', frame)
+	--printT({"UPDATE_MOUSEOVER_UNIT",UnitName('mouseover'), frame.name.text})
+	--end
+end
+
+local function getDebuff(spellIcon, unit)
+	local filter = UnitIsFriend(unit, 'player')
+	for i = 1, 32 do
+		local spellId, count
+		if filter == 1 then
+			spellId, count = UnitBuff(unit, i)
+		else
+			spellId, count = UnitDebuff(unit, i)
+		end
+		if spellIcon == spellId then
+			return spellId, count
 	end
 end
+	return nil, nil
+end
 
-function mod:UNIT_AURA(e, u)
+function mod:UNIT_AURA(e, u, frame)
 	
 	local unit = u and u or arg1
-	local frame
+	if not frame then
 	if unit == 'target' then
 		frame = addon:GetTargetNameplate()
 	else
 		frame = addon:GetNameplate(kui.UnitGUID(unit), nil)
 	end
-	if not frame or not frame.auras then return end
+	end
+	if not frame or not frame.auras or frame.name.text ~= UnitName(unit) then return end
 	if frame.trivial and not self.db.profile.showtrivial then return end
 
 	local unitIsPlayer = UnitIsPlayer(unit)
 	local filter = UnitIsFriend(unit, 'player')
 	local buffs = mod.uc.GetBuffs(frame.name.text)
+	local spellId, count
 
-	for i = 1, 16 do
-
-		--	local name, _, icon, count, _, duration, expirationTime, _, _, _, spellId = UnitAura(unit, i, filter)
-		local spellId, count
+	for i = 1, 32 do
 		if filter == 1 then
 			spellId, count = UnitBuff(unit, i)
 		else
@@ -508,17 +525,10 @@ function mod:UNIT_AURA(e, u)
 
 		end
 		]]
+		if spellId then
+			for k, buff in pairs(buffs) do
+				--spellId, count = getDebuff(buff.icon, unit)
 
-		for _, buff in pairs(buffs) do
-			if buff.icon == spellId then
-				local te = unitIsPlayer and buff.drTimeEnd or buff.timeEnd
-				duration, expirationTime = te - buff.timeStart, te - GetTime()
-			end
-		end
-
-		--name = name and strlower(name) or nil
-
-		if spellId
 		--[[	and
 		   (not self.db.profile.behav.useWhitelist or
 		    (whitelist[spellId] or whitelist[name])) and
@@ -527,16 +537,31 @@ function mod:UNIT_AURA(e, u)
 		   	duration > 0 and
 		    duration <= self.db.profile.display.lengthMax))
 	--]]
-		then
-			--	Sea.io.printTable2({spellId,count,duration,expirationTime},"",2)
+				if spellId == buff.icon then
+			local te = unitIsPlayer and buff.drTimeEnd or buff.timeEnd
+			duration, expirationTime = te - buff.timeStart, te - GetTime()
+
 			local button = frame.auras:GetAuraButton(spellId, count, duration, expirationTime)
 			frame.auras:Show()
 			button:Show()
 			button.used = true
+					table.remove(buffs,k)
 		end
 	end
+		end
+	end
+	if unitIsPlayer then
+	for k, buff in pairs(buffs) do
+		local te = unitIsPlayer and buff.drTimeEnd or buff.timeEnd
+		duration, expirationTime = te - buff.timeStart, te - GetTime()
 
-	for _,button in pairs(frame.auras.buttons) do
+		local button = frame.auras:GetAuraButton(buff.icon, buff.stacks, duration, expirationTime)
+		frame.auras:Show()
+		button:Show()
+		button.used = true
+	end
+	end
+	for _, button in pairs(frame.auras.buttons) do
 	-- hide buttons that weren't used this update
 		if not button.used then
 			button:Hide()
@@ -547,12 +572,24 @@ function mod:UNIT_AURA(e, u)
 end
 
 local function OnNewBuff(event, info)
-	local frame 
-	local guid  =  addon:GetKnownGUID(info.caster) -- Player
+	local frame, spellId, count, unit
+	local guid = addon:GetKnownGUID(info.caster)
+	local targetFrame = addon:GetTargetNameplate()
+	local moframe = addon:GetMouseoverNameplate()
+	 -- Player
 	if guid then 
+		if targetFrame and targetFrame.guid ==  guid then 
+			frame = targetFrame
+			unit = "target"
+		elseif moframe and moframe.guid ==  guid then
+			frame =  moFrame
+			unit = "mouseover"
+		else
 		frame = addon:GetNameplate(guid)
+		end
 	else
 		frame = addon:GetTargetNameplate()
+		unit = 'target'
 		if frame and frame.name.text ~= info.caster then
 			return
 		end
@@ -561,8 +598,20 @@ local function OnNewBuff(event, info)
 	if frame and frame.auras then
 		--if not (frame.trivial and not mod.db.profile.showtrivial) then
 		if info.icon then
+			spellId, count = nil, 0
+			if unit then
+				spellId, count = getDebuff(info.icon, unit)
+				if not spellId and not guid then
+					return
+				end
+			elseif not guid then
+				return
+			end
+			if not spellId then
+				count = info.stacks
+			end
 			local te = guid and info.drTimeEnd or info.timeEnd
-			local button = frame.auras:GetAuraButton(info.icon, info.stacks, te - info.timeStart,
+			local button = frame.auras:GetAuraButton(info.icon, count, te - info.timeStart,
 				te - GetTime())
 			frame.auras:Show()
 			button:Show()
@@ -573,7 +622,15 @@ local function OnNewBuff(event, info)
 end
 
 local function OnEndBuff(event, info)
-	local frames = addon:GetNameplates(info.caster)
+	local frames
+	local guid = addon:GetKnownGUID(info.caster) -- Player
+	if guid and event == "EndDRBuff" then
+		frames = {addon:GetNameplate(guid)}
+	elseif event == "EndDRBuff" then 
+		return
+	else
+		frames = addon:GetNameplates(info.caster)
+	end
 	for _, frame in pairs(frames) do
 		if frame and frame.auras then
 			--if not (frame.trivial and not mod.db.profile.showtrivial) then
@@ -732,11 +789,11 @@ function mod:OnEnable()
 	self:RegisterMessage('KuiNameplates_PostShow', 'Show')
 	self:RegisterMessage('KuiNameplates_PostHide', 'Hide')
 	self:RegisterMessage('KuiNameplates_PostTarget', 'PLAYER_TARGET_CHANGED')
-	--self:RegisterMessage('KuiNameplates_TargetUpdate', 'PLAYER_TARGET_CHANGED')
+	self:RegisterMessage('KuiNameplates_MouseEnter', 'UPDATE_MOUSEOVER_UNIT')
 
 --	self:RegisterEvent('UNIT_AURA')
 	--	self:RegisterEvent('PLAYER_TARGET_CHANGED')
-	self:RegisterEvent('UPDATE_MOUSEOVER_UNIT')
+	--self:RegisterEvent('UPDATE_MOUSEOVER_UNIT')
 	--self:RegisterEvent('COMBAT_LOG_EVENT_UNFILTERED')
 
 	-- Buff/Debuff gain handling
@@ -751,6 +808,7 @@ function mod:OnEnable()
 
 	mod.uc.RegisterCallback(self, "NewBuff", OnNewBuff)
 	mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndBuff)
+	mod.uc.RegisterCallback(self, "EndDRBuff", OnEndBuff)
 
 	local _, frame
 	for _, frame in pairs(addon.frameList) do

@@ -1,8 +1,8 @@
 if GetLocale() == "zhCN" then
 
 	local MAJOR_VERSION = "LibBabble-Spell-3.0"
-	local MINOR_VERSION = tonumber(("$Revision: 66818 $"):match("%d+")) or 0
-
+	local MINOR_VERSION = tonumber(string.sub("$Revision: 67250 $", 12, -3)) or 0
+	local _G = getfenv()
 	if MINOR_VERSION > _G.LibBabble_Spell_3_0_MINOR then
 		_G.LibBabble_Spell_3_0_MINOR = MINOR_VERSION
 	end
@@ -12,7 +12,20 @@ if GetLocale() == "zhCN" then
 		_G.LibBabble_Spell_3_0_foundLocale = true
 
 		lib:SetCurrentTranslations {
-
+			["Free Action"] = true,
+			["Fire Reflector"] = true,
+			["Net-o-Matic"] = true,
+			["Shadow Reflector"] = true,
+			["Nimble Reflexes"] = true,
+			["Damage Absorb"] = true,
+			["Frost Reflector"] = true,
+			["Living Free Action"] = true,
+			["Earthbind"] = true,
+			["Boar Charge"] = true,
+			["Grounding Totem Effect"] = true,
+			["Invulnerability"] = true,
+			["Ward of the Eye"] = true,
+			["Flee"] = true,
 			["Icicle"] = true,
 			["Exploding Shot"] = true,
 			["Crystal Flash"] = true,
@@ -281,14 +294,12 @@ if GetLocale() == "zhCN" then
 			["Create Soulstone"] = "製造靈魂石",
 			["Create Spellstone (Greater)"] = "製造強效法術石",
 			["Create Spellstone (Major)"] = "製造極效法術石",
-			["Create Spellstone (Master)"] = "Create Spellstone (Master)", --  Need to translated
 			["Create Spellstone"] = "製造法術石",
 			["Crippling Poison II"] = "致殘毒藥 II",
 			["Crippling Poison"] = "致殘毒藥",
 			["Critical Mass"] = "火焰重擊",
 			["Crossbows"] = "弩",
 			["Cruelty"] = "殘忍",
-			["Crusader Aura"] = "Crusader Aura", --  Need to translated
 			["Crusader Strike"] = "十字軍打擊",
 			["Cultivation"] = "栽培",
 			["Cure Disease"] = "祛病術",
@@ -316,9 +327,9 @@ if GetLocale() == "zhCN" then
 			["Deadly Poison IV"] = "致命毒藥 IV",
 			["Deadly Poison V"] = "致命毒藥 V",
 			["Deadly Poison"] = "致命毒藥",
-			["Deadly Throw"] = "Deadly Throw", --  Need to translated
 			["Death Coil"] = "死亡纏繞",
 			["Death Wish"] = "死亡之願",
+			["Deep Wound"] = "重伤",
 			["Deep Wounds"] = "重傷",
 			["Defense"] = "防禦",
 			["Defensive Stance Passive"] = "防禦姿態（被動）",

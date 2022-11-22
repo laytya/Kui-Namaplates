@@ -1,8 +1,8 @@
 ﻿if GetLocale() == "deDE" then
 
 	local MAJOR_VERSION = "LibBabble-Spell-3.0"
-	local MINOR_VERSION = tonumber(string.sub("$Revision: 67249 $", 12, -3)) or 0
-
+	local MINOR_VERSION = tonumber(string.sub("$Revision: 67250 $", 12, -3)) or 0
+	local _G = getfenv()
 	if MINOR_VERSION > _G.LibBabble_Spell_3_0_MINOR then
 		_G.LibBabble_Spell_3_0_MINOR = MINOR_VERSION
 	end
@@ -341,6 +341,7 @@
 			["Death Wish"] = "Todeswunsch",
 			["Deep Sleep"] = "Tiefer Schlaf",
 			["Deep Slumber"] = "Tiefer Schlummer",
+			["Deep Wound"] = "Tiefe Wunde",
 			["Deep Wounds"] = "Tiefe Wunden",
 			["Defense"] = "Verteidigung",
 			["Defensive Stance Passive"] = "Verteidigungshaltung - Passiv",
