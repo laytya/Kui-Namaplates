@@ -478,6 +478,7 @@ function mod:UPDATE_MOUSEOVER_UNIT(event,frame)
 end
 
 local function getDebuff(spellIcon, unit)
+	if not unit then return nil, nil end
 	local filter = UnitIsFriend(unit, 'player')
 	for i = 1, 32 do
 		local spellId, count
@@ -622,10 +623,30 @@ local function OnNewBuff(event, info)
 end
 
 local function OnEndBuff(event, info)
-	local frames
-	local guid = addon:GetKnownGUID(info.caster) -- Player
-	if guid and event == "EndDRBuff" then
-		frames = {addon:GetNameplate(guid)}
+	local frames, unit , frame
+	local guid = addon:GetKnownGUID(info.caster) 
+	local targetFrame = addon:GetTargetNameplate()
+	local moframe = addon:GetMouseoverNameplate()
+	
+	if guid then
+		if targetFrame and targetFrame.guid ==  guid then 
+			frame = targetFrame
+			unit = "target"
+		elseif moframe and moframe.guid ==  guid then
+			frame =  moFrame
+			unit = "mouseover"
+		else
+			frame = addon:GetNameplate(guid)
+		end
+	else
+		frame = addon:GetTargetNameplate()
+		unit = 'target'
+		if frame and frame.name.text ~= info.caster then
+			return
+		end
+	end
+	if frame and frame.player and event == "EndDRBuff" then
+		frames = {frame}
 	elseif event == "EndDRBuff" then 
 		return
 	else
@@ -634,7 +655,8 @@ local function OnEndBuff(event, info)
 	for _, frame in pairs(frames) do
 		if frame and frame.auras then
 			--if not (frame.trivial and not mod.db.profile.showtrivial) then
-			if frame.auras.spellIds[info.icon] then
+			spellId, count = getDebuff(info.icon, unit)
+			if frame.auras.spellIds[info.icon] and not spellId then
 				local button = frame.auras.spellIds[info.icon]
 				button.used = nil
 				button:Hide()
