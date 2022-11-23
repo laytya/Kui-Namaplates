@@ -133,7 +133,8 @@ kui.UnitGUID = function( unit)
 	if not uname then return end
 	local ulevel = kui.UnitLevel(unit, true)
 	local _, uclass = UnitClass(unit)	
-	return kui.StringHash((uname or "")..(ulevel or "")..(uclass or ""))
+		
+	return kui.StringHash((uname or "")..(ulevel or "")..(uclass or "")..(kui.UnitIsPet(unit) and "Pet" or ""))
 end
 
 kui.ModifyFontFlags = function(fs, io, flag)

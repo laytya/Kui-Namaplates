@@ -71,7 +71,7 @@ local function SetHealthColour(self,sticky,r,g,b)
 	local r, g, b
 	local classcolor = nil
 	
-	if self.guid and addon:GetClass(self.guid) then
+	if self.guid and addon:GetClass(self.guid) and not self.pet then
 		classcolor = kui.GetClassColour(addon:GetClass(self.guid))	
 	else
 		r, g, b = self.oldHealth:GetStatusBarColor()
@@ -79,9 +79,7 @@ local function SetHealthColour(self,sticky,r,g,b)
 		
 	if self.health.reset  or
        (not classcolor and  (r ~= self.health.r or  g ~= self.health.g or b ~= self.health.b)) or
-        (
-        classcolor and (classcolor.r ~= self.health.r or classcolor.g ~= self.health.g or classcolor.b ~= self.health.b)
-        )
+        (classcolor and (classcolor.r ~= self.health.r or classcolor.g ~= self.health.g or classcolor.b ~= self.health.b))
     then
 		
         -- store the default colour
@@ -92,10 +90,10 @@ local function SetHealthColour(self,sticky,r,g,b)
 		end
         self.health.reset, self.friend, self.player = nil, nil, nil
 
-        if self.guid and addon:GetClass(self.guid) then
+        if self.guid and addon:GetClass(self.guid) and not self.pet then
 			-- Class colors
 			r, g, b = classcolor.r, classcolor.g, classcolor.b
-			self.health.reset, self.friend, self.player = nil, true, true	
+
 		elseif self.tapped  then
 			r, g, b = unpack(addon.db.profile.general.reactioncolours.tappedcol)
 		elseif g > .9 and r == 0 and b == 0 then
@@ -308,6 +306,8 @@ local function OnFrameShow(self)
     self = self.kuiParent
     local f = self.kui
     --local trivial = f.firstChild:GetScale() < 1
+
+    addon:NameOnlyDisable(self)
 
     -- classifications
     if not trivial and f.level.enabled then
@@ -663,6 +663,32 @@ local function SetName(self)
     -- get name from default frame and update our values
     self.name.text = self.oldName:GetText()
     self.name:SetText(self.name.text)
+end
+
+function addon:NameOnlyEnable(f)
+    if f.IN_NAMEONLY then return end
+    f.IN_NAMEONLY = true
+    f:SetCentre()
+    self:UpdateBackground(f, false)
+    self:UpdateHealthBar(f, false)
+    self:UpdateHealthText(f, false)
+    self:UpdateAltHealthText(f, false)
+    self:UpdateLevel(f, false)
+    self:UpdateName(f, false)
+    self:UpdateTargetGlow(f, false)
+end
+ 
+function addon:NameOnlyDisable(f)
+    if not f.IN_NAMEONLY then return end
+    f.IN_NAMEONLY = nil
+    f:SetCentre()
+    self:UpdateBackground(f, false)
+    self:UpdateHealthBar(f, false)
+    self:UpdateHealthText(f, false)
+    self:UpdateAltHealthText(f, false)
+    self:UpdateLevel(f, false)
+    self:UpdateName(f, false)
+    self:UpdateTargetGlow(f, false)
 end
 
 --------------------------------------------------------------- KNP functions --

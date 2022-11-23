@@ -162,8 +162,15 @@ do
         f.classification = classification
 		
         loadedGUIDs[guid] = f
+        f.pet = nil
 
+        f.friend = true
+        if UnitCanAttack('player',unit) then
+            f.friend = nil
+        end
+        addon:NameOnlyDisable(f)
         if UnitIsPlayer(unit) then
+            f.player = true
             -- we can probably assume this unit has a unique name
             -- nevertheless, overwrite this each time. just in case.
             knownGUIDs[f.name.text] = guid
@@ -187,9 +194,15 @@ do
                 knownClass[tguid] = nil
                 knownGUIDs[dguid] = nil
             end
+        
         elseif loadedNames[f.name.text] == f then
             -- force the registered f for this name to change
             loadedNames[f.name.text] = nil
+        else
+            if UnitPlayerControlled(unit) then
+                f.pet = true
+                self:NameOnlyEnable(f)
+            end 
         end
     end
 

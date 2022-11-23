@@ -17,6 +17,7 @@ local critters = {
    ['Beetle'] = true,
    ['Belfry Bat'] = true,
    ['Biletoad'] = true,
+   ['Black Kingsnake'] = true,
    ['Black Rat'] = true,
    ['Brown Prairie Dog'] = true,
    ['Caged Rabbit'] = true,
@@ -72,6 +73,7 @@ local critters = {
    ['Rabbit'] = true,
    ['Ram'] = true,
    ['Rat'] = true,
+   ['Dig Rat'] = true,
    ['Riding Ram'] = true,
    ['Roach'] = true,
    ['Salome'] = true,
@@ -104,38 +106,13 @@ function mod:PostCreate(msg, frame)
 end
 
 ------------------------------------------------------------------------ Show --
-local function NameOnlyEnable(f)
-   if f.IN_NAMEONLY then return end
-   f.IN_NAMEONLY = true
-   f:SetCentre()
-   kn:UpdateBackground(f, false)
-   kn:UpdateHealthBar(f, false)
-   kn:UpdateHealthText(f, false)
-   kn:UpdateAltHealthText(f, false)
-   kn:UpdateLevel(f, false)
-   kn:UpdateName(f, false)
-   kn:UpdateTargetGlow(f, false)
-        end
 
-local function NameOnlyDisable(f)
-   if not f.IN_NAMEONLY then return end
-   f.IN_NAMEONLY = nil
-   f:SetCentre()
-   kn:UpdateBackground(f, false)
-   kn:UpdateHealthBar(f, false)
-   kn:UpdateHealthText(f, false)
-   kn:UpdateAltHealthText(f, false)
-   kn:UpdateLevel(f, false)
-   kn:UpdateName(f, false)
-   kn:UpdateTargetGlow(f, false)
-end
 
 function mod:PostShow(msg, frame)
    if critters[frame.name.text] and tonumber(frame.level:GetText()) == 1 then
-         NameOnlyEnable(frame)
-         return
-      end
-   NameOnlyDisable(frame)
+      kn:NameOnlyEnable(frame)
+      return
+   end
 end
 
 ------------------------------------------------------------------------ Hide --
