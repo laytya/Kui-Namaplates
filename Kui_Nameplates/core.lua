@@ -198,12 +198,11 @@ do
         elseif loadedNames[f.name.text] == f then
             -- force the registered f for this name to change
             loadedNames[f.name.text] = nil
-        else
-            if UnitPlayerControlled(unit) then
-                f.pet = true
-                self:NameOnlyEnable(f)
-            end 
         end
+        if kui.UnitIsPet(unit) then
+            f.pet = true
+            self:NameOnlyEnable(f)
+        end 
     end
 
     function addon:StoreName(f)

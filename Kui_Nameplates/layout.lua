@@ -307,7 +307,7 @@ local function OnFrameShow(self)
     local f = self.kui
     --local trivial = f.firstChild:GetScale() < 1
 
-    addon:NameOnlyDisable(self)
+    
 
     -- classifications
     if not trivial and f.level.enabled then
@@ -388,6 +388,7 @@ local function OnFrameHide(self)
     -- remove name from store
     -- if there are name duplicates, this will be recreated in an onupdate
     addon:ClearName(f)
+    addon:NameOnlyDisable(f)
 
     f.lastAlpha = nil
     f.fadingTo  = nil
@@ -512,14 +513,9 @@ local function UpdateFrame(self)
 		--Set Name text and save it in a list
 		self.scanningPlayers = true
 		TargetByName(self.name.text, true)
-	--	Sea.io.print("-1-")
 		addon:StoreGUID(self, 'target')
 		ClearTarget()
 		self.scanningPlayers = false
-	end
-	
-	if UnitName("mouseover") == self.name.text and self.guid == nil then
-	--	addon:StoreGUID(self, 'mouseover')
 	end
 	
     if self.classification and self.classification ~= "" and tonumber(self.level:GetText()) ~= nil then

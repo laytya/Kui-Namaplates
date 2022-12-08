@@ -588,6 +588,7 @@ uc.RegisterTable("BuffsToTrack", {
     [BS['Sprint']]                  = { duration = 15, prio = 1 },
     [BS['Kidney Shot']]             = { duration = 6, type = 'physical', prio = 2, dr = 'Controlled Stun' },
     [BS['Wound Poison IV']]         = { duration = 15, type = 'poison', display = false, },
+    [BS['Rupture']]                 = { duration = 16, type = 'physical', display = false, },
 
     -- SHAMAN
     [BS['Earthbind']]              = { duration = 5, type = 'magic', },
