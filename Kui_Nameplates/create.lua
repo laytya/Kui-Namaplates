@@ -75,6 +75,7 @@ function addon:CreateHealthBar(frame, f)
         f.health.SetValue = self.SetValueSmooth
     end
 end
+
 function addon:UpdateHealthBar(f, trivial)
     f.health:ClearAllPoints()
     if f.IN_NAMEONLY then
@@ -91,6 +92,20 @@ function addon:UpdateHealthBar(f, trivial)
         f.health:SetPoint('BOTTOMLEFT', f.x+1, f.y+1)
     end
 end
+
+function addon:UpdateOldFrame(f, trivial)
+    if f.kui and f.kui.IN_NAMEONLY then
+        f:SetWidth(self.sizes.frame.twidth)
+        f:SetHeight(12)
+    elseif trivial then
+        f:SetWidth(self.sizes.frame.twidth)
+        f:SetHeight(self.sizes.frame.theight + 10 -self.db.profile.text.healthoffset)
+    elseif not trivial then
+        f:SetWidth(self.sizes.frame.width)
+        f:SetHeight(self.sizes.frame.height + 10 -self.db.profile.text.healthoffset )
+    end
+end
+
 ------------------------------------------------------------------- Highlight --
 function addon:CreateHighlight(frame, f)
     if not self.db.profile.general.highlight then return end

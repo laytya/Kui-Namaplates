@@ -248,6 +248,12 @@ end
 ------------------------------------------------------- Frame script handlers --
 local function OnFrameEnter(self)
    -- self = self.kuiParent
+
+    if self.kui then
+        self = self.kui
+    else
+        return
+    end
     --[[
   local tt ={}
     for i=1,GameTooltip:NumLines() do 
@@ -256,8 +262,8 @@ local function OnFrameEnter(self)
         tinsert(tt,text)
     end
     printT(tt)
+-- ]]
 
-]]
 
     if self.guid == nil and UnitName('mouseover') == self.name.text then
         addon:StoreGUID(self, 'mouseover')        
@@ -288,8 +294,13 @@ local function OnFrameEnter(self)
 end
 
 local function OnFrameLeave(self)
-  --  self = self.kuiParent
-    if not self then return end
+
+    if self.kui then
+        self = self.kui
+    else
+        return
+    end
+
     self.highlighted = false
 
     if self.highlight then
@@ -422,6 +433,9 @@ local function OnFrameUpdate(fr, e)
             floor(y) - 25)
     end
 
+    addon:UpdateOldFrame(fr.kuiParent, f.trivial)
+
+
     -- show the frame after it's been moved so it doesn't flash
     -- .DoShow is set OnFrameShow
     if f.DoShow then
@@ -494,6 +508,7 @@ local function OnFrameUpdate(fr, e)
     if f.critElap <= 0 then
         f.critElap = critUpdateTime
         f:UpdateFrameCritical()
+        addon:UpdateClickHandler(fr.kuiParent)
     end
 end
 
@@ -642,7 +657,7 @@ local function UpdateFrameCritical(self)
     end
 
     --------------------------------------------------------------- Mouseover --
-    --[[ todo ]]
+    --[[ todo 
  
 	if MouseIsOver(self) then
         if not self.highlighted then
@@ -716,35 +731,15 @@ function addon:InitFrame(frame)
 	
 	local healthBar = frame:GetChildren()
 	local borderRegion, glowRegion, nameTextRegion, levelTextRegion, bossIconRegion, raidIconRegion = frame:GetRegions()
-	
-	
- --   local overlayChild, nameTextChild = frame:GetChildren()
- --   local healthBar, castBar = overlayChild:GetChildren()
---[[
-    local _, castbarOverlay, shieldedRegion, spellIconRegion,
-          spellNameRegion, spellNameShadow
-        = castBar:GetRegions()
-
-    local nameTextRegion = nameTextChild:GetRegions()
-    local glowRegion, overlayRegion, highlightRegion, levelTextRegion,
-          bossIconRegion, raidIconRegion, stateIconRegion
-        = overlayChild:GetRegions()
-]]
---    overlayRegion:SetTexture(nil)
---    highlightRegion:SetTexture(nil)
+    --[[  ]]
     bossIconRegion:SetTexture(nil)
 	borderRegion:SetTexture(nil)
---    shieldedRegion:SetTexture(nil)
---    castbarOverlay:SetTexture(nil)
     glowRegion:SetTexture(nil)
---    spellIconRegion:SetSize(.01,.01)
---    spellNameShadow:SetTexture(nil)
---    spellNameRegion:Hide()
 
     -- make default healthbar & castbar transparent
     healthBar:SetStatusBarTexture(kui.m.t.empty)
-  --  castBar:SetStatusBarTexture(kui.m.t.empty)
 
+    -- ]]
     f.firstChild = healthBar
 
     
@@ -787,7 +782,9 @@ function addon:InitFrame(frame)
         f.fixaa = true
     else
         f:ClearAllPoints()
-		f:SetAllPoints(frame)
+        f:SetWidth(self.sizes.frame.width);
+        f:SetHeight(self.sizes.frame.height + 10 - self.db.profile.text.healthoffset)
+        f:SetPoint("TOP", frame, "TOP", 0, 0)
     end
 
 	
@@ -839,8 +836,8 @@ function addon:InitFrame(frame)
     addon:HookScript(f.oldHealth,'OnHide', function() OnFrameHide(this) end)
     addon:HookScript(f.oldHealth,'OnUpdate',function() OnFrameUpdate(this, arg1) end)
 
-    --addon:HookScript(f.oldHealth, 'OnEnter', function() printT("OnEnter") OnFrameEnter(this, arg1) end)
-    --addon:HookScript(f.oldHealth, 'OnLeave', function() OnFrameLeave(this, arg1) end)
+    addon:HookScript(frame, 'OnEnter', function() OnFrameEnter(this, arg1) end)
+    addon:HookScript(frame, 'OnLeave', function() OnFrameLeave(this, arg1) end)
 
     addon:HookScript(f.oldHealth,'OnValueChanged', function() OnHealthValueChanged(this, arg1) end)
 
@@ -895,3 +892,57 @@ function addon:ToggleCombatEvents(io)
         self:UnregisterEvent('PLAYER_REGEN_DISABLED')
     end
 end
+
+--------------------------------------------------------------- ClickThrough
+
+function addon:UpdateClickHandler(frame)
+
+    if self.db.profile.general.clickThrough > 0 then
+        frame:EnableMouse(true)
+        if self.db.profile.general.clickThrough == 2 then
+            if (frame:HasScript("OnMouseDown")) then
+                local test = frame:GetScript("OnMouseDown");
+                if (test) then
+                    return
+                end
+            end
+
+            frame:SetScript("OnMouseDown", function()
+                if arg1 and arg1 == "RightButton" then
+                    MouselookStart()
+                    addon.EmulRightClick.time = GetTime()
+                    addon.EmulRightClick.frame = this
+                    addon.EmulRightClick:Show()
+                end
+            end)
+        end
+    else
+        frame:EnableMouse(false)
+    end
+end
+
+-- emulate fake rightclick
+addon.EmulRightClick = CreateFrame("Frame", nil, UIParent)
+addon.EmulRightClick.time = nil
+addon.EmulRightClick.frame = nil
+addon.EmulRightClick:SetScript("OnUpdate", function()
+    -- break here if nothing to do
+    if not addon.EmulRightClick.time or not addon.EmulRightClick.frame then
+        this:Hide()
+        return
+    end
+
+    -- if threshold is reached (0.5 second) no click action will follow
+    if not IsMouselooking() and addon.EmulRightClick.time + 0.5 < GetTime() then
+        addon.EmulRightClick:Hide()
+        return
+    end
+
+    -- run a usual nameplate rightclick action
+    if not IsMouselooking() then
+        addon.EmulRightClick.frame:Click("LeftButton")
+        if UnitCanAttack("player", "target") and not addon.inCombat then AttackTarget() end
+        addon.EmulRightClick:Hide()
+        return
+    end
+end)

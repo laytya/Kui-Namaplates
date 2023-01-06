@@ -20,7 +20,11 @@ do
         ['DIALOG'] = '5. DIALOG',
         ['TOOLTIP'] = '6. TOOLTIP',
     }
-
+	local ClickThroughList = {
+		[0] = 'On',
+		[1] = 'Off',
+		[2] = 'Off, but RightClick Mouselook'
+	}
     local handlers = {}
     local handlerProto = {}
     local handlerMeta = { __index = handlerProto }
@@ -210,6 +214,14 @@ do
                         values = StrataSelectList,
                         order = 17
                     },
+		    clickThrough = { 
+                        name = 'Click Through',
+                        desc = 'Click Through functionality: On, Off or Off + RightClickMouseLook',
+                        type = 'select',
+                        values = ClickThroughList,
+                        order = 18
+                    },
+					
 					reactioncolours = {
 						name = 'Reaction colours',
 						type = 'group',

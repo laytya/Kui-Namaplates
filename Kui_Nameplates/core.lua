@@ -16,6 +16,7 @@ addon.defaultSizes = { frame = {}, font = {}, tex = {} }
 
 addon.frameList = {}
 addon.numFrames = 0
+addon.inCombat = nil
 
 -- sizes of frame elements
 -- TODO these should be set in create.lua
@@ -71,6 +72,7 @@ local defaults = {
             leftie      = false,
             glowshadow  = true,
             strata      = 'BACKGROUND',
+            clickThrough = 2,
 			reactioncolours = {
 				hatedcol    = { .7, .2, .1 },
 				neutralcol  = {  1, .8,  0 },
@@ -98,7 +100,7 @@ local defaults = {
         },
         hp = {
             friendly  = '<:d;', -- health display pattern for friendly units
-            hostile   = '<:p;', -- health display pattern for enemy units
+            hostile   = '<:c;', -- health display pattern for enemy units
             showalt   = false, -- show alternate health values
             mouseover = false, -- hide health values until mouseover/target
             smooth    = true -- smoothly animate health bar changes
@@ -521,6 +523,14 @@ function addon:OnInitialize()
     addon:CreateConfigChangedListener(addon)
 end
 
+function addon:PLAYER_ENTER_COMBAT()
+    self.inCombat = 1
+    if PlayerFrame then PlayerFrame.inCombat = 1 end
+end
+function addon:PLAYER_LEAVE_COMBAT()
+    self.inCombat = nil
+    if PlayerFrame then PlayerFrame.inCombat = nil end
+end
 ---------------------------------------------------------------------- enable --
 function addon:OnEnable()
     -- get font and status bar texture from LSM
@@ -593,4 +603,8 @@ function addon:OnEnable()
 
     self:ToggleCombatEvents(self.db.profile.general.combat)
     addon:ScheduleRepeatingTimer('OnUpdate', .1)
+
+    addon:RegisterEvent("PLAYER_ENTER_COMBAT")
+    addon:RegisterEvent("PLAYER_LEAVE_COMBAT")
+    
 end
