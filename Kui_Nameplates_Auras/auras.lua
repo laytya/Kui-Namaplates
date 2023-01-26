@@ -12,6 +12,8 @@ local kui = LibStub('Kui-1.0')
 local mod = addon:NewModule('Auras', 'AceEvent-3.0')
 mod.parser = ParserLib:GetInstance("1.1")
 mod.uc = LibStub:GetLibrary("UnitCasting-1.1")
+local B = LibStub("LibBabble-Spell-3.0")
+
 local whitelist, _
 
 local GetTime, floor, ceil, fmod, getn, find = GetTime, math.floor, math.ceil, math.mod, table.getn, string.find
@@ -26,6 +28,9 @@ local auraEvents = {
 	['SPELL_AURA_BROKEN'] = true,
 	['SPELL_AURA_BROKEN_SPELL'] = true,
 }
+local gratuity = AceLibrary("Gratuity-2.0")
+
+mod.gratuity = gratuity
 
 local function ArrangeButtons(self)
 	local pv, pc
@@ -490,8 +495,44 @@ local function getDebuff(spellIcon, unit)
 		if spellIcon == spellId then
 			return spellId, count
 	end
+		
+		
+		gratuity:Erase()
+   		gratuity:SetUnitBuff(unit, i)
+   		local spell = gratuity:GetLine(1)
+		if spell then
+			local spellId = B:GetSpellIcon(spell)
+			if spellId then
+				return spellId, 1
+			end
+		end 
+
+		
 end
 	return nil, nil
+end
+
+local function addAura(spell, buffs, frame)
+	for k, buff in pairs(buffs) do
+		if spell == buff.spell or spell == buff.icon then
+			local te = buff.drTimeEnd
+			local duration, expirationTime = te - buff.timeStart, te - GetTime()
+			local spellId
+			if spell == buff.icon then
+				spellId = spell
+			else
+				spellId = B:GetSpellIcon(spell)
+			end
+			if spellId then
+				local button = frame.auras:GetAuraButton(spellId, count, duration, expirationTime)
+				frame.auras:Show()
+				button:Show()
+				button.used = true
+				return k
+			end
+		end
+	end
+	return nil
 end
 
 function mod:UNIT_AURA(e, u, frame)
@@ -519,7 +560,6 @@ function mod:UNIT_AURA(e, u, frame)
 			spellId, count = UnitDebuff(unit, i)
 		end
 
-		local duration, expirationTime = 0, 0
 		--[[
 		if Chronometer and spellId then
 			duration, expirationTime = getChronometerTimer(spellId, GetUnitName(unit))
@@ -527,34 +567,38 @@ function mod:UNIT_AURA(e, u, frame)
 		end
 		]]
 		if spellId then
-			for k, buff in pairs(buffs) do
-				--spellId, count = getDebuff(buff.icon, unit)
-
-		--[[	and
-		   (not self.db.profile.behav.useWhitelist or
-		    (whitelist[spellId] or whitelist[name])) and
-		   (duration >= self.db.profile.display.lengthMin) and
-		   (self.db.profile.display.lengthMax == -1 or (
-		   	duration > 0 and
-		    duration <= self.db.profile.display.lengthMax))
-	--]]
-				if spellId == buff.icon then
-			local te = unitIsPlayer and buff.drTimeEnd or buff.timeEnd
-			duration, expirationTime = te - buff.timeStart, te - GetTime()
-
-			local button = frame.auras:GetAuraButton(spellId, count, duration, expirationTime)
-			frame.auras:Show()
-			button:Show()
-			button.used = true
-					table.remove(buffs,k)
-		end
-	end
+			local id = addAura(spellId, buffs, frame)
+			if id then
+				table.remove(buffs, id)
+			end
 		end
 	end
 	if unitIsPlayer then
+
+		if unit then
+			for i = 1, 5 do
+				gratuity:Erase()
+   				gratuity:SetUnitBuff(unit, i)
+   				local spell = gratuity:GetLine(1)
+				if spell then
+					local id = addAura(spell, buffs, frame)
+					if id then
+						table.remove(buffs, id)
+					else
+						local spellId = B:GetSpellIcon(spell)
+						if spellId then
+							local button = frame.auras:GetAuraButton(spellId, 1, 0, 0)
+			frame.auras:Show()
+			button:Show()
+			button.used = true
+		end
+	end
+		end
+	end
+		end
 	for k, buff in pairs(buffs) do
 		local te = unitIsPlayer and buff.drTimeEnd or buff.timeEnd
-		duration, expirationTime = te - buff.timeStart, te - GetTime()
+			local duration, expirationTime = te - buff.timeStart, te - GetTime()
 
 		local button = frame.auras:GetAuraButton(buff.icon, buff.stacks, duration, expirationTime)
 		frame.auras:Show()

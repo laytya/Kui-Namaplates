@@ -216,7 +216,7 @@ do
                     },
 		    clickThrough = { 
                         name = 'Click Through',
-                        desc = 'Click Through functionality: On, Off or Off + RightClickMouseLook',
+                        desc = 'Click Through functionality: On, Off or Off + Right-Click Mouse Look',
                         type = 'select',
                         values = ClickThroughList,
                         order = 18

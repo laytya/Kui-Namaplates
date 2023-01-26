@@ -269,8 +269,6 @@ local function OnFrameEnter(self)
         addon:StoreGUID(self, 'mouseover')        
     end
 
-
-
     self.highlighted = true
 
     if self.highlight then
@@ -294,6 +292,7 @@ local function OnFrameEnter(self)
 end
 
 local function OnFrameLeave(self)
+    --self = self.kuiParent
 
     if self.kui then
         self = self.kui
@@ -433,7 +432,6 @@ local function OnFrameUpdate(fr, e)
             floor(y) - 25)
     end
 
-    addon:UpdateOldFrame(fr.kuiParent, f.trivial)
 
 
     -- show the frame after it's been moved so it doesn't flash
@@ -441,6 +439,7 @@ local function OnFrameUpdate(fr, e)
     if f.DoShow then
         f:Show()
         f.DoShow = nil
+        addon:UpdateOldFrame(fr.kuiParent, f.trivial)
     end
 
     f.defaultAlpha = fr.kuiParent:GetAlpha()
@@ -527,10 +526,12 @@ local function UpdateFrame(self)
 	if UnitName("target") == nil and self.guid == nil then 
 		--Set Name text and save it in a list
 		self.scanningPlayers = true
+		Zorlen_Player_Scan = true
 		TargetByName(self.name.text, true)
 		addon:StoreGUID(self, 'target')
 		ClearTarget()
 		self.scanningPlayers = false
+		Zorlen_Player_Scan = false
 	end
 	
     if self.classification and self.classification ~= "" and tonumber(self.level:GetText()) ~= nil then

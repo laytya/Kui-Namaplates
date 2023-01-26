@@ -1,0 +1,1875 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation
+Subject: Gratuity-2.0 API Documentation - WowAce Wiki
+Date: Sat, 17 Sep 2022 16:14:19 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----"
+
+
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/html
+Content-ID: <frame-580C76F613BE808873187ED408698F59@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3.=
+org/1999/xhtml" xml:lang=3D"en" lang=3D"en" dir=3D"ltr"><head><meta http-eq=
+uiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8"><link rel=3D"st=
+ylesheet" type=3D"text/css" href=3D"cid:css-3fc76223-e54a-4a9b-b4ed-890928e=
+1cb1b@mhtml.blink" /><link rel=3D"stylesheet" type=3D"text/css" href=3D"cid=
+:css-4709089c-f2cb-437f-8714-a520ac9ca5ed@mhtml.blink" /><link rel=3D"style=
+sheet" type=3D"text/css" href=3D"cid:css-e1c435c4-2109-48a9-a12e-559ce5e5d4=
+94@mhtml.blink" /><link rel=3D"stylesheet" type=3D"text/css" href=3D"cid:cs=
+s-34d72329-a344-47b9-bef2-8acc042eaca6@mhtml.blink" />
+
+
+
+
+<link rel=3D"stylesheet" type=3D"text/css" href=3D"http://web.archive.org/_=
+static/css/banner-styles.css?v=3DfantwOh2">
+<link rel=3D"stylesheet" type=3D"text/css" href=3D"http://web.archive.org/_=
+static/css/iconochive.css?v=3DqtvMKcIJ">
+<!-- End Wayback Rewrite JS Include -->
+
+	=09
+		<meta name=3D"keywords" content=3D"Gratuity-2.0 API Documentation,Deforma=
+t-2.0">
+<link rel=3D"shortcut icon" href=3D"http://web.archive.org/web/200607220854=
+01im_/http://wiki.wowace.com/favicon.ico">
+<link title=3D"Creative Commons" type=3D"application/rdf+xml" href=3D"http:=
+//web.archive.org/index.php?title=3DGratuity-2.0_API_Documentation&amp;acti=
+on=3Dcreativecommons" rel=3D"meta">
+<link rel=3D"copyright" href=3D"http://web.archive.org/web/20060722085401/h=
+ttp://creativecommons.org/licenses/by-nc-sa/2.5/">
+		<title>Gratuity-2.0 API Documentation - WowAce Wiki</title>
+	=09
+		<link rel=3D"stylesheet" type=3D"text/css" media=3D"print" href=3D"http:/=
+/web.archive.org/web/20060722085401cs_/http://wiki.wowace.com/skins/common/=
+commonPrint.css">
+		<!--[if lt IE 5.5000]><style type=3D"text/css">@import "/skins/monobook/I=
+E50Fixes.css";</style><![endif]-->
+		<!--[if IE 5.5000]><style type=3D"text/css">@import "/skins/monobook/IE55=
+Fixes.css";</style><![endif]-->
+		<!--[if IE 6]><style type=3D"text/css">@import "/skins/monobook/IE60Fixes=
+.css";</style><![endif]-->
+		<!--[if IE 7]><style type=3D"text/css">@import "/skins/monobook/IE70Fixes=
+.css?1";</style><![endif]-->
+		<!--[if lt IE 7]><script type=3D"text/javascript" src=3D"/skins/common/IE=
+Fixes.js"></script>
+		<meta http-equiv=3D"imagetoolbar" content=3D"no" /><![endif]-->
+	=09
+		<link rel=3D"stylesheet" type=3D"text/css" href=3D"http://web.archive.org=
+/web/20060722085401cs_/http://wiki.wowace.com/skins/monobook/KHTMLFixes.css=
+">
+	=09
+	=09
+		<!-- Head Scripts -->
+			</head>
+<body class=3D"ns-0 ltr"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+
+
+<div id=3D"wm-ipp-base" lang=3D"en" style=3D"display: block; direction: ltr=
+;">
+<template shadowmode=3D"closed"><div id=3D"wm-ipp" style=3D"position:fixed;=
+left:0;top:0;right:0;">
+<div id=3D"donato" style=3D"position:relative;width:100%;">
+  <div id=3D"donato-base">
+    <iframe id=3D"donato-if" src=3D"cid:frame-AF621DA05C65CE8D784DA395930BD=
+D95@mhtml.blink" scrolling=3D"no" frameborder=3D"0" style=3D"width:100%; he=
+ight:100%">
+    </iframe>
+  </div>
+</div><div id=3D"wm-ipp-inside">
+  <div id=3D"wm-toolbar" style=3D"position:relative;display:flex;flex-flow:=
+row nowrap;justify-content:space-between;">
+    <div id=3D"wm-logo" style=3D"/*width:110px;*/padding-top:12px;">
+      <a href=3D"http://web.archive.org/web/" title=3D"Wayback Machine home=
+ page"><img src=3D"http://web.archive.org/_static/images/toolbar/wayback-to=
+olbar-logo-200.png" alt=3D"Wayback Machine" style=3D"width:100px" border=3D=
+"0"></a>
+    </div>
+    <div class=3D"c" style=3D"display:flex;flex-flow:column nowrap;justify-=
+content:space-between;flex:1;">
+      <form class=3D"u" style=3D"display:flex;flex-direction:row;flex-wrap:=
+nowrap;" target=3D"_top" method=3D"get" action=3D"http://web.archive.org/we=
+b/submit" name=3D"wmtb" id=3D"wmtb"><input type=3D"text" name=3D"url" id=3D=
+"wmtbURL" value=3D"http://wiki.wowace.com/index.php/Gratuity-2.0_API_Docume=
+ntation" style=3D"flex:1;" autocomplete=3D"off"><input type=3D"submit" valu=
+e=3D"Go">
+      </form>
+      <div style=3D"display:flex;flex-flow:row nowrap;align-items:flex-end;=
+">
+		<div class=3D"s" id=3D"wm-nav-captures" style=3D"flex:1;"><a class=3D"t" =
+href=3D"http://web.archive.org/web/*/http://wiki.wowace.com/index.php/Gratu=
+ity-2.0_API_Documentation" title=3D"See a list of every capture for this UR=
+L">1 capture</a><div class=3D"r" title=3D"Timespan for captures of this URL=
+">22 Jul 2006</div></div>
+	<div class=3D"k">
+	  <a href=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.=
+com/index.php/Gratuity-2.0_API_Documentation" id=3D"wm-graph-anchor">
+	    <div id=3D"wm-ipp-sparkline" title=3D"Explore captures for this URL" s=
+tyle=3D"position: relative">
+	      <canvas id=3D"wm-sparkline-canvas" width=3D"675" height=3D"27" borde=
+r=3D"0"></canvas>
+	    <div class=3D"yt" style=3D"display: none; width: 25px; height: 27px;">=
+</div><div class=3D"mt" style=3D"display: none; width: 2px; height: 27px;">=
+</div></div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class=3D"n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class=3D"m">
+	    <td class=3D"b" nowrap=3D"nowrap">Jun</td>
+	    <td class=3D"c" id=3D"displayMonthEl" title=3D"You are here: 08:54:01 =
+Jul 22, 2006">JUL</td>
+	    <td class=3D"f" nowrap=3D"nowrap">Aug</td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class=3D"d">
+	    <td class=3D"b" nowrap=3D"nowrap"><img src=3D"http://web.archive.org/_=
+static/images/toolbar/wm_tb_prv_off.png" alt=3D"Previous capture" width=3D"=
+14" height=3D"16" border=3D"0"></td>
+	    <td class=3D"c" id=3D"displayDayEl" style=3D"width:34px;font-size:22px=
+;white-space:nowrap;" title=3D"You are here: 08:54:01 Jul 22, 2006">22</td>
+	    <td class=3D"f" nowrap=3D"nowrap"><img src=3D"http://web.archive.org/_=
+static/images/toolbar/wm_tb_nxt_off.png" alt=3D"Next capture" width=3D"14" =
+height=3D"16" border=3D"0"></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class=3D"y">
+	    <td class=3D"b" nowrap=3D"nowrap">2005</td>
+	    <td class=3D"c" id=3D"displayYearEl" title=3D"You are here: 08:54:01 J=
+ul 22, 2006">2006</td>
+	    <td class=3D"f" nowrap=3D"nowrap">2007</td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class=3D"r" style=3D"display:flex;flex-flow:column nowrap;align-it=
+ems:flex-end;justify-content:space-between;">
+      <div id=3D"wm-btns" style=3D"text-align:right;height:23px;">
+        	<span class=3D"xxs">
+          <div id=3D"wm-save-snapshot-success">success</div>
+          <div id=3D"wm-save-snapshot-fail">fail</div>
+          <a id=3D"wm-save-snapshot-open" href=3D"http://web.archive.org/we=
+b/20060722085401/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Document=
+ation#" title=3D"Share via My Web Archive" style=3D"display: none;">
+            <span class=3D"iconochive-web"></span>
+          </a>
+          <a href=3D"https://archive.org/account/login.php" title=3D"Sign I=
+n" id=3D"wm-sign-in" style=3D"display: inline-block;">
+            <span class=3D"iconochive-person"></span>
+          </a>
+          <span id=3D"wm-save-snapshot-in-progress" class=3D"iconochive-web=
+" style=3D"display: none;"></span>
+	</span>
+        	<a class=3D"xxs" href=3D"http://faq.web.archive.org/" title=3D"Get=
+ some help using the Wayback Machine" style=3D"top:-6px;"><span class=3D"ic=
+onochive-question" style=3D"color:rgb(87,186,244);font-size:160%;"></span><=
+/a>
+	<a id=3D"wm-tb-close" href=3D"http://web.archive.org/web/20060722085401/ht=
+tp://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#close" style=
+=3D"top:-2px;" title=3D"Close the toolbar"><span class=3D"iconochive-remove=
+-circle" style=3D"color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id=3D"wm-share" class=3D"xxs">
+        <a href=3D"http://web.archive.org/web/20060722085401/http://web.arc=
+hive.org/screenshot/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Docum=
+entation" id=3D"wm-screenshot" title=3D"screenshot" style=3D"visibility: hi=
+dden;">
+          <span class=3D"wm-icon-screen-shot"></span>
+        </a>
+        <a href=3D"http://web.archive.org/web/20060722085401/http://wiki.wo=
+wace.com/index.php/Gratuity-2.0_API_Documentation#" id=3D"wm-video" title=
+=3D"video">
+          <span class=3D"iconochive-movies"></span>
+        </a>
+	<a id=3D"wm-share-facebook" href=3D"http://web.archive.org/web/20060722085=
+401/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#" data-=
+url=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com:80/=
+index.php/Gratuity-2.0_API_Documentation" title=3D"Share on Facebook" style=
+=3D"margin-right:5px;" target=3D"_blank"><span class=3D"iconochive-facebook=
+" style=3D"color:#3b5998;font-size:160%;"></span></a>
+	<a id=3D"wm-share-twitter" href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#" data-u=
+rl=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com:80/i=
+ndex.php/Gratuity-2.0_API_Documentation" title=3D"Share on Twitter" style=
+=3D"margin-right:5px;" target=3D"_blank"><span class=3D"iconochive-twitter"=
+ style=3D"color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style=3D"padding-right:2px;text-align:right;white-space:nowrap;"=
+>
+	<a id=3D"wm-expand" class=3D"wm-btn wm-closed" href=3D"http://web.archive.=
+org/web/20060722085401/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Do=
+cumentation#expand"><span id=3D"wm-expand-icon" class=3D"iconochive-down-so=
+lid"></span> <span class=3D"xxs" style=3D"font-size:80%;">About this captur=
+e</span></a>
+      </div>
+    </div>
+  </div>
+    <div id=3D"wm-capinfo" style=3D"border-top:1px solid #777;display:none;=
+ overflow: hidden">
+                    <div id=3D"wm-capinfo-collected-by">
+    <div style=3D"background-color:#666;color:#fff;font-weight:bold;text-al=
+ign:center">COLLECTED BY</div>
+    <div style=3D"padding:3px;position:relative" id=3D"wm-collected-by-cont=
+ent">
+            <div style=3D"display:inline-block;vertical-align:top;width:50%=
+;">
+			<span class=3D"c-logo" style=3D"background-image:url(https://archive.org=
+/services/img/alexacrawls);"></span>
+		Organization: <a style=3D"color:#33f;" href=3D"https://archive.org/detail=
+s/alexacrawls" target=3D"_new"><span class=3D"wm-title">Alexa Crawls</span>=
+</a>
+		<div style=3D"max-height:75px;overflow:hidden;position:relative;">
+	  <div style=3D"position:absolute;top:0;left:0;width:100%;height:75px;back=
+ground:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0)=
+ 90%,rgba(255,255,255,255) 100%);"></div>
+	  Starting in 1996, <a href=3D"http://www.alexa.com/">Alexa Internet</a> h=
+as been donating their crawl data to the Internet Archive.  Flowing in ever=
+y day, these data are added to the <a href=3D"http://web.archive.org/">Wayb=
+ack Machine</a> after an embargo period.
+	</div>
+	      </div>
+      <div style=3D"display:inline-block;vertical-align:top;width:49%;">
+			<span class=3D"c-logo" style=3D"background-image:url(https://archive.org=
+/services/img/26_crawl)"></span>
+		<div>Collection: <a style=3D"color:#33f;" href=3D"https://archive.org/det=
+ails/26_crawl" target=3D"_new"><span class=3D"wm-title">26_crawl</span></a>=
+</div>
+		<div style=3D"max-height:75px;overflow:hidden;position:relative;">
+	  <div style=3D"position:absolute;top:0;left:0;width:100%;height:75px;back=
+ground:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0)=
+ 90%,rgba(255,255,255,255) 100%);"></div>
+	  this data is currently not publicly accessible.
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id=3D"wm-capinfo-timestamps">
+    <div style=3D"background-color:#666;color:#fff;font-weight:bold;text-al=
+ign:center" title=3D"Timestamps for the elements of this page">TIMESTAMPS</=
+div>
+    <div>
+      <div id=3D"wm-capresources" style=3D"margin:0 5px 5px 5px;max-height:=
+250px;overflow-y:scroll !important"></div>
+      <div id=3D"wm-capresources-loading" style=3D"text-align:left;margin:0=
+ 20px 5px 5px;display:none"><img src=3D"http://web.archive.org/_static/imag=
+es/loading.gif" alt=3D"loading"></div>
+    </div>
+    </div>
+  </div></div></div><link rel=3D"stylesheet" type=3D"text/css" href=3D"http=
+://web.archive.org/_static/css/banner-styles.css?v=3DfantwOh2"><link rel=3D=
+"stylesheet" type=3D"text/css" href=3D"http://web.archive.org/_static/css/i=
+conochive.css?v=3DqtvMKcIJ"><div class=3D"wb-autocomplete-suggestions "></d=
+iv></template></div><div id=3D"wm-ipp-print">The Wayback Machine - http://w=
+eb.archive.org/web/20060722085401/http://wiki.wowace.com:80/index.php/Gratu=
+ity-2.0_API_Documentation</div>
+
+<!-- END WAYBACK TOOLBAR INSERT -->
+	<div id=3D"globalWrapper">
+		<div id=3D"column-content">
+	<div id=3D"content">
+		<a name=3D"top" id=3D"top"></a>
+				<h1 class=3D"firstHeading">Gratuity-2.0 API Documentation</h1>
+		<div id=3D"bodyContent">
+			<h3 id=3D"siteSub">From WowAce Wiki</h3>
+			<div id=3D"contentSub"></div>
+									<div id=3D"jump-to-nav">Jump to: <a href=3D"http://web.archive.org=
+/web/20060722085401/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Docum=
+entation#column-one">navigation</a>, <a href=3D"http://web.archive.org/web/=
+20060722085401/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentat=
+ion#searchInput">search</a></div>			<!-- start content -->
+			<table id=3D"toc" class=3D"toc" summary=3D"Contents"><tbody><tr><td><div=
+ id=3D"toctitle"><h2>Contents</h2> <span class=3D"toctoggle">[<a id=3D"togg=
+lelink" class=3D"internal">hide</a>]</span></div>
+<ul>
+<li class=3D"toclevel-1"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#:Erase.2=
+8.29"><span class=3D"tocnumber">1</span> <span class=3D"toctext">:Erase()</=
+span></a>
+<ul>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Example"=
+><span class=3D"tocnumber">1.1</span> <span class=3D"toctext">Example</span=
+></a></li>
+</ul>
+</li>
+<li class=3D"toclevel-1"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#:Set.2A.=
+28....29"><span class=3D"tocnumber">2</span> <span class=3D"toctext">:Set*(=
+...)</span></a>
+<ul>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Example_=
+2"><span class=3D"tocnumber">2.1</span> <span class=3D"toctext">Example</sp=
+an></a></li>
+</ul>
+</li>
+<li class=3D"toclevel-1"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#:Find.28=
+.22text.22_.5B.2C_startline.5D_.5B.2C_endline.5D_.5B.2C_ignoreleft.5D_.5B.2=
+C_ignoreright.5D.29"><span class=3D"tocnumber">3</span> <span class=3D"toct=
+ext">:Find("text" [, startline] [, endline] [, ignoreleft] [, ignoreright])=
+</span></a>
+<ul>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Args"><s=
+pan class=3D"tocnumber">3.1</span> <span class=3D"toctext">Args</span></a><=
+/li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Returns"=
+><span class=3D"tocnumber">3.2</span> <span class=3D"toctext">Returns</span=
+></a></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Remarks"=
+><span class=3D"tocnumber">3.3</span> <span class=3D"toctext">Remarks</span=
+></a></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Example_=
+3"><span class=3D"tocnumber">3.4</span> <span class=3D"toctext">Example</sp=
+an></a></li>
+</ul>
+</li>
+<li class=3D"toclevel-1"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#:MultiFi=
+nd.28.5Bstartline.5D_.5B.2C_endline.5D_.5B.2C_ignoreleft.5D_.5B.2C_ignoreri=
+ght.5D.2C_.22t1.22.2C_.5B.22t2.22-.22t10.22.5D.29"><span class=3D"tocnumber=
+">4</span> <span class=3D"toctext">:MultiFind([startline] [, endline] [, ig=
+noreleft] [, ignoreright], "t1", ["t2"-"t10"])</span></a>
+<ul>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Args_2">=
+<span class=3D"tocnumber">4.1</span> <span class=3D"toctext">Args</span></a=
+></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Returns_=
+2"><span class=3D"tocnumber">4.2</span> <span class=3D"toctext">Returns</sp=
+an></a></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Example_=
+4"><span class=3D"tocnumber">4.3</span> <span class=3D"toctext">Example</sp=
+an></a></li>
+</ul>
+</li>
+<li class=3D"toclevel-1"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#:FindDef=
+ormat.28.22text.22_.5B.2C_startline.5D_.5B.2C_endline.5D_.5B.2C_ignoreleft.=
+5D_.5B.2C_ignoreright.5D.29"><span class=3D"tocnumber">5</span> <span class=
+=3D"toctext">:FindDeformat("text" [, startline] [, endline] [, ignoreleft] =
+[, ignoreright])</span></a>
+<ul>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Args_3">=
+<span class=3D"tocnumber">5.1</span> <span class=3D"toctext">Args</span></a=
+></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Returns_=
+3"><span class=3D"tocnumber">5.2</span> <span class=3D"toctext">Returns</sp=
+an></a></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Example_=
+5"><span class=3D"tocnumber">5.3</span> <span class=3D"toctext">Example</sp=
+an></a></li>
+</ul>
+</li>
+<li class=3D"toclevel-1"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#:GetText=
+.28startline.2C_endline_.5B.2C_ignoreleft.5D_.5B.2C_ignoreright.5D.29"><spa=
+n class=3D"tocnumber">6</span> <span class=3D"toctext">:GetText(startline, =
+endline [, ignoreleft] [, ignoreright])</span></a>
+<ul>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Args_4">=
+<span class=3D"tocnumber">6.1</span> <span class=3D"toctext">Args</span></a=
+></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Returns_=
+4"><span class=3D"tocnumber">6.2</span> <span class=3D"toctext">Returns</sp=
+an></a></li>
+<li class=3D"toclevel-2"><a href=3D"http://web.archive.org/web/200607220854=
+01/http://wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation#Example_=
+6"><span class=3D"tocnumber">6.3</span> <span class=3D"toctext">Example</sp=
+an></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+1" title=3D"Edit section:&nbsp;:Erase()">edit</a>]</div><a name=3D":Erase.2=
+8.29"></a><h2>&nbsp;:Erase() </h2>
+<p>Erases Gratuity's tooltip and resets it so scanning can occur.  Note tha=
+t this is a <i>complete</i> erase, not the "erase left texts, hide right te=
+xts" that GameTooltip:ClearLines() does.
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+2" title=3D"Edit section: Example">edit</a>]</div><a name=3D"Example"></a><=
+h3> Example </h3>
+<pre>local g =3D AceLibrary("Gratuity-2.0")
+g:Erase() -- We now have a nice clean tooltip to set
+</pre>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+3" title=3D"Edit section:&nbsp;:Set*(...)">edit</a>]</div><a name=3D":Set.2=
+A.28....29"></a><h2>&nbsp;:Set*(...) </h2>
+<p>GameTooltip:Set* methods.  These methods will call&nbsp;:Erase() automat=
+ically, so you don't have to.  They take the same args as their GameTooltip=
+ counterparts, and they have the same returns.  The following methods are s=
+upported:
+</p>
+<ul><li> SetBagItem
+</li><li> SetAction
+</li><li> SetAuctionItem
+</li><li> SetAuctionSellItem
+</li><li> SetBuybackItem
+</li><li> SetCraftItem
+</li><li> SetCraftSpell
+</li><li> SetHyperlink
+</li><li> SetInboxItem
+</li><li> SetInventoryItem
+</li><li> SetLootItem
+</li><li> SetLootRollItem
+</li><li> SetMerchantItem
+</li><li> SetPetAction
+</li><li> SetPlayerBuff
+</li><li> SetQuestItem
+</li><li> SetQuestLogItem
+</li><li> SetQuestRewardSpell
+</li><li> SetSendMailItem
+</li><li> SetShapeshift
+</li><li> SetSpell
+</li><li> SetTalent
+</li><li> SetTrackingSpell
+</li><li> SetTradePlayerItem
+</li><li> SetTradeSkillItem
+</li><li> SetTradeTargetItem
+</li><li> SetTrainerService
+</li><li> SetUnit
+</li><li> SetUnitBuff
+</li><li> SetUnitDebuff
+</li></ul>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+4" title=3D"Edit section: Example">edit</a>]</div><a name=3D"Example_2"></a=
+><h3> Example </h3>
+<pre>-- Set the tooltip to the item in Bag 1, Slot 2
+g:SetBagItem(1,2)
+</pre>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+5" title=3D"Edit section:&nbsp;:Find(&quot;text&quot; [, startline] [, endl=
+ine] [, ignoreleft] [, ignoreright])">edit</a>]</div><a name=3D":Find.28.22=
+text.22_.5B.2C_startline.5D_.5B.2C_endline.5D_.5B.2C_ignoreleft.5D_.5B.2C_i=
+gnoreright.5D.29"></a><h2>&nbsp;:Find("text" [, startline] [, endline] [, i=
+gnoreleft] [, ignoreright]) </h2>
+<p>Scan the tooltip for a specific text string
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+6" title=3D"Edit section: Args">edit</a>]</div><a name=3D"Args"></a><h3> Ar=
+gs </h3>
+<dl><dt> "text"&nbsp;</dt><dd> string - the text to search for.  This can b=
+e any string valid in string.find
+</dd><dt> [startline]&nbsp;</dt><dd> integer - The first line to scan
+</dd><dt> [endline]&nbsp;</dt><dd> integer - The last line to scan (will no=
+t scan past GameTooltip:NumLines()
+</dd><dt> [ignoreleft]&nbsp;</dt><dd> boolean - If set, left-hand side text=
+ fields will not be scanned
+</dd><dt> [ignoreright]&nbsp;</dt><dd> boolean - If set, right-hand side te=
+xt fields will not be scanned
+</dd></dl>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+7" title=3D"Edit section: Returns">edit</a>]</div><a name=3D"Returns"></a><=
+h3> Returns </h3>
+<p>If a match is found, the return values from string.find are returned
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+8" title=3D"Edit section: Remarks">edit</a>]</div><a name=3D"Remarks"></a><=
+h3> Remarks </h3>
+<p>This method essentially loops thru the tooltip's text fields calling str=
+ing.find until a match is found.  Use this method the same way you would us=
+e string.find.
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+9" title=3D"Edit section: Example">edit</a>]</div><a name=3D"Example_3"></a=
+><h3> Example </h3>
+<pre>-- Scan left-side lines 2-4 of the tooltip for the item's bind type
+g:Find("Bind on (%S+)", 2, 4, nil, true)
+</pre>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+10" title=3D"Edit section:&nbsp;:MultiFind([startline] [, endline] [, ignor=
+eleft] [, ignoreright], &quot;t1&quot;, [&quot;t2&quot;-&quot;t10&quot;])">=
+edit</a>]</div><a name=3D":MultiFind.28.5Bstartline.5D_.5B.2C_endline.5D_.5=
+B.2C_ignoreleft.5D_.5B.2C_ignoreright.5D.2C_.22t1.22.2C_.5B.22t2.22-.22t10.=
+22.5D.29"></a><h2>&nbsp;:MultiFind([startline] [, endline] [, ignoreleft] [=
+, ignoreright], "t1", ["t2"-"t10"]) </h2>
+<p>Calls&nbsp;:Find up to 10 times, returns back the first result found
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+11" title=3D"Edit section: Args">edit</a>]</div><a name=3D"Args_2"></a><h3>=
+ Args </h3>
+<dl><dt> [startline]&nbsp;</dt><dd> integer - The first line to scan
+</dd><dt> [endline]&nbsp;</dt><dd> integer - The last line to scan (will no=
+t scan past GameTooltip:NumLines()
+</dd><dt> [ignoreleft]&nbsp;</dt><dd> boolean - If set, left-hand side text=
+ fields will not be scanned
+</dd><dt> [ignoreright]&nbsp;</dt><dd> boolean - If set, right-hand side te=
+xt fields will not be scanned
+</dd><dt> "t1"&nbsp;</dt><dd> string - The first string to search for
+</dd><dt> ["t2"-"t10"]&nbsp;</dt><dd> strings - Up to 9 more strings to sea=
+rch for
+</dd></dl>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+12" title=3D"Edit section: Returns">edit</a>]</div><a name=3D"Returns_2"></=
+a><h3> Returns </h3>
+<p>Returns the result from&nbsp;:Find for the first match found
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+13" title=3D"Edit section: Example">edit</a>]</div><a name=3D"Example_4"></=
+a><h3> Example </h3>
+<pre>-- Scan the tooltip to find out if the item is soulbound
+g:MultiFind(2, 4, nil, true, "Soulbound", "Quest Item", "Bind on Pickup")
+</pre>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+14" title=3D"Edit section:&nbsp;:FindDeformat(&quot;text&quot; [, startline=
+] [, endline] [, ignoreleft] [, ignoreright])">edit</a>]</div><a name=3D":F=
+indDeformat.28.22text.22_.5B.2C_startline.5D_.5B.2C_endline.5D_.5B.2C_ignor=
+eleft.5D_.5B.2C_ignoreright.5D.29"></a><h2>&nbsp;:FindDeformat("text" [, st=
+artline] [, endline] [, ignoreleft] [, ignoreright]) </h2>
+<p>Runs a deformat find on the tooltip.  This method requires <a href=3D"ht=
+tp://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.php/De=
+format-2.0" title=3D"Deformat-2.0">Deformat-2.0</a>
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+15" title=3D"Edit section: Args">edit</a>]</div><a name=3D"Args_3"></a><h3>=
+ Args </h3>
+<dl><dt> "text"&nbsp;</dt><dd> string - the text to search for
+</dd><dt> [startline]&nbsp;</dt><dd> integer - The first line to scan
+</dd><dt> [endline]&nbsp;</dt><dd> integer - The last line to scan (will no=
+t scan past GameTooltip:NumLines()
+</dd><dt> [ignoreleft]&nbsp;</dt><dd> boolean - If set, left-hand side text=
+ fields will not be scanned
+</dd><dt> [ignoreright]&nbsp;</dt><dd> boolean - If set, right-hand side te=
+xt fields will not be scanned
+</dd></dl>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+16" title=3D"Edit section: Returns">edit</a>]</div><a name=3D"Returns_3"></=
+a><h3> Returns </h3>
+<p>If text is found on tooltip then results from <a href=3D"http://web.arch=
+ive.org/web/20060722085401/http://wiki.wowace.com/index.php/Deformat-2.0" t=
+itle=3D"Deformat-2.0">Deformat-2.0</a> are returned
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+17" title=3D"Edit section: Example">edit</a>]</div><a name=3D"Example_5"></=
+a><h3> Example </h3>
+<pre>-- Scan the tooltip for durability information and deformat it
+g:FindDeformat("Durability: %d / %d")
+</pre>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+18" title=3D"Edit section:&nbsp;:GetText(startline, endline [, ignoreleft] =
+[, ignoreright])">edit</a>]</div><a name=3D":GetText.28startline.2C_endline=
+_.5B.2C_ignoreleft.5D_.5B.2C_ignoreright.5D.29"></a><h2>&nbsp;:GetText(star=
+tline, endline [, ignoreleft] [, ignoreright]) </h2>
+<p>Retrieve a table of strings from the tooltip
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+19" title=3D"Edit section: Args">edit</a>]</div><a name=3D"Args_4"></a><h3>=
+ Args </h3>
+<dl><dt> startline&nbsp;</dt><dd> integer - The first line to retrieve
+</dd><dt> endline&nbsp;</dt><dd> integer - The last line to retrieve
+</dd><dt> [ignoreleft]&nbsp;</dt><dd> boolean - If true the left-hand strin=
+gs will not be returned
+</dd><dt> [ignoreright]&nbsp;</dt><dd> boolean - If true the right-hand str=
+ings will not be returned
+</dd></dl>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+20" title=3D"Edit section: Returns">edit</a>]</div><a name=3D"Returns_4"></=
+a><h3> Returns </h3>
+<p>Returns a table of strings pulled from the tooltip, or nil if no strings=
+ in tooltip
+</p>
+<div class=3D"editsection" style=3D"float:right;margin-left:5px;">[<a href=
+=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/index.=
+php?title=3DGratuity-2.0_API_Documentation&amp;action=3Dedit&amp;section=3D=
+21" title=3D"Edit section: Example">edit</a>]</div><a name=3D"Example_6"></=
+a><h3> Example </h3>
+<pre>-- Get a table with the first 4 lines of the tooltip (both left and ri=
+ght texts)
+g:GetText(1, 4)
+</pre>
+<!-- Saved in parser cache with key wowace_wiki:pcache:idhash:1687-0!1!0!0!=
+!en!2 and timestamp 20060721095117 -->
+<div class=3D"printfooter">
+Retrieved from "<a href=3D"http://web.archive.org/web/20060722085401/http:/=
+/wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation">http://wiki.wowa=
+ce.com/index.php/Gratuity-2.0_API_Documentation</a>"</div>
+			<div id=3D"catlinks"><p class=3D"catlinks"><a href=3D"http://web.archive=
+.org/web/20060722085401/http://wiki.wowace.com/index.php?title=3DSpecial:Ca=
+tegories&amp;article=3DGratuity-2.0_API_Documentation" title=3D"Special:Cat=
+egories">Category</a>: <span dir=3D"ltr"><a href=3D"http://web.archive.org/=
+web/20060722085401/http://wiki.wowace.com/index.php/Category:API_Documentat=
+ion" title=3D"Category:API Documentation">API Documentation</a></span></p><=
+/div>			<!-- end content -->
+			<div class=3D"visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id=3D"column-one">
+	<div id=3D"p-cactions" class=3D"portlet">
+		<h5>Views</h5>
+		<ul>
+				 <li id=3D"ca-nstab-main" class=3D"selected"><a href=3D"http://web.arch=
+ive.org/web/20060722085401/http://wiki.wowace.com/index.php/Gratuity-2.0_AP=
+I_Documentation" accesskey=3D"c" title=3D"View the content page [alt-c]">Ar=
+ticle</a></li>
+				 <li id=3D"ca-talk" class=3D"new"><a href=3D"http://web.archive.org/web=
+/20060722085401/http://wiki.wowace.com/index.php?title=3DTalk:Gratuity-2.0_=
+API_Documentation&amp;action=3Dedit" accesskey=3D"t" title=3D"Discussion ab=
+out the content page [alt-t]">Discussion</a></li>
+				 <li id=3D"ca-edit"><a href=3D"http://web.archive.org/web/2006072208540=
+1/http://wiki.wowace.com/index.php?title=3DGratuity-2.0_API_Documentation&a=
+mp;action=3Dedit" accesskey=3D"e" title=3D"You can edit this page. Please u=
+se the preview button before saving. [alt-e]">Edit</a></li>
+				 <li id=3D"ca-history"><a href=3D"http://web.archive.org/web/2006072208=
+5401/http://wiki.wowace.com/index.php?title=3DGratuity-2.0_API_Documentatio=
+n&amp;action=3Dhistory" accesskey=3D"h" title=3D"Past versions of this page=
+. [alt-h]">History</a></li>
+		</ul>
+	</div>
+	<div class=3D"portlet" id=3D"p-personal">
+		<h5>Personal tools</h5>
+		<div class=3D"pBody">
+			<ul>
+				<li id=3D"pt-login"><a href=3D"http://web.archive.org/web/2006072208540=
+1/http://wiki.wowace.com/index.php?title=3DSpecial:Userlogin&amp;returnto=
+=3DGratuity-2.0_API_Documentation" accesskey=3D"o" title=3D"You are encoura=
+ged to log in, it is not mandatory however. [alt-o]">Log in / create accoun=
+t</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class=3D"portlet" id=3D"p-logo" title=3D"Main Page">
+		<a style=3D"background-image: url(/web/20060722085401im_/http://wiki.wowa=
+ce.com/skins/common/images/logo.gif);" href=3D"http://web.archive.org/web/2=
+0060722085401/http://wiki.wowace.com/index.php/Main_Page" title=3D"Main Pag=
+e"></a>
+	</div>
+=09
+		<div class=3D"portlet" id=3D"p-navigation">
+		<h5>Navigation</h5>
+		<div class=3D"pBody">
+			<ul>
+				<li id=3D"n-mainpage"><a href=3D"http://web.archive.org/web/20060722085=
+401/http://wiki.wowace.com/index.php/Main_Page" accesskey=3D"z" title=3D"Vi=
+sit the Main Page [alt-z]">Main Page</a></li>
+				<li id=3D"n-portal" title=3D"About the project, what you can do, where =
+to find things"><a href=3D"http://web.archive.org/web/20060722085401/http:/=
+/wiki.wowace.com/index.php/WowAce_Wiki:Community_Portal">Community portal</=
+a></li>
+				<li id=3D"n-currentevents" title=3D"Find background information on curr=
+ent events"><a href=3D"http://web.archive.org/web/20060722085401/http://wik=
+i.wowace.com/index.php/Current_events">Current events</a></li>
+				<li id=3D"n-recentchanges"><a href=3D"http://web.archive.org/web/200607=
+22085401/http://wiki.wowace.com/index.php/Special:Recentchanges" accesskey=
+=3D"r" title=3D"The list of recent changes in the wiki. [alt-r]">Recent cha=
+nges</a></li>
+				<li id=3D"n-randompage"><a href=3D"http://web.archive.org/web/200607220=
+85401/http://wiki.wowace.com/index.php/Special:Random" accesskey=3D"x" titl=
+e=3D"Load a random page [alt-x]">Random page</a></li>
+				<li id=3D"n-help" title=3D"The place to find out."><a href=3D"http://we=
+b.archive.org/web/20060722085401/http://wiki.wowace.com/index.php/Help:Cont=
+ents">Help</a></li>
+				<li id=3D"n-sitesupport" title=3D"Support us"><a href=3D"http://web.arc=
+hive.org/web/20060722085401/http://wiki.wowace.com/index.php/WowAce_Wiki:Si=
+te_support">Donations</a></li>
+			</ul>
+		</div>
+	</div>
+		<div id=3D"p-search" class=3D"portlet">
+		<h5><label for=3D"searchInput">Search</label></h5>
+		<div id=3D"searchBody" class=3D"pBody">
+			<form action=3D"http://web.archive.org/web/20060722085401/http://wiki.wo=
+wace.com/index.php/Special:Search" id=3D"searchform"><div>
+				<input id=3D"searchInput" name=3D"search" type=3D"text" accesskey=3D"f"=
+ value=3D"" data-cip-id=3D"searchInput">
+				<input type=3D"submit" name=3D"go" class=3D"searchButton" id=3D"searchG=
+oButton" value=3D"Go">&nbsp;
+				<input type=3D"submit" name=3D"fulltext" class=3D"searchButton" value=
+=3D"Search">
+			</div></form>
+		</div>
+	</div>
+	<div class=3D"portlet" id=3D"p-tb">
+		<h5>Toolbox</h5>
+		<div class=3D"pBody">
+			<ul>
+				<li id=3D"t-whatlinkshere"><a href=3D"http://web.archive.org/web/200607=
+22085401/http://wiki.wowace.com/index.php/Special:Whatlinkshere/Gratuity-2.=
+0_API_Documentation" accesskey=3D"j" title=3D"List of all wiki pages that l=
+ink here [alt-j]">What links here</a></li>
+				<li id=3D"t-recentchangeslinked"><a href=3D"http://web.archive.org/web/=
+20060722085401/http://wiki.wowace.com/index.php/Special:Recentchangeslinked=
+/Gratuity-2.0_API_Documentation" accesskey=3D"k" title=3D"Recent changes in=
+ pages linked from this page [alt-k]">Related changes</a></li>
+<li id=3D"t-upload"><a href=3D"http://web.archive.org/web/20060722085401/ht=
+tp://wiki.wowace.com/index.php/Special:Upload" accesskey=3D"u" title=3D"Upl=
+oad images or media files [alt-u]">Upload file</a></li>
+<li id=3D"t-specialpages"><a href=3D"http://web.archive.org/web/20060722085=
+401/http://wiki.wowace.com/index.php/Special:Specialpages" accesskey=3D"q" =
+title=3D"List of all special pages [alt-q]">Special pages</a></li>
+				<li id=3D"t-print"><a href=3D"http://web.archive.org/web/20060722085401=
+/http://wiki.wowace.com/index.php?title=3DGratuity-2.0_API_Documentation&am=
+p;printable=3Dyes">Printable version</a></li>				<li id=3D"t-permalink"><a =
+href=3D"http://web.archive.org/web/20060722085401/http://wiki.wowace.com/in=
+dex.php?title=3DGratuity-2.0_API_Documentation&amp;oldid=3D2739">Permanent =
+link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class=3D"visualClear"></div>
+			<div id=3D"footer">
+				<div id=3D"f-poweredbyico"><a href=3D"http://web.archive.org/web/200607=
+22085401/http://www.mediawiki.org/"><img src=3D"http://web.archive.org/web/=
+20060722085401im_/http://wiki.wowace.com/skins/common/images/poweredby_medi=
+awiki_88x31.png" alt=3D"MediaWiki"></a></div>
+				<div id=3D"f-copyrightico"><a href=3D"http://web.archive.org/web/200607=
+22085401/http://creativecommons.org/licenses/by-nc-sa/2.5/"><img src=3D"htt=
+p://web.archive.org/web/20060722085401im_/http://creativecommons.org/images=
+/public/somerights20.png" alt=3D"Attribution-NonCommercial-ShareAlike 2.5">=
+</a></div>
+			<ul id=3D"f-list">
+				<li id=3D"lastmod"> This page was last modified 04:07, 3 July 2006.</li=
+>
+				<li id=3D"viewcount">This page has been accessed 24 times.</li>
+				<li id=3D"copyright">Content is available under <a href=3D"http://web.a=
+rchive.org/web/20060722085401/http://creativecommons.org/licenses/by-nc-sa/=
+2.5/" class=3D"external " title=3D"http://creativecommons.org/licenses/by-n=
+c-sa/2.5/" rel=3D"nofollow">Attribution-NonCommercial-ShareAlike 2.5</a>.</=
+li>
+				<li id=3D"privacy"><a href=3D"http://web.archive.org/web/20060722085401=
+/http://wiki.wowace.com/index.php/WowAce_Wiki:Privacy_policy" title=3D"WowA=
+ce Wiki:Privacy policy">Privacy policy</a></li>
+				<li id=3D"about"><a href=3D"http://web.archive.org/web/20060722085401/h=
+ttp://wiki.wowace.com/index.php/WowAce_Wiki:About" title=3D"WowAce Wiki:Abo=
+ut">About WowAce Wiki</a></li>
+				<li id=3D"disclaimer"><a href=3D"http://web.archive.org/web/20060722085=
+401/http://wiki.wowace.com/index.php/WowAce_Wiki:General_disclaimer" title=
+=3D"WowAce Wiki:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+=09
+</div>
+<!-- Served by eqhosting3.eqhosting.net in 0.04 secs. -->
+
+<!--
+     FILE ARCHIVED ON 08:54:01 Jul 22, 2006 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 16:12:19 Sep 17, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 267.037
+  exclusion.robots: 0.178
+  exclusion.robots.policy: 0.171
+  cdx.remote: 0.061
+  esindex: 0.008
+  LoadShardBlock: 232.506 (3)
+  PetaboxLoader3.datanode: 284.623 (4)
+  CDXLines.iter: 13.655 (3)
+  load_resource: 183.417
+  PetaboxLoader3.resolve: 91.138
+--></body></html>
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-3fc76223-e54a-4a9b-b4ed-890928e1cb1b@mhtml.blink
+
+@charset "utf-8";
+
+@import url("/web/20060722085401cs_/http://wiki.wowace.com/skins/monobook/m=
+ain.css?7");
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/web/20060722085401cs_/http://wiki.wowace.com/skins/monobook/main.css?7
+
+@charset "utf-8";
+=0A
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-4709089c-f2cb-437f-8714-a520ac9ca5ed@mhtml.blink
+
+@charset "utf-8";
+
+@import url("/web/20060722085401cs_/http://wiki.wowace.com/index.php?title=
+=3DMediaWiki:Common.css&action=3Draw&ctype=3Dtext/css&smaxage=3D18000");
+
+@import url("/web/20060722085401cs_/http://wiki.wowace.com/index.php?title=
+=3DMediaWiki:Monobook.css&action=3Draw&ctype=3Dtext/css&smaxage=3D18000");
+
+@import url("/web/20060722085401cs_/http://wiki.wowace.com/index.php?title=
+=3D-&action=3Draw&gen=3Dcss&maxage=3D18000");
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/web/20060722085401cs_/http://wiki.wowace.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css&smaxage=18000
+
+@charset "utf-8";
+=0A
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/web/20060722085401cs_/http://wiki.wowace.com/index.php?title=MediaWiki:Monobook.css&action=raw&ctype=text/css&smaxage=18000
+
+@charset "utf-8";
+=0A
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/web/20060722085401cs_/http://wiki.wowace.com/index.php?title=-&action=raw&gen=css&maxage=18000
+
+@charset "utf-8";
+=0A
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-e1c435c4-2109-48a9-a12e-559ce5e5d494@mhtml.blink
+
+@charset "utf-8";
+
+.cip-genpw-icon.cip-icon-key-small { background-image: url("chrome-extensio=
+n://dafgdjggglmmknipkhngniifhplpcldb/icons/key_16x16.png"); }
+
+.cip-genpw-icon.cip-icon-key-big { background-image: url("chrome-extension:=
+//dafgdjggglmmknipkhngniifhplpcldb/icons/key_24x24.png"); }
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-34d72329-a344-47b9-bef2-8acc042eaca6@mhtml.blink
+
+@charset "utf-8";
+
+body { margin-top: 0px !important; padding-top: 0px !important; }
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/_static/css/banner-styles.css?v=fantwOh2
+
+@charset "utf-8";
+
+@import url("record.css");
+
+#wm-ipp-base { height: 65px; padding: 0px; margin: 0px; border: none; backg=
+round: none transparent; }
+
+#wm-ipp { z-index: 2147483647; }
+
+#wm-ipp, #wm-ipp * { font-family: "Lucida Grande", Helvetica, Arial, sans-s=
+erif; font-size: 12px; line-height: 1.2; letter-spacing: 0px; width: auto; =
+height: auto; max-width: none; max-height: none; min-height: 0px; outline: =
+none; float: none; text-align: left; border: none; color: rgb(0, 0, 0); tex=
+t-indent: 0px; position: initial; background: none; min-width: 0px !importa=
+nt; }
+
+#wm-ipp div, #wm-ipp canvas { display: block; }
+
+#wm-ipp div, #wm-ipp tr, #wm-ipp td, #wm-ipp a, #wm-ipp form { padding: 0px=
+; margin: 0px; border: none; border-radius: 0px; background-color: transpar=
+ent; background-image: none; height: auto; }
+
+#wm-ipp table { border: none; border-collapse: collapse; margin: 0px; paddi=
+ng: 0px; width: auto; font-size: inherit; }
+
+#wm-ipp form input { height: auto; display: inline; margin: 0px; color: rgb=
+(0, 0, 0); background: none rgb(255, 255, 255); border: 1px solid rgb(102, =
+102, 102); padding: 1px !important; }
+
+#wm-ipp form input[type=3D"submit"] { padding: 0px 8px !important; margin: =
+1px 0px 1px 5px !important; width: auto !important; border: 1px solid rgb(0=
+, 0, 0) !important; background: rgb(255, 255, 255) !important; color: rgb(0=
+, 0, 0) !important; }
+
+#wm-ipp a { display: inline; }
+
+#wm-ipp a:hover { text-decoration: underline; }
+
+#wm-ipp a.wm-btn:hover { text-decoration: none; color: rgb(255, 255, 0) !im=
+portant; }
+
+#wm-ipp a.wm-btn:hover span { color: rgb(255, 255, 0) !important; }
+
+#wm-ipp #wm-ipp-inside { margin: 0px 6px; border-right: 5px solid rgb(0, 0,=
+ 0); border-bottom: 5px solid rgb(0, 0, 0); border-left: 5px solid rgb(0, 0=
+, 0); border-image: initial; border-top: none; background-color: rgba(255, =
+255, 255, 0.9); box-shadow: rgb(51, 51, 51) 1px 1px 4px; border-radius: 0px=
+ 0px 8px 8px; }
+
+#wm-ipp #wm-logo { padding: 0px 10px; vertical-align: middle; min-width: 10=
+0px; flex: 0 0 100px; }
+
+#wm-ipp .c { padding-left: 4px; }
+
+#wm-ipp .c .u { margin-top: 4px !important; }
+
+#wm-ipp .n { vertical-align: bottom; padding: 0px 0px 0px 5px !important; }
+
+#wm-ipp .n a { text-decoration: none; color: rgb(51, 51, 255); font-weight:=
+ bold; }
+
+#wm-ipp .n .b { overflow: visible; white-space: nowrap; color: rgb(153, 153=
+, 170); vertical-align: middle; padding: 0px 6px 0px 0px !important; text-a=
+lign: right !important; }
+
+#wm-ipp .n .y .b { padding: 0px 6px 2px 0px !important; }
+
+#wm-ipp .n .c { background: rgb(0, 0, 0); color: rgb(255, 255, 0); font-wei=
+ght: bold; text-align: center; padding: 0px !important; }
+
+#wm-ipp.hi .n td.c { color: rgb(236, 0, 140); }
+
+#wm-ipp .n td.f { overflow: visible; white-space: nowrap; color: rgb(153, 1=
+53, 170); vertical-align: middle; padding: 0px 0px 0px 6px !important; text=
+-align: left !important; }
+
+#wm-ipp .n tr.m td { text-transform: uppercase; white-space: nowrap; paddin=
+g: 2px 0px; }
+
+#wm-ipp .c .s { vertical-align: bottom; padding: 0px 5px 0px 0px !important=
+; }
+
+#wm-ipp #wm-nav-captures { white-space: nowrap; }
+
+#wm-ipp .c .s a.t { color: rgb(51, 51, 255); font-weight: bold; line-height=
+: 1.8; }
+
+#wm-ipp .c .s div.r { color: rgb(102, 102, 102); font-size: 9px; white-spac=
+e: nowrap; }
+
+#wm-ipp .c .k { padding-bottom: 1px; }
+
+#wm-ipp .c .s { padding: 0px 5px 2px 0px !important; }
+
+#wm-ipp td#displayMonthEl { padding: 2px 0px !important; }
+
+#wm-ipp td#displayYearEl { padding: 0px 0px 2px !important; }
+
+div#wm-ipp-sparkline { position: relative; white-space: nowrap; background-=
+color: rgb(255, 255, 255); cursor: pointer; line-height: 0.9; }
+
+#sparklineImgId, #wm-sparkline-canvas { position: relative; z-index: 9012; =
+max-width: none; }
+
+#wm-ipp-sparkline div.yt { position: absolute; top: 0px; z-index: 9010 !imp=
+ortant; background-color: rgb(255, 255, 0) !important; }
+
+#wm-ipp-sparkline div.mt { position: absolute; top: 0px; z-index: 9013 !imp=
+ortant; background-color: rgb(236, 0, 140) !important; }
+
+#wm-ipp .r { margin-left: 4px; }
+
+#wm-ipp .r a { color: rgb(51, 51, 255); border: none; position: relative; b=
+ackground-color: transparent; text-decoration: none; background-repeat: no-=
+repeat !important; background-position: 100% 100% !important; }
+
+#wm-ipp #wm-capinfo { border-radius: 0px 0px 4px 4px; }
+
+#wm-ipp #wm-capinfo .c-logo { display: block; float: left; margin-right: 3p=
+x; width: 90px; min-height: 90px; max-height: 290px; border-radius: 45px; o=
+verflow: hidden; background-position: 50% center; background-size: auto 90p=
+x; box-shadow: rgb(208, 208, 208) 0px 0px 2px 2px inset; }
+
+#wm-ipp #wm-capinfo .c-logo span { display: inline-block; }
+
+#wm-ipp #wm-capinfo .c-logo img { height: 90px; position: relative; left: -=
+50%; }
+
+#wm-ipp #wm-capinfo .wm-title { font-size: 130%; }
+
+#wm-ipp #wm-capinfo a.wm-selector { display: inline-block; color: rgb(170, =
+170, 170); padding: 2px 8px; text-decoration: none !important; }
+
+#wm-ipp #wm-capinfo a.wm-selector.selected { background-color: rgb(102, 102=
+, 102); }
+
+#wm-ipp #wm-capinfo a.wm-selector:hover { color: rgb(255, 255, 255); }
+
+#wm-ipp #wm-capinfo.notice-only #wm-capinfo-collected-by, #wm-ipp #wm-capin=
+fo.notice-only #wm-capinfo-timestamps { display: none; }
+
+#wm-ipp #wm-capinfo #wm-capinfo-notice .wm-capinfo-content { background-col=
+or: rgb(255, 255, 0); padding: 5px; font-size: 14px; text-align: center; }
+
+#wm-ipp #wm-capinfo #wm-capinfo-notice .wm-capinfo-content * { font-size: 1=
+4px; text-align: center; }
+
+#wm-ipp #wm-expand { right: 1px; bottom: -1px; color: rgb(255, 255, 255); b=
+ackground-color: rgb(102, 102, 102) !important; padding: 0px 5px 0px 3px !i=
+mportant; border-radius: 3px 3px 0px 0px !important; }
+
+#wm-ipp #wm-expand span { color: rgb(255, 255, 255); }
+
+#wm-ipp #wm-expand #wm-expand-icon { display: inline-block; transition: tra=
+nsform 0.5s ease 0s; transform-origin: 50% 45%; }
+
+#wm-ipp #wm-expand.wm-open #wm-expand-icon { transform: rotate(180deg); }
+
+#wm-ipp #wmtb { text-align: right; }
+
+#wm-ipp #wmtb #wmtbURL { width: calc(100% - 45px); }
+
+#wm-ipp #wm-graph-anchor { border-right: 1px solid rgb(204, 204, 204); }
+
+html.wb-highlight { box-shadow: rgb(165, 14, 58) 0px 0px 0px 3px inset !imp=
+ortant; }
+
+.wb-highlight { outline: rgb(165, 14, 58) solid 3px !important; }
+
+#wm-ipp-print { display: none !important; }
+
+@media print {
+  #wm-ipp-base { display: none !important; }
+  #wm-ipp-print { white-space: nowrap; overflow: hidden; text-overflow: ell=
+ipsis; display: block !important; }
+}
+
+@media (max-width: 414px) {
+  #wm-ipp .xxs { display: none !important; }
+}
+
+@media (min-width: 1055px) {
+  #wm-ipp #wm-graph-anchor { display: block !important; }
+}
+
+@media (max-width: 1054px) {
+  #wm-ipp #wm-graph-anchor { display: none !important; }
+}
+
+@media (max-width: 1163px) {
+  #wm-logo { display: none !important; }
+}
+
+#wm-btns { white-space: nowrap; margin-top: -2px; }
+
+#wm-btns #wm-save-snapshot-open { margin-right: 7px; top: -6px; }
+
+#wm-btns #wm-sign-in { box-sizing: content-box; display: none; margin-right=
+: 7px; top: -8px; border: 2px solid rgb(0, 0, 0); border-radius: 14px; padd=
+ing-right: 2px; padding-bottom: 2px; width: 11px; height: 11px; }
+
+#wm-btns #wm-sign-in > .iconochive-person { font-size: 12.5px; }
+
+#wm-save-snapshot-open > .iconochive-web { color: rgb(0, 0, 0); font-size: =
+160%; }
+
+#wm-ipp #wm-share { display: flex; align-items: flex-end; justify-content: =
+space-between; }
+
+#wm-share > #wm-screenshot { display: inline-block; margin-right: 3px; visi=
+bility: hidden; }
+
+#wm-screenshot > .iconochive-image { color: rgb(0, 0, 0); font-size: 160%; =
+}
+
+#wm-share > #wm-video { display: inline-block; margin-right: 3px; visibilit=
+y: hidden; }
+
+#wm-video > .iconochive-movies { color: rgb(0, 0, 0); display: inline-block=
+; font-size: 150%; margin-bottom: 2px; }
+
+#wm-btns #wm-save-snapshot-in-progress { display: none; font-size: 160%; op=
+acity: 0.5; position: relative; margin-right: 7px; top: -5px; }
+
+#wm-btns #wm-save-snapshot-success { display: none; color: green; position:=
+ relative; top: -7px; }
+
+#wm-btns #wm-save-snapshot-fail { display: none; color: red; position: rela=
+tive; top: -7px; }
+
+.wm-icon-screen-shot { display: inline-block; background: url("../images/we=
+b-screenshot.svg") 0% 0% / contain no-repeat !important; width: 22px !impor=
+tant; height: 19px !important; }
+
+#donato { height: 0px; margin: 0px; padding: 0px; border-bottom: 1px solid =
+rgb(153, 153, 153) !important; }
+
+body.wm-modal { height: auto !important; overflow: hidden !important; }
+
+#donato #donato-base { width: 100%; height: 100%; margin: 0px; padding: 0px=
+; position: absolute; z-index: 2147483639; }
+
+body.wm-modal #donato #donato-base { position: fixed; inset: 0px; z-index: =
+2147483640; }
+
+.wb-autocomplete-suggestions { font-family: "Lucida Grande", Helvetica, Ari=
+al, sans-serif; font-size: 12px; text-align: left; cursor: default; border-=
+width: 0px 1px 1px; border-right-style: solid; border-bottom-style: solid; =
+border-left-style: solid; border-right-color: rgb(204, 204, 204); border-bo=
+ttom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204); bord=
+er-image: initial; border-top-style: initial; border-top-color: initial; ba=
+ckground: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.1) -1px 1px 3px; =
+position: absolute; display: none; z-index: 2147483647; max-height: 254px; =
+overflow: hidden auto; box-sizing: border-box; }
+
+.wb-autocomplete-suggestion { position: relative; padding: 0px 0.6em; line-=
+height: 23px; white-space: nowrap; overflow: hidden; text-overflow: ellipsi=
+s; font-size: 1.02em; color: rgb(51, 51, 51); }
+
+.wb-autocomplete-suggestion b { font-weight: bold; }
+
+.wb-autocomplete-suggestion.selected { background: rgb(240, 240, 240); }
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/_static/css/record.css
+
+@charset "utf-8";
+
+.__wb_overlay { opacity: 0.6; background-color: rgb(0, 0, 0); position: fix=
+ed; width: 100%; height: 100%; top: 0px; left: 0px; padding: 0px !important=
+; border: 0px !important; margin: 0px !important; border-radius: 0px !impor=
+tant; z-index: 2147483643 !important; }
+
+#__wb_record_overlay_div { cursor: wait !important; }
+
+.__wb_record_content { opacity: 1; position: fixed; top: 50%; left: 50%; bo=
+rder-radius: 8px; box-shadow: rgb(0, 0, 0) 0px 0px 30px 5px; margin: 0px !i=
+mportant; padding: 0px !important; background-color: rgb(255, 255, 255) !im=
+portant; z-index: 2147483644 !important; }
+
+#__wb_record_content_loader { cursor: wait !important; padding-top: 30px !i=
+mportant; margin-left: -287px !important; margin-top: -177px !important; wi=
+dth: 574px !important; height: 355px !important; }
+
+#__wb_record_content_done { margin-left: -427px !important; margin-top: -17=
+7px !important; width: 855px !important; height: 355px !important; }
+
+.__wb_record_content > * { margin: auto !important; display: block !importa=
+nt; text-align: center !important; font-family: "Open Sans", "Helvetica Neu=
+e", Helvetica, Arial, sans-serif !important; }
+
+.__wb_record_content > wb_h1 { line-height: 2em; font-size: 36px !important=
+; color: rgb(34, 34, 34) !important; margin: 0px !important; padding: 0px !=
+important; font-weight: normal !important; width: auto !important; height: =
+auto !important; }
+
+.__wb_record_content > wb_p { line-height: 2em; font-size: 17px !important;=
+ color: rgb(34, 34, 34) !important; margin: 8px 0px !important; padding: 0p=
+x !important; }
+
+.__wb_record_content > #_wb_logo { margin-bottom: 10px !important; }
+
+.__wb_record_content > #_wb_spinner { margin-top: 30px !important; margin-b=
+ottom: 30px !important; }
+
+.__wb_record_content > #_wb_curr_url { text-decoration: underline !importan=
+t; font-weight: bold !important; }
+
+#__wb_record_content_done > #__wb_link { font-size: 20px !important; border=
+: 1px solid rgb(170, 170, 170) !important; padding: 3px !important; text-al=
+ign: center !important; width: 80% !important; height: auto !important; }
+
+#__wb_record_content_done > #__wb_link:focus { outline: 0px !important; bor=
+der-color: rgb(66, 139, 202) !important; }
+
+#__wb_record_content_done > #__wb_donate_close { float: right; display: inl=
+ine-block; font-size: 18px !important; width: auto !important; margin: 0px =
+!important; padding: 8px 8px 0px 0px !important; }
+
+#__wb_donate_close > #__wb_record_done_close { display: inline-block; curso=
+r: pointer !important; vertical-align: bottom !important; }
+
+#__wb_record_content_done > #__wb_donate_close a { color: rgb(66, 139, 202)=
+ !important; }
+
+#__wb_record_content_done > #__wb_donate_close a:link { color: rgb(66, 139,=
+ 202) !important; text-decoration: none !important; margin-right: 16px !imp=
+ortant; }
+
+#__wb_record_content_done > #__wb_donate_close a:visited { color: rgb(66, 1=
+39, 202) !important; }
+
+#__wb_record_content_done > #__wb_donate_close a:hover { color: rgb(0, 177,=
+ 247) !important; }
+
+#__wb_spinningSquaresG { position: relative; width: 240px; height: 20px; pa=
+dding: 0px !important; margin: 30px 0px 30px 160px !important; border: 0px =
+!important; border-radius: 0px !important; }
+
+.__wb_spinningSquaresG { position: absolute; top: 0px; background-color: rg=
+b(0, 0, 0); width: 22px; height: 22px; animation-name: bounce_spinningSquar=
+esG; animation-duration: 1.9s; animation-iteration-count: infinite; transfo=
+rm: scale(0.3); margin: 0px !important; padding: 0px !important; border: 0p=
+x !important; border-radius: 0px !important; }
+
+#__wb_spinningSquaresG_1 { left: 0px; animation-delay: 0.76s; }
+
+#__wb_spinningSquaresG_2 { left: 30px; animation-delay: 0.95s; }
+
+#__wb_spinningSquaresG_3 { left: 60px; animation-delay: 1.14s; }
+
+#__wb_spinningSquaresG_4 { left: 90px; animation-delay: 1.33s; }
+
+#__wb_spinningSquaresG_5 { left: 120px; animation-delay: 1.52s; }
+
+#__wb_spinningSquaresG_6 { left: 150px; animation-delay: 1.71s; }
+
+#__wb_spinningSquaresG_7 { left: 180px; animation-delay: 1.9s; }
+
+#__wb_spinningSquaresG_8 { left: 210px; animation-delay: 2.09s; }
+
+@-webkit-keyframes bounce_spinningSquaresG {=20
+  0% { transform: scale(1); background-color: rgb(0, 0, 0); }
+  100% { transform: scale(0.3) rotate(90deg); background-color: rgb(255, 25=
+5, 255); }
+}
+
+@keyframes bounce_spinningSquaresG {=20
+  0% { transform: scale(1); background-color: rgb(0, 0, 0); }
+  100% { transform: scale(0.3) rotate(90deg); background-color: rgb(255, 25=
+5, 255); }
+}
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/_static/css/iconochive.css?v=qtvMKcIJ
+
+@charset "utf-8";
+
+@font-face { font-family: Iconochive-Regular; src: url("https://archive.org=
+/includes/fonts/Iconochive-Regular.eot?#iefix-ccsheb") format("embedded-ope=
+ntype"), url("https://archive.org/includes/fonts/Iconochive-Regular.woff?-c=
+csheb") format("woff"), url("https://archive.org/includes/fonts/Iconochive-=
+Regular.ttf?-ccsheb") format("truetype"), url("https://archive.org/includes=
+/fonts/Iconochive-Regular.svg?-ccsheb#Iconochive-Regular") format("svg"); f=
+ont-weight: normal; font-style: normal; }
+
+[class^=3D"iconochive-"], [class*=3D" iconochive-"] { speak: none; font-sty=
+le: normal; font-weight: normal; font-variant: normal; text-transform: none=
+; line-height: 1; -webkit-font-smoothing: antialiased; font-family: Iconoch=
+ive-Regular !important; }
+
+.iconochive-Uplevel::before { content: "=E2=86=B5"; }
+
+.iconochive-exit::before { content: "=F0=9F=9A=A3"; }
+
+.iconochive-beta::before { content: "=CE=B2"; }
+
+.iconochive-logo::before { content: "=F0=9F=8F=9B"; }
+
+.iconochive-audio::before { content: "=F0=9F=95=A8"; }
+
+.iconochive-movies::before { content: "=F0=9F=8E=9E"; }
+
+.iconochive-software::before { content: "=F0=9F=92=BE"; }
+
+.iconochive-texts::before { content: "=F0=9F=95=AE"; }
+
+.iconochive-etree::before { content: "=F0=9F=8E=A4"; }
+
+.iconochive-image::before { content: "=F0=9F=96=BC"; }
+
+.iconochive-web::before { content: "=F0=9F=97=94"; }
+
+.iconochive-collection::before { content: "=E2=88=91"; }
+
+.iconochive-folder::before { content: "=F0=9F=93=82"; }
+
+.iconochive-data::before { content: "=F0=9F=97=83"; }
+
+.iconochive-tv::before { content: "=F0=9F=93=BA"; }
+
+.iconochive-article::before { content: "=F0=9F=97=8F"; }
+
+.iconochive-question::before { content: "=E2=8D=B0"; }
+
+.iconochive-question-dark::before { content: "?"; }
+
+.iconochive-info::before { content: "i"; }
+
+.iconochive-info-small::before { content: "=E2=93=98"; }
+
+.iconochive-comment::before { content: "=F0=9F=97=A9"; }
+
+.iconochive-comments::before { content: "=F0=9F=97=AA"; }
+
+.iconochive-person::before { content: "=F0=9F=91=A4"; }
+
+.iconochive-people::before { content: "=F0=9F=91=A5"; }
+
+.iconochive-eye::before { content: "=F0=9F=91=81"; }
+
+.iconochive-rss::before { content: "=E2=88=9E"; }
+
+.iconochive-time::before { content: "=F0=9F=95=91"; }
+
+.iconochive-quote::before { content: "=E2=9D=9D"; }
+
+.iconochive-disc::before { content: "=F0=9F=92=BF"; }
+
+.iconochive-tv-commercial::before { content: "=F0=9F=92=B0"; }
+
+.iconochive-search::before { content: "=F0=9F=94=8D"; }
+
+.iconochive-search-star::before { content: "=E2=9C=BD"; }
+
+.iconochive-tiles::before { content: "=E2=8A=9E"; }
+
+.iconochive-list::before { content: "=E2=87=B6"; }
+
+.iconochive-list-bulleted::before { content: "=E2=8C=97"; }
+
+.iconochive-latest::before { content: "=E2=88=88"; }
+
+.iconochive-left::before { content: "=CB=82"; }
+
+.iconochive-right::before { content: "=CB=83"; }
+
+.iconochive-left-solid::before { content: "=E2=97=82"; }
+
+.iconochive-right-solid::before { content: "=E2=96=B8"; }
+
+.iconochive-up-solid::before { content: "=E2=96=B4"; }
+
+.iconochive-down-solid::before { content: "=E2=96=BE"; }
+
+.iconochive-dot::before { content: "=E2=8F=A4"; }
+
+.iconochive-dots::before { content: "=E2=96=A6"; }
+
+.iconochive-columns::before { content: "=E2=96=AF"; }
+
+.iconochive-sort::before { content: "=E2=87=95"; }
+
+.iconochive-atoz::before { content: "=F0=9F=94=A4"; }
+
+.iconochive-ztoa::before { content: "=F0=9F=94=A5"; }
+
+.iconochive-upload::before { content: "=F0=9F=93=A4"; }
+
+.iconochive-download::before { content: "=F0=9F=93=A5"; }
+
+.iconochive-favorite::before { content: "=E2=98=85"; }
+
+.iconochive-heart::before { content: "=E2=99=A5"; }
+
+.iconochive-play::before { content: "=E2=96=B6"; }
+
+.iconochive-play-framed::before { content: "=F0=9F=8E=AC"; }
+
+.iconochive-fullscreen::before { content: "=E2=9B=B6"; }
+
+.iconochive-mute::before { content: "=F0=9F=94=87"; }
+
+.iconochive-unmute::before { content: "=F0=9F=94=8A"; }
+
+.iconochive-share::before { content: "=F0=9F=8E=81"; }
+
+.iconochive-edit::before { content: "=E2=9C=8E"; }
+
+.iconochive-reedit::before { content: "=E2=9C=90"; }
+
+.iconochive-gear::before { content: "=E2=9A=99"; }
+
+.iconochive-remove-circle::before { content: "=E2=9D=8E"; }
+
+.iconochive-plus-circle::before { content: "=F0=9F=97=96"; }
+
+.iconochive-minus-circle::before { content: "=F0=9F=97=95"; }
+
+.iconochive-x::before { content: "=F0=9F=97=99"; }
+
+.iconochive-fork::before { content: "=E2=8B=94"; }
+
+.iconochive-trash::before { content: "=F0=9F=97=91"; }
+
+.iconochive-warning::before { content: "=E2=9A=A0"; }
+
+.iconochive-flash::before { content: "=F0=9F=97=B2"; }
+
+.iconochive-world::before { content: "=F0=9F=97=BA"; }
+
+.iconochive-lock::before { content: "=F0=9F=94=92"; }
+
+.iconochive-unlock::before { content: "=F0=9F=94=93"; }
+
+.iconochive-twitter::before { content: "=F0=9F=90=A6"; }
+
+.iconochive-facebook::before { content: "f"; }
+
+.iconochive-googleplus::before { content: "g"; }
+
+.iconochive-reddit::before { content: "=F0=9F=91=BD"; }
+
+.iconochive-tumblr::before { content: "T"; }
+
+.iconochive-pinterest::before { content: "=F0=9D=93=9F"; }
+
+.iconochive-popcorn::before { content: "=F0=9F=92=A5"; }
+
+.iconochive-email::before { content: "=F0=9F=93=A7"; }
+
+.iconochive-embed::before { content: "=F0=9F=94=97"; }
+
+.iconochive-gamepad::before { content: "=F0=9F=95=B9"; }
+
+.iconochive-Zoom_In::before { content: "+"; }
+
+.iconochive-Zoom_Out::before { content: "-"; }
+
+.iconochive-RSS::before { content: "=F0=9F=93=A8"; }
+
+.iconochive-Light_Bulb::before { content: "=F0=9F=92=A1"; }
+
+.iconochive-Add::before { content: "=E2=8A=95"; }
+
+.iconochive-Tab_Activity::before { content: "=E2=8C=98"; }
+
+.iconochive-Forward::before { content: "=E2=8F=A9"; }
+
+.iconochive-Backward::before { content: "=E2=8F=AA"; }
+
+.iconochive-No_Audio::before { content: "=F0=9F=94=88"; }
+
+.iconochive-Pause::before { content: "=E2=8F=B8"; }
+
+.iconochive-No_Favorite::before { content: "=E2=98=86"; }
+
+.iconochive-Unike::before { content: "=E2=99=A1"; }
+
+.iconochive-Song::before { content: "=E2=99=AB"; }
+
+.iconochive-No_Flag::before { content: "=E2=9A=90"; }
+
+.iconochive-Flag::before { content: "=E2=9A=91"; }
+
+.iconochive-Done::before { content: "=E2=9C=93"; }
+
+.iconochive-Check::before { content: "=E2=9C=94"; }
+
+.iconochive-Refresh::before { content: "=E2=9F=B3"; }
+
+.iconochive-Headphones::before { content: "=F0=9F=8E=A7"; }
+
+.iconochive-Chart::before { content: "=F0=9F=93=88"; }
+
+.iconochive-Bookmark::before { content: "=F0=9F=93=91"; }
+
+.iconochive-Documents::before { content: "=F0=9F=93=9A"; }
+
+.iconochive-Newspaper::before { content: "=F0=9F=93=B0"; }
+
+.iconochive-Podcast::before { content: "=F0=9F=93=B6"; }
+
+.iconochive-Radio::before { content: "=F0=9F=93=BB"; }
+
+.iconochive-Cassette::before { content: "=F0=9F=93=BC"; }
+
+.iconochive-Shuffle::before { content: "=F0=9F=94=80"; }
+
+.iconochive-Loop::before { content: "=F0=9F=94=81"; }
+
+.iconochive-Low_Audio::before { content: "=F0=9F=94=89"; }
+
+.iconochive-First::before { content: "=F0=9F=8E=96"; }
+
+.iconochive-Invisible::before { content: "=F0=9F=95=B6"; }
+
+.iconochive-Computer::before { content: "=F0=9F=96=B3"; }
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/web/20060722085401cs_/http://wiki.wowace.com/skins/common/commonPrint.css
+
+@charset "utf-8";
+
+a.stub, a.new { color: rgb(186, 0, 0); text-decoration: none; }
+
+#toc { border: 1px solid rgb(170, 170, 170); background-color: rgb(249, 249=
+, 249); padding: 5px; }
+
+.tocindent { margin-left: 2em; }
+
+.tocline { margin-bottom: 0px; }
+
+.toctoggle, .editsection { font-size: smaller; }
+
+div.floatright { float: right; margin: 0px; position: relative; border-styl=
+e: solid; border-color: white; border-image: initial; border-width: 0.5em 0=
+px 0.8em 1.4em; }
+
+div.floatright p { font-style: italic; }
+
+div.floatleft { float: left; margin: 0.3em 0.5em 0.5em 0px; position: relat=
+ive; border-style: solid; border-color: white; border-image: initial; borde=
+r-width: 0.5em 1.4em 0.8em 0px; }
+
+div.floatleft p { font-style: italic; }
+
+div.thumb { margin-bottom: 0.5em; border-style: solid; border-color: white;=
+ width: auto; overflow: hidden; }
+
+div.thumb div { border: 1px solid rgb(204, 204, 204); background-color: rgb=
+(249, 249, 249); font-size: 94%; text-align: center; padding: 3px !importan=
+t; }
+
+div.thumb div a img { border: 1px solid rgb(204, 204, 204); }
+
+div.thumb div div.thumbcaption { border: none; padding: 0.3em 0px 0.1em; }
+
+div.magnify { display: none; }
+
+div.tright { float: right; border-width: 0.5em 0px 0.8em 1.4em; }
+
+div.tleft { float: left; margin-right: 0.5em; border-width: 0.5em 1.4em 0.8=
+em 0px; }
+
+table.rimage { float: right; width: 1pt; position: relative; margin-left: 1=
+em; margin-bottom: 1em; text-align: center; }
+
+body { background: white; color: black; margin: 0px; padding: 0px; }
+
+.noprint, div#jump-to-nav, div.top, div#column-one, #colophon, .editsection=
+, .toctoggle, .tochidden, div#f-poweredbyico, div#f-copyrightico, li#f-view=
+count, li#f-about, li#f-disclaimer, li#f-privacy { display: none; }
+
+ul { list-style-type: square; }
+
+#content { background: none; font-size: 11pt; border: none !important; padd=
+ing: 0px !important; margin: 0px !important; }
+
+#footer { background: white; color: black; border-top: 1px solid black; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+
+p, .documentDescription { line-height: 1.2em; margin: 1em 0px !important; }
+
+.tocindent p { margin: 0px !important; }
+
+pre { border: 1pt dashed black; white-space: pre; font-size: 8pt; overflow:=
+ auto; padding: 1em 0px; background: white; color: black; }
+
+table.listing, table.listing td { border: 1pt solid black; border-collapse:=
+ collapse; }
+
+a { color: black !important; padding: 0px !important; }
+
+a:link, a:visited { color: rgb(85, 34, 0); background: transparent; text-de=
+coration: underline; }
+
+#content a.external.text::after, #content a.external.autonumber::after { co=
+ntent: " (" attr(href) ") "; }
+
+#globalWrapper { width: 100% !important; min-width: 0px !important; }
+
+#content { background: white; color: black; }
+
+#column-content { margin: 0px !important; }
+
+#column-content #content { padding: 1em; margin: 0px !important; }
+
+a, a.external, a.new, a.stub { color: black !important; text-decoration: no=
+ne !important; }
+
+a, a.external, a.new, a.stub { color: inherit !important; text-decoration: =
+inherit !important; }
+
+img { border: none; }
+
+img.tex { vertical-align: middle; }
+
+span.texhtml { font-family: serif; }
+
+div.townBox { position: relative; float: right; background: white; margin-l=
+eft: 1em; border: 1px solid gray; padding: 0.3em; width: 200px; overflow: h=
+idden; clear: right; }
+
+div.townBox dl { padding: 0px; margin: 0px 0px 0.3em; font-size: 96%; }
+
+div.townBox dl dt { background: none; margin: 0.4em 0px 0px; }
+
+div.townBox dl dd { margin: 0.1em 0px 0px 1.1em; background-color: rgb(243,=
+ 243, 243); }
+
+#siteNotice { display: none; }
+
+table.gallery { border: 1px solid rgb(204, 204, 204); margin: 2px; padding:=
+ 2px; background-color: rgb(255, 255, 255); }
+
+table.gallery tr { vertical-align: top; }
+
+div.gallerybox { border: 1px solid rgb(204, 204, 204); margin: 2px; backgro=
+und-color: rgb(249, 249, 249); width: 150px; }
+
+div.gallerybox div.thumb { text-align: center; border: 1px solid rgb(204, 2=
+04, 204); margin: 2px; }
+
+div.gallerytext { font-size: 94%; padding: 2px 4px; }
+
+table.diff { background: white; }
+
+td.diff-otitle { background: rgb(255, 255, 255); }
+
+td.diff-ntitle { background: rgb(255, 255, 255); }
+
+td.diff-addedline { background: rgb(204, 255, 204); font-size: smaller; bor=
+der: 2px solid black; }
+
+td.diff-deletedline { background: rgb(255, 255, 170); font-size: smaller; b=
+order: 2px dotted black; }
+
+td.diff-context { background: rgb(238, 238, 238); font-size: smaller; }
+
+span.diffchange { color: silver; font-weight: bold; text-decoration: underl=
+ine; }
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://web.archive.org/web/20060722085401cs_/http://wiki.wowace.com/skins/monobook/KHTMLFixes.css
+
+@charset "utf-8";
+=0A
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://web.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png
+
+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
+
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://web.archive.org/_static/images/toolbar/wm_tb_prv_off.png
+
+iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAYAAAAmlE46AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAAMVJREFUeNqU078KQVEcwHH/kkwWJU9ABik2M4skryApdhlYSSYjSVkt
+XoA3MBg9gMXAZlDC99TvDNTl/H71WW59b797Ttc/W6x8ysmhE1AEcUyxRyXkEITRRB8Jefb8F5Yx
+kvU+xitMSVDzeuN3GMMAbUR+rWLDoHyHiZIuJ2XCKobIaO4kICtFtZdpwjXS6OKiCc3cMZF153i4
+hnbOaKGArSa0c0AJdRw1oZkXNsijh6traOeGMbJY2k7zd5zQQBG7twADACeQHTcDpaCSAAAAAElF
+TkSuQmCC
+
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://web.archive.org/_static/images/toolbar/wm_tb_nxt_off.png
+
+iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAYAAAAmlE46AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAAMhJREFUeNqU0s8KAUEcwPHBJjm5KHkCVy/BRZKnUMpBuXKmHGz+pDbl
+CVwdOCoH5U8pD+DiwM1BSb5TO7WHjfn96tPW1reZndnI1Jt7SqkR9kowUZSwwwBpSfjxnw2cUEfc
+JgxOBkNsUZSEZvJYYoGcJDRT8Q+tj5Qk1JNAE2fUELMNzWQxwRFlSWgmqXfhCII7unDxsgnfmKGN
+m3n5L1yhhYPtdVxQRSEsClvxgZ7/9zx/bcUJrKq/o4OrzUnpcI0xNpI7+QowAGDEIqP9eOV2AAAA
+AElFTkSuQmCC
+
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://web.archive.org/_static/images/loading.gif
+
+R0lGODlhFAAUAOMIAAAAABoaGjMzM0xMTGZmZoCAgJmZmbKysv//////////////////////////
+/////yH/C05FVFNDQVBFMi4wAwEAAAAh+QQBCgAIACwAAAAAFAAUAAAEUxDJSau9CADMteZTEEje
+hhzHJYqkiaLWOlZvGs8WDO6UIPAGw8TnAwWDEuKPcxQml0YnjzcYYAqFS7VqwWItWyuCQJB4s2Ax
+mWxGg9bl6YQtl0cAACH5BAEKAA8ALAAAAAAUABQAAART8MlJq70vBMy15pMgSN72AMAliqSJotY6
+Vm8azxYM7tQw8IfDxOcDBYMS4o9zFCaXRiePRyBgDIZLtWrBYi1b66NQkHizYDGZbEaD1uXphC2X
+RwAAIfkEAQoADwAsAAAAABQAFAAABFPwyUmrvU8IzLXm0zBI3vYEwSWKpImi1jpWbxrPFgzuFEHw
+AMDE5wMFgxLij3MUJpdGJ49XKGAOh0u1asFiLVvrw2CQeLNgMZlsRoPW5emELZdHAAAh+QQBCgAP
+ACwAAAAAFAAUAAAEU/DJSau9bwzMteYTQUje9gjCJYqkiaLWOlZvGs8WDO5UUfCBwMTnAwWDEuKP
+cxQml0Ynj2cwYACAS7VqwWItW+vjcJB4s2AxmWxGg9bl6YQtl0cAACH5BAEKAA8ALAAAAAAUABQA
+AART8MlJq72PEMy15lNRSN72DMMliqSJotY6Vm8azxYM7pRh8ALBxOcDBYMS4o9zFCaXRiePdzhg
+AoFLtWrBYi1b6wMAkHizYDGZbEaD1uXphC2XRwAAIfkEAQoADwAsAAAAABQAFAAABFPwyUmrva8U
+zLXmk2FI3vYQxCWKpImi1jpWbxrPFgzu1HHwg8HE5wMFgxLij3MUJpdGJ48HAGAEgku1asFiLVvr
+IxCQeLNgMZlsRoPW5emELZdHAAAh+QQBCgAPACwAAAAAFAAUAAAEU/DJSau9zxjMtebTcUje9hTF
+JYqkiaLWOlZvGs8WDO4UAPAEwsTnAwWDEuKPcxQml0YnjxcIYAaDS7VqwWItW+tDIJB4s2AxmWxG
+g9bl6YQtl0cAACH5BAEKAA8ALAAAAAAUABQAAART8MlJq73vHMy15hMASN72GMYliqSJotY6Vm8a
+zxYM7lQQ8IXCxOcDBYMS4o9zFCaXRiePJxBgCIRLtWrBYi1b62MwkHizYDGZbEaD1uXphC2XRwAA
+Ow==
+
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://web.archive.org/web/20060722085401im_/http://wiki.wowace.com/skins/common/images/poweredby_mediawiki_88x31.png
+
+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
+
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://web.archive.org/web/20060722085401im_/http://creativecommons.org/images/public/somerights20.png
+
+iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAABGdBTUEAAK/INwWK6QAAABl0RVh0
+U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABFUExURSAgILC2r9XX1VZXVpaXlu/v77zA
+vLi9uLK3scDEv8nNyK2yrLW6tMXJxK60rXx8fEBAQM3QzKyyq6uxqv///wAAAAAAACmwp6sAAAAX
+dFJOU/////////////////////////////8A5kDmXgAAAtxJREFUeNq0luuWqyAMhVNAbb0ltmTe
+/1HPDqBiW6c9P4Y1i0qEb203CQz96J+0H1J97O1ubRjmeb5cr+PYdW17u92maer7fikNj/00Idy2
+XTeO1+vlMs/DMKS1K0iVTriXxO0yt8IWdCZ3hTwbOXF3cg2+vxVsXNBGb19IfsxoI2+SN/D9PfiR
+uUMSfC2CzQeggCVhAZttCPBUJGcv5mcvXhTvgsdKsFcK0Rrc80smP0m+fw2uuKzSxNwcKe9mvHjx
+Dvxk8eoEwJPqFNfmMKhc/gK8erxZXBSbYI5N4DY6Zhe9squ9WBPuC8WrxUWwE10i2b6RErlJvSuS
+K5M/bd6wgZPibLFovEF0YH30bYwqlcnjwYstkQ+KE3k+KL4ZuC9gxwo3DHyu+P7ZioNi1yAZVFRE
+G5cUL0+KP+fx/OJxzxpi54Ujiwwx5M17UjyfKz73eFRqtnSD9jF7XNJtrLPi3Ip5TbdxTzfn1W9g
+PC+uFPUh3YZfFb+vvImwYbk8RKl3VU1vTszfl/Rm8uJ6pLEPLeMsksnVp9A3lXc/7t7h1HRM6WYg
+27hfzs3HaR7vx2Yt2doj+PBwSw3uziz+j4PemnPbHfIi+Gixgf+oAYwTnGnBQRujCAoWe89q/aBR
+kGYtoTAiIxDSG7EJ1omNLZ4iDjG/DgwsMXgsU1vqvYHtAkpMdKgzdFiDeWozDQwt6FTLyhy5Nr7J
+UVsJMO4c3GYJ3DLO3A0sCYyzmFawzUwYzuCyMke44RUsCaxmQQYH+1ozQTYr8K0Ax5jA+EpKVjTJ
+irKyfL3ER5OiK5iEgstgdukhK8ZlkcBxt4IkNAaGQUlbWZkjGp0/KJa8NQYWg7xYUXlsv5UVZWWO
+aJOJu2IY4HwTGx+lXWSzIoNDrBSHdJUWMGyxcbbCwLfkVaQ1K3CVoVw9jgEm7wmbxfaPCWJMTMSI
+eUEYf2mmpmcy720s9pDeivVc3vxdgfwTYABlOKHZNVc3hgAAAABJRU5ErkJggg==
+
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/html
+Content-ID: <frame-AF621DA05C65CE8D784DA395930BDD95@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://archive.org/includes/donate.php?as_page=1&platform=wb&referer=http%3A//web.archive.org/web/20060722085401/http%3A//wiki.wowace.com/index.php/Gratuity-2.0_API_Documentation
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3DUTF-8"><link rel=3D"stylesheet" type=3D"text/css" href=3D"cid:css-f332ce=
+49-27af-442b-8fb3-148905de795c@mhtml.blink" /></head><body></body></html>
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-f332ce49-27af-442b-8fb3-148905de795c@mhtml.blink
+
+@charset "utf-8";
+
+.cip-genpw-icon.cip-icon-key-small { background-image: url("chrome-extensio=
+n://dafgdjggglmmknipkhngniifhplpcldb/icons/key_16x16.png"); }
+
+.cip-genpw-icon.cip-icon-key-big { background-image: url("chrome-extension:=
+//dafgdjggglmmknipkhngniifhplpcldb/icons/key_24x24.png"); }
+------MultipartBoundary--2LRmSFpLAvYberns0HVmS1EW9fQMindSiy4L8ppTQG------

@@ -5,4 +5,5 @@
 	<Include file="ParserLib\optimizer-zhTW.lua"/>
 	<Include file="ParserLib\ParserLib.lua"/>
 	<Include file="KuiSpellList\KuiSpellList.lua"/>
+	<Include file="Gratuity-2.0\Gratuity-2.0.lua"/>
 </Ui>
