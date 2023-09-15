@@ -151,7 +151,7 @@ local function OnAuraUpdate(self, elapsed)
 
 			if timeLeft <= 5 then
 				-- red text
-				self.time:SetTextColor(1, 0, 0)
+				self.time:SetTextColor(1, 0.2, 0)
 			elseif timeLeft <= 20 then
 				-- yellow text
 				self.time:SetTextColor(1, 1, 0)
@@ -168,6 +168,8 @@ local function OnAuraUpdate(self, elapsed)
 			-- used when a non-targeted mob's auras timer gets below 0
 			-- but the combat log hasn't reported that it has faded yet.
 			self.time:SetText('0')
+			self.used = nil
+			self:Hide()
 		end
 
 		if mod.db.profile.display.decimal and
