@@ -2,7 +2,7 @@
 ## Title: FuBar - |cffffffffKui Nameplates|r|cff00ff00Fu|r
 ## Notes: Adds an KNP button to FuBar.
 ## Version 1.2
-## Dependencies: Kui_Nameplates, FuBar
+## Dependencies: Kui_Nameplates
 ## Author: laytya
 ## SavedVariables: FuBar_KuiNameplatesDB
 ## X-Embeds: FuBarPlugin-2.0, Tablet-2.0, AceLocale-2.2, AceDB-2.0
