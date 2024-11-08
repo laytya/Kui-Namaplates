@@ -17,6 +17,7 @@ addon.defaultSizes = { frame = {}, font = {}, tex = {} }
 addon.frameList = {}
 addon.numFrames = 0
 addon.inCombat = nil
+addon.superwow = SpellInfo
 
 -- sizes of frame elements
 -- TODO these should be set in create.lua
@@ -143,8 +144,12 @@ do
     end
     
     function addon:StoreGUID(f, unit)
-      --  Sea.io.print("unit=",unit)
-		if not unit then return end
+        if not unit and addon.superwow then
+            unit = f.oldHealth.kuiParent:GetName(1)
+        end
+        if not unit then
+            return
+        end
 		local guid  = kui.UnitGUID(unit)
         local _, classification = kui.UnitLevel(unit)
 
@@ -273,7 +278,7 @@ do
     function addon:GetNameplates(name)
         local frames = {}
         for _, frame in pairs(addon.frameList) do
-            if frame.kui.name.text == name then
+            if frame.kui.name.text == name or frame.kui.guid == name then
                 tinsert( frames, frame.kui)
             end
         end
@@ -497,7 +502,7 @@ function addon:LSMMediaRegistered(msg, mediatype, key)
     elseif mediatype == LSM.MediaType.STATUSBAR then
         if key == self.db.profile.general.bartexture then
             self.bartexture = LSM:Fetch(mediatype, key)
-            UpdateAllFonts()
+            UpdateAllBars()
         end
     end
 end

@@ -151,7 +151,7 @@ local function OnAuraUpdate(self, elapsed)
 
 			if timeLeft <= 5 then
 				-- red text
-				self.time:SetTextColor(1, 0, 0)
+				self.time:SetTextColor(1, 0.2, 0)
 			elseif timeLeft <= 20 then
 				-- yellow text
 				self.time:SetTextColor(1, 1, 0)
@@ -168,6 +168,8 @@ local function OnAuraUpdate(self, elapsed)
 			-- used when a non-targeted mob's auras timer gets below 0
 			-- but the combat log hasn't reported that it has faded yet.
 			self.time:SetText('0')
+			self.used = nil
+			self:Hide()
 		end
 
 		if mod.db.profile.display.decimal and
@@ -402,7 +404,11 @@ function mod:Show(msg, frame)
 			3, addon.sizes.frame.aurasOffset)
 	end
 	if frame.target then
-		self:UNIT_AURA('UNIT_AURA', 'target')
+		self:UNIT_AURA('UNIT_AURA', 'target', frame)
+		return
+	end
+	if addon.superwow then
+		self:UNIT_AURA('UNIT_AURA', frame.guid, frame)
 		return
 	end
 	if frame.totem then
@@ -438,6 +444,13 @@ function mod:Hide(msg, frame)
 	end
 end
 
+function mod:Update(msg, frame)
+	if addon.superwow then
+		--self:UNIT_AURA('UNIT_AURA', frame.guid, frame)
+		return
+	end
+end
+
 -------------------------------------------------------------- event handlers --
 function mod:COMBAT_LOG_EVENT(event, info)
 	--	local castTime, event, _, guid, name, _, _, targetGUID, targetName = ...
@@ -451,13 +464,26 @@ function mod:COMBAT_LOG_EVENT(event, info)
 
 	if info.type ~= 'buff' or info.type ~= 'debuff' then return end
 
+	if (addon.superwow and LoggingCombat("RAW") == 1 ) then
+		local frame = addon:GetNameplate(info.victim)
+		if frame then
+			self:UNIT_AURA('UNIT_AURA', info.victim, frame)
+		--	pritnT(info)
+			return
+		end
+	end
+
+
+	local _, targetGUID = UnitExists("target")
+	local _, moGUID = UnitExists('mouseover')
 	if UnitExists("target") and not UnitIsDeadOrGhost("target")
-		and UnitName('target') == info.victim then
+		and ( UnitName('target') == info.victim or targetGUID == info.victim)then
 		self:UNIT_AURA('UNIT_AURA', 'target')
 	elseif UnitExists("mouseover") and UnitIsPlayer("mouseover") and not UnitIsDeadOrGhost("mouseover")
-		and UnitName('mouseover') == info.victim then
+		and (UnitName('mouseover') == info.victim or moGUID == info.victim) then
 		self:UNIT_AURA('UNIT_AURA', 'mouseover')
 	end
+
 	--	local f = addon:GetNameplate(nil, targetName)
 	--	if not f or not f.auras then return end
 
@@ -483,7 +509,7 @@ function mod:UPDATE_MOUSEOVER_UNIT(event,frame)
 end
 
 local function getDebuff(spellIcon, unit)
-	if not unit then return nil, nil end
+	if not unit or not UnitExists(unit) then return nil, nil end
 	local filter = UnitIsFriend(unit, 'player')
 	for i = 1, 32 do
 		local spellId, count
@@ -550,7 +576,10 @@ function mod:UNIT_AURA(e, u, frame)
 
 	local unitIsPlayer = UnitIsPlayer(unit)
 	local filter = UnitIsFriend(unit, 'player')
-	local buffs = mod.uc.GetBuffs(frame.name.text)
+	local _, guid = UnitExists(unit)
+	local unitName = (addon.superwow and LoggingCombat("RAW") == 1 ) and guid or frame.name.text
+	local buffs = mod.uc.GetBuffs(unitName)
+	
 	local spellId, count
 
 	for i = 1, 32 do
@@ -573,10 +602,10 @@ function mod:UNIT_AURA(e, u, frame)
 			end
 		end
 	end
-	if unitIsPlayer then
+	if unitIsPlayer or (addon.superwow and LoggingCombat("RAW") == 1 ) then
 
 		if unit then
-			for i = 1, 5 do
+			for i = 1, 32 do
 				gratuity:Erase()
    				gratuity:SetUnitBuff(unit, i)
    				local spell = gratuity:GetLine(1)
@@ -618,7 +647,7 @@ end
 
 local function OnNewBuff(event, info)
 	local frame, spellId, count, unit
-	local guid = addon:GetKnownGUID(info.caster)
+	local guid = (addon.superwow and LoggingCombat("RAW") == 1 ) and info.caster or addon:GetKnownGUID(info.caster)
 	local targetFrame = addon:GetTargetNameplate()
 	local moframe = addon:GetMouseoverNameplate()
 	 -- Player
@@ -631,6 +660,7 @@ local function OnNewBuff(event, info)
 			unit = "mouseover"
 		else
 		frame = addon:GetNameplate(guid)
+			if (addon.superwow and LoggingCombat("RAW") == 1 ) then unit =  info.caster end
 		end
 	else
 		frame = addon:GetTargetNameplate()
@@ -668,7 +698,7 @@ end
 
 local function OnEndBuff(event, info)
 	local frames, unit , frame
-	local guid = addon:GetKnownGUID(info.caster) 
+	local guid = (addon.superwow and LoggingCombat("RAW") == 1 ) and info.caster or addon:GetKnownGUID(info.caster)
 	local targetFrame = addon:GetTargetNameplate()
 	local moframe = addon:GetMouseoverNameplate()
 	
@@ -681,6 +711,7 @@ local function OnEndBuff(event, info)
 			unit = "mouseover"
 		else
 			frame = addon:GetNameplate(guid)
+			if (addon.superwow and LoggingCombat("RAW") == 1 ) then unit =  info.caster end
 		end
 	else
 		frame = addon:GetTargetNameplate()
@@ -854,6 +885,7 @@ function mod:OnEnable()
 	self:RegisterMessage('KuiNameplates_PostCreate', 'Create')
 	self:RegisterMessage('KuiNameplates_PostShow', 'Show')
 	self:RegisterMessage('KuiNameplates_PostHide', 'Hide')
+	self:RegisterMessage('KuiNameplates_PostUpdate', 'Update')
 	self:RegisterMessage('KuiNameplates_PostTarget', 'PLAYER_TARGET_CHANGED')
 	self:RegisterMessage('KuiNameplates_MouseEnter', 'UPDATE_MOUSEOVER_UNIT')
 

@@ -1,0 +1,13 @@
+{
+    "Lua.diagnostics.globals": [
+        "GameFontNormal",
+        "ChatFrame1",
+        "DEFAULT_CHAT_FRAME",
+        "CRUSHING_TRAILER",
+        "GLANCING_TRAILER",
+        "ABSORB_TRAILER",
+        "BLOCK_TRAILER",
+        "RESIST_TRAILER",
+        "VULNERABLE_TRAILER"
+    ]
+}

@@ -1,7 +1,7 @@
 ## Interface: 11200
 ## Author: Kesava, ported by laytya
 ## Title: Kui |cff9966ffNameplates|r
-## Version: beta0.7
+## Version: beta0.9
 ## Notes: Prettier, lightweight, configurable nameplates.
 ## SavedVariables: KuiNameplatesGDB
 

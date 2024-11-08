@@ -107,16 +107,17 @@ end
 
 
 function mod:OnCastbarUpdate(f, elapsed)
-	
+	local v,vv
 	if not mod.enabledState then return end
-
-	local v = mod.uc.GetCast(f.name.text)
-	local vv = mod.uc.GetHeal(f.name.text)
-	
-	if v == nil and vv ~= nil then
-		v = vv
+	if addon.superwow then
+		v = f.castbar.spellInfo
+	else
+		v = mod.uc.GetCast(f.name.text)
+		vv = mod.uc.GetHeal(f.name.text)
+	        if v == nil and vv ~= nil then
+		    v = vv
+	    end
 	end
-
 	if v ~= nil and GetTime() < v.timeEnd then
 
 		f.castbar.bar:SetMinMaxValues(0, v.timeEnd - v.timeStart)
@@ -148,8 +149,12 @@ end
 local function OnStartCast(event, info)
 	
 	local frame
-	local guid = addon:GetKnownGUID(info.caster) -- Player
-
+	local guid
+	if LoggingCombat and LoggingCombat("RAW") == 1 then
+		guid = info.caster
+	else
+		guid = addon:GetKnownGUID(info.caster) -- Player
+	end
 	if guid then
 		frame = addon:GetNameplate(guid)
 	else
@@ -169,6 +174,34 @@ local function OnEndCast(event, info)
 	local frames = addon:GetNameplates(info.caster)
 	for _, frame in pairs(frames) do
 		if frame and frame.castbar and ( frame.castbar:IsShown() and frame.castbar.name:GetText() == info.skill) then
+			OnCastbarHide(frame)
+		end
+	end
+end
+
+local function OnCastEvent()
+	local caster, target, eventType, spellId, start, duration = arg1, arg2, arg3, arg4, GetTime(), arg5 / 1000
+	if eventType == "MAINHAND" or eventType == "OFFHAND" then return end
+	local frame = addon:GetNameplate(caster)
+	if frame and frame.castbar then
+		if eventType == "START" or eventType == "CHANNEL" then
+			frame.castbar.spellInfo = nil
+			local spell, rank, icon = SpellInfo(spellId)
+			frame.castbar.spellInfo = {
+				target = target, 
+				spellId = spellId,
+				spell = spell, 
+				rank = rank, 
+				icon = icon, 
+				inverse = eventType == "CHANNEL",
+				timeStart = start, 
+				timeEnd = start + duration
+			}
+			
+			mod:OnCastbarUpdate(frame)
+		elseif eventType == "CAST" or eventType == "FAIL" 
+						and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
+			frame.castbar.spellInfo = nil
 			OnCastbarHide(frame)
 		end
 	end
@@ -399,8 +432,13 @@ function mod:OnEnable()
 --	self:RegisterMessage('KuiNameplates_TargetUpdate', 'PLAYER_TARGET_CHANGED')
 	--self:RegisterMessage('KuiNameplates_TargetUpdate', 'OnCastbarUpdate')
 
-	mod.uc.RegisterCallback(self, "NewCast", OnStartCast)
-	mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndCast)
+	if addon.superwow then
+		self:RegisterEvent("UNIT_CASTEVENT", OnCastEvent)
+	else
+	    mod.uc.RegisterCallback(self, "NewCast", OnStartCast)
+	    mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndCast)
+	end
+
 
 	local _,frame
     for _, frame in pairs(addon.frameList) do
@@ -415,4 +453,6 @@ function mod:OnDisable()
 	for _, frame in pairs(addon.frameList) do
 		self:HideCastbar(nil, frame.kui)
 	end
+	self:UnregisterEvent("UNIT_CASTEVENT")
+	self.uc.UnregisterAllCallbacks(self)
 end

@@ -523,6 +523,7 @@ uc.RegisterTable("BuffsToTrack", {
     [BS['Pyroblast']]               = { duration = 12, display = false, },
     [BS['Slow Fall']]               = { duration = 30, display = false, },
     [BS['Winter\'s Chill']]         = { duration = 15, type = 'magic', display = false, },
+    [BS['Ignite']]                  = { duration = 4, display = false,},
 
     -- PALADIN
     [BS['Blessing of Sacrifice']]     = { duration = 30, display = false, },
@@ -584,7 +585,7 @@ uc.RegisterTable("BuffsToTrack", {
     [BS['Mind-numbing Poison III']] = { duration = 14, display = false, },
     [BS['Remorseless']]             = { duration = 20, display = false, },
     [BS['Riposte']]                 = { duration = 6, type = 'physical', prio = 1 },
-    [BS["Sap"]]                     = { duration = 11, type = 'physical', prio = 3, dr = 'Disorient' },
+    [BS["Sap"]]                     = { duration = 35, type = 'physical', prio = 3, dr = 'Disorient' },
     [BS['Sprint']]                  = { duration = 15, prio = 1 },
     [BS['Kidney Shot']]             = { duration = 6, type = 'physical', prio = 2, dr = 'Controlled Stun' },
     [BS['Wound Poison IV']]         = { duration = 15, type = 'poison', display = false, },
@@ -678,7 +679,7 @@ uc.RegisterTable("DebuffRefreshingSpells", {
     [BS['Cone of Cold']] = { BS['Winter\'s Chill'], },
     [BS['Frost Nova']] = { BS['Winter\'s Chill'], },
     [BS['Frostbolt']] = { BS['Frostbolt'], BS['Winter\'s Chill'], },
-    [BS['Scorch']] = { BS['Improved Scorch'], },
+    [BS['Scorch']] = { BS['Fire Vulnerability'], },
     -- PALADIN
     [BS['Judgement of the Crusader']] = { BS['Judgement of the Crusader'], },
     [BS['Judgement of Justice']] = { BS['Judgement of Justice'], },

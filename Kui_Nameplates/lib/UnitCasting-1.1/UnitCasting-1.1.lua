@@ -1,4 +1,4 @@
-local MAJOR, MINOR = 'UnitCasting-1.1', 7
+local MAJOR, MINOR = 'UnitCasting-1.1', 10
 local uc = LibStub:NewLibrary(MAJOR, MINOR)
 if not uc then
 	-- already registered
@@ -622,9 +622,9 @@ end
 
 function uc:CastSpellByName(text, onself)
 	local _, _, spell, rank = string.find(text, '(.+)%((.+)%)')
-    local spell = spell or text
-    local rank = rank or "Max"
-	local spell = string.gsub(text, "%(.-%)$", "")
+  spell = spell or text
+  rank = rank or "Max"
+	--spell = string.gsub(text, "%(.-%)$", "")
 	catchSpellcast(spell, rank, onself)
 end
 

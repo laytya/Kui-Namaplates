@@ -51,7 +51,7 @@ end
 -- get default health bar colour, parse it into one of our custom colours
 -- and the reaction of the unit toward the player
 local function SetHealthColour(self,sticky,r,g,b)
-	if sticky then
+ --[[   if sticky then
 		-- sticky colour; override other colours
 		
 		self.health:SetStatusBarColor(r,g,b)
@@ -68,6 +68,8 @@ local function SetHealthColour(self,sticky,r,g,b)
 			self.stickyHealthColour = false
 		end
 	end
+]]
+
 	local r, g, b
 	local classcolor = nil
 	
@@ -77,7 +79,7 @@ local function SetHealthColour(self,sticky,r,g,b)
 		r, g, b = self.oldHealth:GetStatusBarColor()
 	end
 		
-	if self.health.reset  or
+    if true or self.health.reset or
        (not classcolor and  (r ~= self.health.r or  g ~= self.health.g or b ~= self.health.b)) or
         (classcolor and (classcolor.r ~= self.health.r or classcolor.g ~= self.health.g or classcolor.b ~= self.health.b))
     then
@@ -108,10 +110,24 @@ local function SetHealthColour(self,sticky,r,g,b)
 				r, g, b = unpack(addon.db.profile.general.reactioncolours.playercol)
         elseif r > .9 and g == 0 and b == 0 then
             -- enemy NPC
+            if addon.TankModule and addon.TankMode then
+                r, g, b  = addon.TankModule:UpdateHealthbarColor(self)
+            else
+                r, g, b = unpack(addon.db.profile.general.reactioncolours.hatedcol)
+            end
+            if r == nil then
             r, g, b = unpack(addon.db.profile.general.reactioncolours.hatedcol)
+            end
         elseif (r + g) > 1.8 and b == 0 then
             -- neutral NPC
+            if addon.TankModule and addon.TankMode then
+                r, g, b  = addon.TankModule:UpdateHealthbarColor(self)
+            else
             r, g, b = unpack(addon.db.profile.general.reactioncolours.neutralcol)
+            end
+            if r == nil then
+               r, g, b = unpack(addon.db.profile.general.reactioncolours.neutralcol) 
+            end
         elseif r < .6 and (r+g) == (r+b) then
             -- tapped NPC
             r, g, b = unpack(addon.db.profile.general.reactioncolours.tappedcol)
@@ -518,12 +534,13 @@ local function UpdateFrame(self)
 
     -- ensure a frame is still stored for this name, as name conflicts cause
     -- it to be erased when another might still exist
-   -- addon:StoreName(self)
-
+    if addon.superwow then
+        addon:StoreGUID(self)
+    end
     -- reset/update health bar colour
     --self:SetHealthColour()
 	
-	if UnitName("target") == nil and self.guid == nil then 
+    if not addon.superwow and UnitName("target") == nil and self.guid == nil then
 		--Set Name text and save it in a list
 		self.scanningPlayers = true
 		Zorlen_Player_Scan = true
@@ -551,11 +568,13 @@ local function UpdateFrame(self)
         addon:SendMessage('KuiNameplates_PostShow', 1, self)
         self.DispatchPostShow = nil
     end
+
+    addon:SendMessage('KuiNameplates_PostUpdate', 1, self)
 end
 
 -- stuff that needs to be updated often
 local function UpdateFrameCritical(self)
-
+    self:SetHealthColour()
     ------------------------------------------------------------------ Threat --
     if self.glow:IsVisible() then
         self.glow.wasVisible = true
@@ -564,7 +583,7 @@ local function UpdateFrameCritical(self)
         self.glow.r, self.glow.g, self.glow.b = self.oldName:GetTextColor() --self.glow:GetVertexColor()
         self:SetGlowColour(self.glow.r, self.glow.g, self.glow.b)
 
-        if not self.friend and addon.TankModule and addon.TankMode then
+        --[[if  not self.friend and addon.TankModule and addon.TankMode then
             -- in tank mode; is the default glow red (are we tanking)?
 			self.hasThreat = true
 			self.holdingThreat = self.glow.r > .9 and (self.glow.g + self.glow.b) < .1
@@ -577,7 +596,7 @@ local function UpdateFrameCritical(self)
 				-- losing/gaining threat
 				self:SetHealthColour(true, unpack(addon.TankModule.db.profile.midcolour))
 			end
-        end
+        end]]
     elseif self.glow.wasVisible then
         self.glow.wasVisible = nil
 
@@ -657,6 +676,7 @@ local function UpdateFrameCritical(self)
         end
     end
 
+    addon:SendMessage('KuiNameplates_PostCritUpdate', 1, self)
     --------------------------------------------------------------- Mouseover --
     --[[ todo 
  

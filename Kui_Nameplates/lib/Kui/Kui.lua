@@ -9,7 +9,7 @@ end
 local getn = table.getn
 local len, format, byte = string.len, string.format, string.byte
 local floor, ceil, mod = math.floor, math.ceil, math.mod
-
+local superwow = SpellInfo
 --------------------------------------------------------------- media / files --
 local media = "Interface\\AddOns\\Kui_Media\\"
 kui.m = {
@@ -129,12 +129,17 @@ end
 
 kui.UnitGUID = function( unit)
 	if not unit then return nil end
-	local uname = UnitName(unit)
-	if not uname then return end
-	local ulevel = kui.UnitLevel(unit, true)
-	local _, uclass = UnitClass(unit)	
-		
-	return kui.StringHash((uname or "")..(ulevel or "")..(uclass or "")..(kui.UnitIsPet(unit) and "Pet" or ""))
+	if superwow then
+		local _, guid = UnitExists(unit)
+		return guid
+	else 
+		local uname = UnitName(unit)
+		if not uname then return end
+		local ulevel = kui.UnitLevel(unit, true)
+		local _, uclass = UnitClass(unit)	
+			
+		return kui.StringHash((uname or "")..(ulevel or "")..(uclass or "")..(kui.UnitIsPet(unit) and "Pet" or ""))
+	end
 end
 
 kui.ModifyFontFlags = function(fs, io, flag)
