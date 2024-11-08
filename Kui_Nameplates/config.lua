@@ -492,7 +492,7 @@ do
             args = opts
         }
     end
-
+	
 	function addon:InitDBOptions(dbOptions, name)
 		 options.args[name] = dbOptions
 	end

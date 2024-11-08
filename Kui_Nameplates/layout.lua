@@ -18,7 +18,7 @@ local _G = getfenv()
 local kui = LibStub('Kui-1.0')
 local LSM = LibStub('LibSharedMedia-3.0')
 local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
-local slowUpdateTime, critUpdateTime = 1, 1/60
+local slowUpdateTime, critUpdateTime = 1, 1 / 60
 
 local AceCore = LibStub("AceCore-3.0")
 local new, del = AceCore.new, AceCore.del
@@ -28,13 +28,13 @@ local strsplit = AceCore.strsplit
 --------------------------------------------------------------------- globals --
 local select, strfind, pairs, ipairs, unpack, tinsert, type, floor, tonumber = select, strfind, pairs, ipairs, unpack,
     tinsert, type, math.floor, tonumber
-local UnitExists=UnitExists
+local UnitExists = UnitExists
 local getn, setn = table.getn, table.setn
 ------------------------------------------------------------- Frame functions --
 local function SetFrameCentre(f)
     -- using CENTER breaks pixel-perfectness with oddly sized frames
     -- .. so we have to align frames manually.
-    local w,h = f:GetWidth(),f:GetHeight()
+    local w, h = f:GetWidth(), f:GetHeight()
     if f.IN_NAMEONLY then
         f.x = floor((w / 2) - (addon.sizes.frame.twidth / 2))
         f.y = floor((h / 2) - 1)
@@ -72,9 +72,9 @@ local function SetHealthColour(self,sticky,r,g,b)
 
 	local r, g, b
 	local classcolor = nil
-	
+
 	if self.guid and addon:GetClass(self.guid) and not self.pet then
-		classcolor = kui.GetClassColour(addon:GetClass(self.guid))	
+        classcolor = kui.GetClassColour(addon:GetClass(self.guid))
 	else
 		r, g, b = self.oldHealth:GetStatusBarColor()
 	end
@@ -83,9 +83,9 @@ local function SetHealthColour(self,sticky,r,g,b)
        (not classcolor and  (r ~= self.health.r or  g ~= self.health.g or b ~= self.health.b)) or
         (classcolor and (classcolor.r ~= self.health.r or classcolor.g ~= self.health.g or classcolor.b ~= self.health.b))
     then
-		
+
         -- store the default colour
-        if classcolor then 
+        if classcolor then
 			self.health.r, self.health.g, self.health.b = classcolor.r, classcolor.g, classcolor.b
 		else
         self.health.r, self.health.g, self.health.b = r, g, b
@@ -106,7 +106,7 @@ local function SetHealthColour(self,sticky,r,g,b)
             -- friendly player
             self.friend = true
             self.player = true
-			
+
 				r, g, b = unpack(addon.db.profile.general.reactioncolours.playercol)
         elseif r > .9 and g == 0 and b == 0 then
             -- enemy NPC
@@ -162,16 +162,16 @@ end
 ---------------------------------------------------- Update health bar & text --
 local OnHealthValueChanged
 do
-	local rules,rule,big,sml,condition,display,pattern
+    local rules, rule, big, sml, condition, display, pattern
 	OnHealthValueChanged = function(oldBar, curr)
 		if oldBar.oldHealth then
 			-- allow calling this as a function of the frame
 			oldBar = oldBar.oldHealth
 			curr = oldBar:GetValue()
 		end
-	
+
 		local frame = oldBar.kuiParent.kui --:GetParent():GetParent().kui
-		big,sml = nil,nil
+        big, sml = nil, nil
 
 		-- store values for external access
 		frame.health.min, frame.health.max = oldBar:GetMinMaxValues()
@@ -180,8 +180,8 @@ do
 
 		frame.health:SetMinMaxValues(frame.health.min, frame.health.max)
 		frame.health:SetValue(frame.health.curr)
-        
---[[        
+
+        --[[        
         -- if "curr" is percentage values
 		frame.health.pmin, frame.health.pmax = oldBar:GetMinMaxValues()
 		
@@ -195,7 +195,7 @@ do
         frame.health:SetMinMaxValues(frame.health.pmin, frame.health.pmax)
 		frame.health:SetValue(frame.health.percent)
 ]]
---[[
+        --[[
 		if  MobHealth_PPP  then
 			if MobHealth_GetTargetCurHP and frame.target then
 				frame.health.curr = MobHealth_GetTargetCurHP()
@@ -211,8 +211,8 @@ do
 				end
 			end
 		end
-]]		
-		
+]]
+
 
 		-- select correct health display pattern
 		if frame.friend then
@@ -238,7 +238,7 @@ do
 			end
 			if condition then
 				if display == 'd' then
-					big = '-'..kui.num(frame.health.max - frame.health.curr)
+                    big = '-' .. kui.num(frame.health.max - frame.health.curr)
 					sml = kui.num(frame.health.curr)
 				elseif display == 'm' then
 					big = kui.num(frame.health.max)
@@ -263,26 +263,26 @@ do
 end
 ------------------------------------------------------- Frame script handlers --
 local function OnFrameEnter(self)
-   -- self = self.kuiParent
+    --self = self.kuiParent
 
     if self.kui then
         self = self.kui
     else
         return
     end
-    --[[
-  local tt ={}
-    for i=1,GameTooltip:NumLines() do 
-        local mytext=_G["GameTooltipTextLeft"..i] 
-        local text=mytext:GetText()
-        tinsert(tt,text)
+--[[
+    local tt = {}
+    for i = 1, GameTooltip:NumLines() do
+        local mytext = _G["GameTooltipTextLeft" .. i]
+        local text = mytext:GetText()
+        tinsert(tt, text)
     end
     printT(tt)
 -- ]]
 
 
     if self.guid == nil and UnitName('mouseover') == self.name.text then
-        addon:StoreGUID(self, 'mouseover')        
+        addon:StoreGUID(self, 'mouseover')
     end
 
     self.highlighted = true
@@ -296,8 +296,8 @@ local function OnFrameEnter(self)
 	else
 		self.tapped = false
 	end
-	
-	
+
+
     if addon.db.profile.hp.mouseover then
         self.health.p:Show()
         if self.health.mo then self.health.mo:Show() end
@@ -333,19 +333,19 @@ local function OnFrameShow(self)
     local f = self.kui
     --local trivial = f.firstChild:GetScale() < 1
 
-    
+
 
     -- classifications
     if not trivial and f.level.enabled then
         if f.boss:IsVisible() then
             f.level:SetText('Boss')
-            f.level:SetTextColor(1,.2,.2)
+            f.level:SetTextColor(1, .2, .2)
             f.level:Show()
         end
     else
         f.level:Hide()
     end
---[[
+    --[[
     if f.state:IsVisible() then
         -- hide the elite/rare dragon
         f.state:Hide()
@@ -392,7 +392,7 @@ local function OnFrameShow(self)
 
     f.DoShow = true
     -- dispatch the PostShow message after the first UpdateFrame
-    f.DispatchPostShow = true 
+    f.DispatchPostShow = true
 end
 
 local function OnFrameHide(self)
@@ -539,7 +539,7 @@ local function UpdateFrame(self)
     end
     -- reset/update health bar colour
     --self:SetHealthColour()
-	
+
     if not addon.superwow and UnitName("target") == nil and self.guid == nil then
 		--Set Name text and save it in a list
 		self.scanningPlayers = true
@@ -550,7 +550,7 @@ local function UpdateFrame(self)
 		self.scanningPlayers = false
 		Zorlen_Player_Scan = false
 	end
-	
+
     if self.classification and self.classification ~= "" and tonumber(self.level:GetText()) ~= nil then
         self.level:SetText(self.level:GetText() .. self.classification)
     end
@@ -578,7 +578,7 @@ local function UpdateFrameCritical(self)
     ------------------------------------------------------------------ Threat --
     if self.glow:IsVisible() then
         self.glow.wasVisible = true
-		
+
         -- set glow to the current default ui's colour
         self.glow.r, self.glow.g, self.glow.b = self.oldName:GetTextColor() --self.glow:GetVertexColor()
         self:SetGlowColour(self.glow.r, self.glow.g, self.glow.b)
@@ -623,7 +623,7 @@ local function UpdateFrameCritical(self)
             end
 
             if self.targetDelay >= 1 then
-	 
+
 				-- this is almost probably certainly maybe the target
                 -- (the delay may not be long enough, but it already feels
                 -- laggy so i'd prefer not to make it longer)
@@ -679,7 +679,7 @@ local function UpdateFrameCritical(self)
     addon:SendMessage('KuiNameplates_PostCritUpdate', 1, self)
     --------------------------------------------------------------- Mouseover --
     --[[ todo 
- 
+
 	if MouseIsOver(self) then
         if not self.highlighted then
             OnFrameEnter(self)
@@ -709,7 +709,7 @@ function addon:NameOnlyEnable(f)
     self:UpdateName(f, false)
     self:UpdateTargetGlow(f, false)
 end
- 
+
 function addon:NameOnlyDisable(f)
     if not f.IN_NAMEONLY then return end
     f.IN_NAMEONLY = nil
@@ -725,11 +725,11 @@ end
 
 --------------------------------------------------------------- KNP functions --
 function addon:IsNameplate(frame)
-    
+
 	local overlayRegion = frame:GetRegions()
-    return ( overlayRegion and overlayRegion:GetObjectType() == "Texture" and
+    return (overlayRegion and overlayRegion:GetObjectType() == "Texture" and
             overlayRegion:GetTexture() == "Interface\\Tooltips\\Nameplate-Border")
-	
+
 	--[[
 	if frame:GetName() and strfind(frame:GetName(), '^NamePlate%d') then
         local nameTextChild = select(2, frame:GetChildren())
@@ -749,7 +749,7 @@ function addon:InitFrame(frame)
     f.fontObjects = {}
 
     -- fetch default ui's objects
-	
+
 	local healthBar = frame:GetChildren()
 	local borderRegion, glowRegion, nameTextRegion, levelTextRegion, bossIconRegion, raidIconRegion = frame:GetRegions()
     --[[  ]]
@@ -763,17 +763,17 @@ function addon:InitFrame(frame)
     -- ]]
     f.firstChild = healthBar
 
-    
+
     f.glow       = glowRegion
     f.boss       = bossIconRegion
---    f.state      = stateIconRegion
+    --    f.state      = stateIconRegion
     f.level      = levelTextRegion
     f.icon       = raidIconRegion
---    f.spell      = spellIconRegion
---    f.spellName  = spellNameRegion
---    f.shield     = shieldedRegion
+    --    f.spell      = spellIconRegion
+    --    f.spellName  = spellNameRegion
+    --    f.shield     = shieldedRegion
     f.oldHealth  = healthBar
---    f.oldCastbar = castBar
+    --    f.oldCastbar = castBar
 
     f.oldName = nameTextRegion
     f.oldName:Hide()
@@ -793,8 +793,8 @@ function addon:InitFrame(frame)
 
     ------------------------------------------------------------------ Layout --
     if self.db.profile.general.fixaa and addon.uiscale then
-        f:SetWidth(frame:GetWidth()/addon.uiscale);
-		f:SetHeight( frame:GetHeight()/addon.uiscale)
+        f:SetWidth(frame:GetWidth() / addon.uiscale);
+        f:SetHeight(frame:GetHeight() / addon.uiscale)
         f:SetScale(addon.uiscale)
 
         f:SetPoint('BOTTOMLEFT', UIParent)
@@ -808,7 +808,7 @@ function addon:InitFrame(frame)
         f:SetPoint("TOP", frame, "TOP", 0, 0)
     end
 
-	
+
     f:SetFrameStrata(self.db.profile.general.strata)
     f:SetFrameLevel(0)
 
@@ -820,7 +820,7 @@ function addon:InitFrame(frame)
     -- overlay (text is parented to this) --------------------------------------
     f.overlay = CreateFrame('Frame', nil, f)
     f.overlay:SetAllPoints(f.health)
-    f.overlay:SetFrameLevel(f.health:GetFrameLevel()+1)
+    f.overlay:SetFrameLevel(f.health:GetFrameLevel() + 1)
 
     self:CreateHighlight(frame, f)
     self:CreateHealthText(frame, f)
@@ -844,7 +844,7 @@ function addon:InitFrame(frame)
 
     -- raid icon ---------------------------------------------------------------
     f.icon:SetParent(f.overlay)
-    f.icon:SetWidth(addon.sizes.tex.raidicon) 
+    f.icon:SetWidth(addon.sizes.tex.raidicon)
 	f.icon:SetHeight(addon.sizes.tex.raidicon)
     f.icon:ClearAllPoints()
     f.icon:SetPoint('LEFT', f.health, 'RIGHT', 5, 1)
@@ -853,14 +853,14 @@ function addon:InitFrame(frame)
     -- used by these scripts
     f.oldHealth.kuiParent = frame
 
-    addon:HookScript(f.oldHealth,'OnShow', function() OnFrameShow(this) end)
-    addon:HookScript(f.oldHealth,'OnHide', function() OnFrameHide(this) end)
-    addon:HookScript(f.oldHealth,'OnUpdate',function() OnFrameUpdate(this, arg1) end)
+    addon:HookScript(f.oldHealth, 'OnShow', function() OnFrameShow(this) end)
+    addon:HookScript(f.oldHealth, 'OnHide', function() OnFrameHide(this) end)
+    addon:HookScript(f.oldHealth, 'OnUpdate', function() OnFrameUpdate(this, arg1) end)
 
     addon:HookScript(frame, 'OnEnter', function() OnFrameEnter(this, arg1) end)
     addon:HookScript(frame, 'OnLeave', function() OnFrameLeave(this, arg1) end)
 
-    addon:HookScript(f.oldHealth,'OnValueChanged', function() OnHealthValueChanged(this, arg1) end)
+    addon:HookScript(f.oldHealth, 'OnValueChanged', function() OnHealthValueChanged(this, arg1) end)
 
     ------------------------------------------------------------ Finishing up --
     addon:SendMessage('KuiNameplates_PostCreate', 1, f)
@@ -888,7 +888,7 @@ end
 do
     local WorldFrame = WorldFrame
     function addon:OnUpdate()
-        local frames = { WorldFrame:GetChildren()}
+        local frames = { WorldFrame:GetChildren() }
 
         if getn(frames) ~= self.numFrames then
             local f

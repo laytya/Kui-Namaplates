@@ -362,7 +362,7 @@ local function IsTotem(name)
 end
 
 function mod:Show(msg, frame)
-	
+
 	local totem = IsTotem(frame and frame.name.text or "")
 	frame.totem = nil
 
@@ -453,26 +453,15 @@ end
 
 -------------------------------------------------------------- event handlers --
 function mod:COMBAT_LOG_EVENT(event, info)
-	--	local castTime, event, _, guid, name, _, _, targetGUID, targetName = ...
-	--	if not guid then return end
-	--	if not auraEvents[event] then return end
-	--if guid ~= kui.UnitGUID('player') then return end
-
-	--print(event..' from '..name..' on '..targetName)
-
-	-- fetch the subject's nameplate
-
 	if info.type ~= 'buff' or info.type ~= 'debuff' then return end
 
 	if (addon.superwow and LoggingCombat("RAW") == 1 ) then
 		local frame = addon:GetNameplate(info.victim)
 		if frame then
 			self:UNIT_AURA('UNIT_AURA', info.victim, frame)
-		--	pritnT(info)
 			return
 		end
 	end
-
 
 	local _, targetGUID = UnitExists("target")
 	local _, moGUID = UnitExists('mouseover')
@@ -483,25 +472,13 @@ function mod:COMBAT_LOG_EVENT(event, info)
 		and (UnitName('mouseover') == info.victim or moGUID == info.victim) then
 		self:UNIT_AURA('UNIT_AURA', 'mouseover')
 	end
-
-	--	local f = addon:GetNameplate(nil, targetName)
-	--	if not f or not f.auras then return end
-
-	--print('(frame for guid: '..targetGUID..')')
-
-	--	local spId = select(12, ...)
-
-	--	if f.auras.spellIds[spId] then
-	--		f.auras.spellIds[spId]:Hide()
-	--	end
 end
 
 function mod:PLAYER_TARGET_CHANGED(event, frame)
-	--printT({"PLAYER_TARGET_CHANGED", event, UnitName('target'), frame.name.text})
 	self:UNIT_AURA('UNIT_AURA', 'target', frame)
 end
 
-function mod:UPDATE_MOUSEOVER_UNIT(event,frame)
+function mod:UPDATE_MOUSEOVER_UNIT(event, frame)
 	--if UnitIsPlayer("mouseover") then
 	self:UNIT_AURA('UNIT_AURA', 'mouseover', frame)
 	--printT({"UPDATE_MOUSEOVER_UNIT",UnitName('mouseover'), frame.name.text})
@@ -534,7 +511,7 @@ local function getDebuff(spellIcon, unit)
 		end 
 
 		
-end
+	end
 	return nil, nil
 end
 
@@ -562,7 +539,7 @@ local function addAura(spell, buffs, frame)
 end
 
 function mod:UNIT_AURA(e, u, frame)
-	
+
 	local unit = u and u or arg1
 	if not frame then
 	if unit == 'target' then
@@ -651,8 +628,8 @@ local function OnNewBuff(event, info)
 	local targetFrame = addon:GetTargetNameplate()
 	local moframe = addon:GetMouseoverNameplate()
 	 -- Player
-	if guid then 
-		if targetFrame and targetFrame.guid ==  guid then 
+	if guid then
+		if targetFrame and targetFrame.guid == guid then
 			frame = targetFrame
 			unit = "target"
 		elseif moframe and moframe.guid ==  guid then
@@ -697,13 +674,13 @@ local function OnNewBuff(event, info)
 end
 
 local function OnEndBuff(event, info)
-	local frames, unit , frame
+	local frames, unit, frame
 	local guid = (addon.superwow and LoggingCombat("RAW") == 1 ) and info.caster or addon:GetKnownGUID(info.caster)
 	local targetFrame = addon:GetTargetNameplate()
 	local moframe = addon:GetMouseoverNameplate()
-	
+
 	if guid then
-		if targetFrame and targetFrame.guid ==  guid then 
+		if targetFrame and targetFrame.guid == guid then
 			frame = targetFrame
 			unit = "target"
 		elseif moframe and moframe.guid ==  guid then
@@ -721,8 +698,8 @@ local function OnEndBuff(event, info)
 		end
 	end
 	if frame and frame.player and event == "EndDRBuff" then
-		frames = {frame}
-	elseif event == "EndDRBuff" then 
+		frames = { frame }
+	elseif event == "EndDRBuff" then
 		return
 	else
 		frames = addon:GetNameplates(info.caster)
@@ -889,7 +866,7 @@ function mod:OnEnable()
 	self:RegisterMessage('KuiNameplates_PostTarget', 'PLAYER_TARGET_CHANGED')
 	self:RegisterMessage('KuiNameplates_MouseEnter', 'UPDATE_MOUSEOVER_UNIT')
 
---	self:RegisterEvent('UNIT_AURA')
+	--	self:RegisterEvent('UNIT_AURA')
 	--	self:RegisterEvent('PLAYER_TARGET_CHANGED')
 	--self:RegisterEvent('UPDATE_MOUSEOVER_UNIT')
 	--self:RegisterEvent('COMBAT_LOG_EVENT_UNFILTERED')
@@ -917,7 +894,7 @@ function mod:OnEnable()
 end
 
 function mod:OnDisable()
---	self:UnregisterEvent('UNIT_AURA')
+	--	self:UnregisterEvent('UNIT_AURA')
 	self:UnregisterEvent('PLAYER_TARGET_CHANGED')
 	self:UnregisterEvent('UPDATE_MOUSEOVER_UNIT')
 	self.parser:UnregisterAllEvents("KNP_Auras")

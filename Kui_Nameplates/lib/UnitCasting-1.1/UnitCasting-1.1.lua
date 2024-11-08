@@ -1,4 +1,4 @@
-local MAJOR, MINOR = 'UnitCasting-1.1', 10
+local MAJOR, MINOR = 'UnitCasting-1.1', 11
 local uc = LibStub:NewLibrary(MAJOR, MINOR)
 if not uc then
 	-- already registered
@@ -76,7 +76,12 @@ buff.__index        = buff
 buffQueue.__index   = buffQueue
 dreturns.__index    = dreturns
 
-local playerName = UnitName 'player'
+local _, playerName
+if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+	_, playerName = UnitExists('player')
+else
+	playerName = UnitName('player')
+end
 
 Cast.create = function(caster, spell, info, timeMod, time, inv)
 	local acnt = {}
@@ -400,10 +405,10 @@ local forceHideTableItem = function(tab, caster, spell)
 	local time = GetTime()
 	for k, v in pairs(tab) do
 		if (v.caster == caster) and (time < v.timeEnd) then
-			if (spell ~= nil) then 
-				if v.spell == spell then 
+			if (spell ~= nil) then
+				if v.spell == spell then
 					v.timeEnd = time -- 10000 end
-				end 
+				end
 			else
 				v.timeEnd = time -- 10000 -- force hide
 			end
@@ -455,7 +460,7 @@ end
 
 local gainDebuff = function(info)
 	local victim = info.victim == ParserLib_SELF and playerName or info.victim
-	
+
 	-- debuffs to be displayed
 	if uc.BuffsToTrack[info.skill] then
 		newbuff(victim, info.skill, info.amountRank, false)
@@ -499,7 +504,7 @@ local hitCrits = function(info)
 	if uc.InstantSpellcastsToTrack[info.skill] then
 		forceHideTableItem(casts, source, nil)
 	end
-	
+
 	if uc.ChanneledSpellcastsToTrack[info.skill] then
 		newCast(source, info.skill, true)
 	end
@@ -514,10 +519,10 @@ local hitCrits = function(info)
 		refreshBuff(victim, info.skill)
 	end
 
-	uc.callbacks:Fire("Hit",1,info)
+	uc.callbacks:Fire("Hit", 1, info)
 end
 
-local fear = function(msg, caster )
+local fear = function(msg, caster)
 	local fear = '(.+) attempts to run away in fear!'
 	local ffear = string.find(msg, fear)
 	if ffear then
@@ -529,7 +534,7 @@ end
 
 local handleHeal = function(info)
 	if uc.InstantSpellcastsToTrack[info.skill] then
-		forceHideTableItem(casts, info.source == ParserLib_SELF and playerName or info.source , nil)
+		forceHideTableItem(casts, info.source == ParserLib_SELF and playerName or info.source, nil)
 		return
 	end
 	if info.isDOT and uc.ChanneledHealsSpellcastsToTrack[info.skill] then
@@ -597,7 +602,11 @@ local function catchSpellcast(spell, rank, onself)
 			duration = info.duration
 		end
 		if UnitExists("target") then
+			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+				unit, target = UnitExists("target")
+			else
 			target = GetUnitName("target")
+		end
 		end
 		queueBuff(target, spell, info, duration)
 	end
@@ -629,26 +638,41 @@ function uc:CastSpellByName(text, onself)
 end
 
 function uc:SpellTargetUnit(unit)
+	local _
 	for k, v in pairs(buffQueueList) do
 		if v.target == "" then
+			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+				_, v.target = UnitExists(unit)
+			else
 			v.target = UnitName(unit)
 		end
+	end
 	end
 end
 
 function uc:TargetUnit(unit)
+	local _
 	for k, v in pairs(buffQueueList) do
 		if v.target == "" then
+			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+				_, v.target = UnitExists(unit)
+			else
 			v.target = UnitName(unit)
 		end
+	end
 	end
 end
 
 function uc:OnMouseDown()
+	local _
 	for k, v in pairs(buffQueueList) do
 		if v.target == "" and arg1 == "LeftButton" and UnitExists("mouseover") then
+			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+				_, v.target = UnitExists("mouseover")
+			else
 			v.target = UnitName("mouseover")
 		end
+	end
 	end
 end
 

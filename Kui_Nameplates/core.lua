@@ -153,7 +153,7 @@ do
 		local guid  = kui.UnitGUID(unit)
         local _, classification = kui.UnitLevel(unit)
 
-		
+
         if not guid then return end
 		
         if f.guid and loadedGUIDs[f.guid] and unit ~= 'mouseover' then
@@ -519,7 +519,7 @@ function addon:OnInitialize()
     -- enable ace3 profiles
 	local optionstable = LibStub('AceDBOptions-3.0'):GetOptionsTable(self.db)
     addon:InitDBOptions(optionstable, "Profiles")
-    -- self.ac.RegisterOptionsTable(self, 'kuinameplates-profiles', optionstable)
+   --self.ac.RegisterOptionsTable(self, 'kuinameplates-profiles', optionstable)
    --self.acd:AddToBlizOptions('kuinameplates','Profiles', 'kuinameplates', 'Profiles')
     
     self.db.RegisterCallback(self, 'OnProfileChanged', 'ProfileChanged')

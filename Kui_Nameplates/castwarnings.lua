@@ -79,8 +79,6 @@ function mod:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 			guid, name = targetGUID, targetName
 		end
 		
-		--guid, name = UnitGUID('target'), GetUnitName('target') -- [DEBUG]
-
 		if self.db.profile.useNames and name then
 			name = name -- and name:gsub('%-.+$', '') -- remove realm names
 		else

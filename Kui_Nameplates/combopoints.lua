@@ -80,15 +80,8 @@ end
 -------------------------------------------------------------- Event handlers --
 
 function mod:PLAYER_COMBO_POINTS() --event,unit)
-	-- only works for player > target
---	if unit ~= 'player' then return end
-
-
-
 	local guid, name = kui.UnitGUID('target'), UnitName('target')
-	--local name =  UnitName('target')
 	local f = addon:GetNameplate(guid, name)
-	--Sea.io.printTable2({guid, name, f and f.name.text, f})
 	self:OnUpdateTargetFrame("",f)
 end
 ----------------------------------------------------------------------UpdateTarget
