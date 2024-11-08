@@ -80,7 +80,7 @@ function addon:UpdateHealthBar(f, trivial)
     f.health:ClearAllPoints()
     if f.IN_NAMEONLY then
         f.health:SetWidth(self.sizes.frame.twidth-2)
-	f.health:SetHeight(2)
+	    f.health:SetHeight(2)
         f.health:SetPoint('BOTTOMLEFT', f.x+1, f.y+1)
     elseif trivial then
 		f.health:SetWidth(self.sizes.frame.twidth-2)
@@ -272,4 +272,83 @@ function addon:UpdateTargetGlow(f, trivial)
 		f.targetGlow:SetWidth(self.sizes.tex.targetGlowW)
 		f.targetGlow:SetHeight(self.sizes.tex.targetGlowH)
     end
+end
+
+-- target arrows ###############################################################
+do
+    local TARGET_ARROWS 
+    local function Arrows_Hide(self)
+        self.l:Hide()
+        self.r:Hide()
+    end
+    local function Arrows_Show(self)
+        self.l:Show()
+        self.r:Show()
+    end
+    local function Arrows_SetVertexColor(self, r, g, b, a)
+        self.l:SetVertexColor( r, g, b, a)
+        self.l:SetAlpha(1)
+        self.r:SetVertexColor( r, g, b, a)
+        self.r:SetAlpha(1)
+    end
+    local function Arrows_UpdatePosition(self)
+        self.l:SetPoint('RIGHT',self.parent.bg,'LEFT',3,0) --TARGET_ARROWS_INSET
+        self.r:SetPoint('LEFT',self.parent.bg,'RIGHT',-3,0)
+    end
+    local function Arrows_SetSize(self,size)
+        self.l:SetHeight(size)
+        self.l:SetWidth(size)
+        self.r:SetHeight(size)
+        self.r:SetWidth(size)
+        self:UpdatePosition()
+    end
+
+    local function UpdateTargetArrows(f)
+        if not TARGET_ARROWS or f.IN_NAMEONLY then
+            f.TargetArrows:Hide()
+            return
+        end
+
+        if f.target then
+            f.TargetArrows.l:SetTexture("Interface\\AddOns\\Kui_Nameplates\\media\\targetarrows3")
+            f.TargetArrows.r:SetTexture("Interface\\AddOns\\Kui_Nameplates\\media\\targetarrows3")
+            f.TargetArrows:SetVertexColor(.3, .7, 1, .6)
+            f.TargetArrows:SetSize(28)
+            f.TargetArrows:Show()
+        else
+            f.TargetArrows:Hide()
+        end
+    end
+    function addon:CreateTargetArrows(f)
+        TARGET_ARROWS = self.db.profile.general.targetarrows
+        if not TARGET_ARROWS or f.TargetArrows then return end
+
+        local left = f.health:CreateTexture(nil,'ARTWORK',nil,4)
+        left:SetBlendMode('BLEND')
+
+        local right = f.health:CreateTexture(nil,'ARTWORK',nil,4)
+        right:SetBlendMode('BLEND')
+        right:SetTexCoord(1,0,0,1)
+
+        local arrows = {
+            Hide = Arrows_Hide,
+            Show = Arrows_Show,
+            SetVertexColor = Arrows_SetVertexColor,
+            UpdatePosition = Arrows_UpdatePosition,
+            SetSize = Arrows_SetSize,
+            parent = f,
+            l = left,
+            r = right,
+        }
+
+        f.TargetArrows = arrows
+        f.UpdateTargetArrows = UpdateTargetArrows
+    end
+    function addon:configChangedTargetArrows()
+        if not TARGET_ARROWS then return end
+        for _,f in addon.frameList do
+            self:CreateTargetArrows(f)
+        end
+    end
+
 end

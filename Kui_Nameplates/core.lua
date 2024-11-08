@@ -144,14 +144,14 @@ do
     end
     
     function addon:StoreGUID(f, unit)
-        if not unit and addon.superwow then
+	if not unit and addon.superwow then
             unit = f.oldHealth.kuiParent:GetName(1)
         end
         if not unit then
             return
         end
 		local guid  = kui.UnitGUID(unit)
-        local _, classification = kui.UnitLevel(unit)
+		local _, classification = kui.UnitLevel(unit)
 
 
         if not guid then return end
@@ -166,7 +166,7 @@ do
         end
 		
         f.guid = guid
-        f.classification = classification
+		f.classification = classification
 		
         loadedGUIDs[guid] = f
         f.pet = nil
@@ -188,7 +188,7 @@ do
                 end 
             end
             if not found then
-            tinsert(knownIndex, f.name.text)
+                tinsert(knownIndex, f.name.text)
             end
 			local _
 			_, knownClass[guid] = UnitClass(unit)
@@ -202,15 +202,15 @@ do
                 knownGUIDs[dguid] = nil
             end
         
-        elseif loadedNames[f.name.text] == f then
+     elseif loadedNames[f.name.text] == f then
             -- force the registered f for this name to change
             loadedNames[f.name.text] = nil
         end
         if kui.UnitIsPet(unit) then
-            f.pet = true
-            self:NameOnlyEnable(f)
-        end 
-    end
+                f.pet = true
+                self:NameOnlyEnable(f)
+            end 
+        end
 
     function addon:StoreName(f)
         if not f.name.text or f.guid then return end
@@ -259,11 +259,11 @@ do
     end
 
 	function addon:GetTargetNameplate()
-        for _, frame in pairs(addon.frameList) do
-			if frame.kui.target then
-				return frame.kui
-			end
+            for _, frame in pairs(addon.frameList) do
+		if frame.kui.target then
+			return frame.kui
 		end
+	    end
 	end
 
     function addon:GetMouseoverNameplate()
@@ -489,6 +489,13 @@ addon.configChangedFuncs.targetglowcolour = function(frame, val)
     frame.targetGlow:SetVertexColor(unpack(val))
 end
 
+addon.configChangedFuncs.targetarrows = function(frame, val)
+    if val then
+        -- create arrows if needed
+        addon:configChangedTargetArrows()
+    end
+end
+
 addon.configChangedFuncs.strata = function(frame, val)
     frame:SetFrameStrata(val)
 end
@@ -518,7 +525,7 @@ function addon:OnInitialize()
 	self.acd = LibStub('AceConfigDialog-3.0')
     -- enable ace3 profiles
 	local optionstable = LibStub('AceDBOptions-3.0'):GetOptionsTable(self.db)
-    addon:InitDBOptions(optionstable, "Profiles")
+	addon:InitDBOptions(optionstable, "Profiles")
    --self.ac.RegisterOptionsTable(self, 'kuinameplates-profiles', optionstable)
    --self.acd:AddToBlizOptions('kuinameplates','Profiles', 'kuinameplates', 'Profiles')
     

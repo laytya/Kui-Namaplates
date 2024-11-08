@@ -152,10 +152,16 @@ do
                         type = 'toggle',
                         order = 6
                     },
+                    targetarrows = {
+                        name = 'Target arrows',
+                        desc = 'Show target arrows',
+                        type = 'toggle',
+                        order = 7
+                    },
                     targetglowcolour = {
                         name = 'Target glow colour',
                         type = 'color',
-                        order = 7,
+                        order = 8,
                         hasAlpha = true,
                         disabled = function(info)
                             return not addon.db.profile.general.targetglow
@@ -164,7 +170,7 @@ do
                     hheight = {
                         name = 'Health bar height',
                         desc = 'Note that these values do not affect the size or shape of the click-box, which cannot be changed.',
-                        order = 8,
+                        order = 9,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -174,7 +180,7 @@ do
                     thheight = {
                         name = 'Trivial health bar height',
                         desc = 'Height of the health bar of trivial (small, low maximum health) units.',
-                        order = 9,
+                        order = 10,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -183,7 +189,7 @@ do
                     },
                     width = {
                         name = 'Frame width',
-                        order = 10,
+                        order = 11,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -192,7 +198,7 @@ do
                     },
                     twidth = {
                         name = 'Trivial frame width',
-                        order = 11,
+                        order = 12,
                         type = 'range',
                         step = 1,
                         min = 1,
