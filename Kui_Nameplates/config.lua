@@ -152,25 +152,35 @@ do
                         type = 'toggle',
                         order = 6
                     },
-                    targetarrows = {
-                        name = 'Target arrows',
-                        desc = 'Show target arrows',
-                        type = 'toggle',
-                        order = 7
-                    },
+                    
                     targetglowcolour = {
                         name = 'Target glow colour',
                         type = 'color',
-                        order = 8,
+                        order = 7,
                         hasAlpha = true,
                         disabled = function(info)
                             return not addon.db.profile.general.targetglow
                         end
                     },
+                    targetarrows = {
+                        name = 'Target arrows',
+                        desc = 'Show target arrows',
+                        type = 'toggle',
+                        order = 8
+                    },
+                    targetarrowssize = {
+                        name = 'Target arrows size',
+                        order = 9,
+                        type = 'range',
+                        step = 1,
+                        min = 1,
+                        softMin = 10,
+                        softMax = 50
+                    },
                     hheight = {
                         name = 'Health bar height',
                         desc = 'Note that these values do not affect the size or shape of the click-box, which cannot be changed.',
-                        order = 9,
+                        order = 10,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -180,7 +190,7 @@ do
                     thheight = {
                         name = 'Trivial health bar height',
                         desc = 'Height of the health bar of trivial (small, low maximum health) units.',
-                        order = 10,
+                        order = 11,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -189,7 +199,7 @@ do
                     },
                     width = {
                         name = 'Frame width',
-                        order = 11,
+                        order = 12,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -198,7 +208,7 @@ do
                     },
                     twidth = {
                         name = 'Trivial frame width',
-                        order = 12,
+                        order = 13,
                         type = 'range',
                         step = 1,
                         min = 1,

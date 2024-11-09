@@ -386,7 +386,6 @@ local function processQueuedBuff(tar, b, start)
 	local time = GetTime()
 	for k, v in pairs(buffQueueList) do
 		if v.target == tar and v.buffName == b then
-			--printT({"processQueuedBuff",v})
 			local drf = manageDR(time, v.target, v.buffName, false)
 			local n = buff.create(v.target, v.buffName, 1, v.buffData, drf, time)
 			table.insert(buffList, n)

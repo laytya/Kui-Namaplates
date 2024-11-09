@@ -80,7 +80,6 @@ local critters = {
    ['School of Fish'] = true,
    ['Scorpion'] = true,
    ['Sheep'] = true,
-   ['Sheep'] = true,
    ['Shen\'dralar Wisp'] = true,
    ['Sickly Deer'] = true,
    ['Sickly Gazelle'] = true,

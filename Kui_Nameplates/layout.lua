@@ -155,7 +155,6 @@ local function SetGlowColour(self, r, g, b, a)
     if not a then
         a = .85
     end
-
     self.bg:SetVertexColor(r, g, b, a)
 end
 
@@ -270,16 +269,6 @@ local function OnFrameEnter(self)
     else
         return
     end
---[[
-    local tt = {}
-    for i = 1, GameTooltip:NumLines() do
-        local mytext = _G["GameTooltipTextLeft" .. i]
-        local text = mytext:GetText()
-        tinsert(tt, text)
-    end
-    printT(tt)
--- ]]
-
 
     if self.guid == nil and UnitName('mouseover') == self.name.text then
         addon:StoreGUID(self, 'mouseover')
@@ -373,7 +362,7 @@ local function OnFrameShow(self)
         addon:UpdateLevel(f, trivial)
         addon:UpdateName(f, trivial)
         addon:UpdateTargetGlow(f, trivial)
-        f:UpdateTargetArrows()
+        addon:UpdateTargetArrows(f)
 
         f.doneFirstShow = true
     end
@@ -426,7 +415,7 @@ local function OnFrameHide(self)
 
     -- unset stored health bar colours
     f.health.r, f.health.g, f.health.b, f.health.reset = nil, nil, nil, nil
-    f:UpdateTargetArrows()
+    addon:UpdateTargetArrows(f)
     addon:SendMessage('KuiNameplates_PostHide', 1, f)
 end
 
@@ -584,20 +573,19 @@ local function UpdateFrameCritical(self)
         self.glow.r, self.glow.g, self.glow.b = self.oldName:GetTextColor() --self.glow:GetVertexColor()
         self:SetGlowColour(self.glow.r, self.glow.g, self.glow.b)
 
-        --[[if  not self.friend and addon.TankModule and addon.TankMode then
+        if  not self.friend and addon.TankModule and addon.TankMode then
             -- in tank mode; is the default glow red (are we tanking)?
             self.hasThreat = true
-            self.holdingThreat = self.glow.r > .9 and (self.glow.g + self.glow.b) < .1
+            --self.holdingThreat = self.glow.r > .9 and (self.glow.g + self.glow.b) < .1
 
+            
+            local _, _, _, holdingThreat = addon.TankModule:UpdateHealthbarColor(self)
+            if holdingThreat then
             self:SetGlowColour(unpack(addon.TankModule.db.profile.glowcolour))
-
-            if self.holdingThreat then
-                self:SetHealthColour(true, unpack(addon.TankModule.db.profile.barcolour))
-            else
-                -- losing/gaining threat
-                self:SetHealthColour(true, unpack(addon.TankModule.db.profile.midcolour))
+            elseif holdingThreat == false then
+                self:SetGlowColour(unpack(addon.TankModule.db.profile.barcolour))
+            end        
             end
-        end]]
     elseif self.glow.wasVisible then
         self.glow.wasVisible = nil
 
@@ -607,7 +595,7 @@ local function UpdateFrameCritical(self)
         if self.hasThreat then
             -- lost threat
             self.hasThreat = nil
-            self:SetHealthColour(false)
+           -- self:SetHealthColour(false)
         end
     end
     ------------------------------------------------------------ Target stuff --
@@ -645,7 +633,7 @@ local function UpdateFrameCritical(self)
                 if self.targetGlow then
                     self.targetGlow:Show()
                 end
-                self:UpdateTargetArrows()
+                addon:UpdateTargetArrows(self)
 
                 if (not UnitIsTappedByPlayer('target') and UnitIsTapped('target') and UnitCanAttack("player", 'target')) then
                     self.tapped = true
@@ -671,7 +659,7 @@ local function UpdateFrameCritical(self)
             if self.targetGlow then
                 self.targetGlow:Hide()
             end
-            self:UpdateTargetArrows()
+            addon:UpdateTargetArrows(self)
 
             if not self.highlighted and addon.db.profile.hp.mouseover then
                 self.health.p:Hide()
@@ -712,7 +700,7 @@ function addon:NameOnlyEnable(f)
     self:UpdateLevel(f, false)
     self:UpdateName(f, false)
     self:UpdateTargetGlow(f, false)
-    f:UpdateTargetArrows()
+    self:UpdateTargetArrows(f)
 end
 
 function addon:NameOnlyDisable(f)
@@ -726,7 +714,7 @@ function addon:NameOnlyDisable(f)
     self:UpdateLevel(f, false)
     self:UpdateName(f, false)
     self:UpdateTargetGlow(f, false)
-    f:UpdateTargetArrows()
+    self:UpdateTargetArrows(f)
 end
 
 --------------------------------------------------------------- KNP functions --
@@ -768,7 +756,6 @@ function addon:InitFrame(frame)
 
     -- ]]
     f.firstChild = healthBar
-
 
     f.glow      = glowRegion
     f.boss      = bossIconRegion
@@ -854,7 +841,7 @@ function addon:InitFrame(frame)
     f.icon:SetWidth(addon.sizes.tex.raidicon)
     f.icon:SetHeight(addon.sizes.tex.raidicon)
     f.icon:ClearAllPoints()
-    f.icon:SetPoint('LEFT', f.health, 'RIGHT', 5, 1)
+    f.icon:SetPoint('LEFT', f.health, 'RIGHT', 15, 1)
 
     ----------------------------------------------------------------- Scripts --
     -- used by these scripts

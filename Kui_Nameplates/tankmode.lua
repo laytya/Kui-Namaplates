@@ -113,13 +113,17 @@ function mod:UpdateHealthbarColor(f)
     if UnitAffectingCombat("player") and UnitAffectingCombat(f.guid) and not UnitCanAssist("player", f.guid) then
         local g = guidsTargets[f.guid]
         local _, player = UnitExists("player")
+				local r, gg, b
         if g.cc then
-            return unpack(mod.db.profile.cccolour)
+					r, gg, b = unpack(mod.db.profile.cccolour)
+          return r, gg, b, true
         elseif (g.cast and (g.cast == player or g.prev == player)) or g.current == player or
             (not g.cast and (not g.current and g.prev == player)) then
-            return unpack(mod.db.profile.barcolour)
+						r, gg, b = unpack(mod.db.profile.barcolour)
+            return r, gg, b, true
         else
-            return unpack(mod.db.profile.loosecolour)
+					r, gg, b = unpack(mod.db.profile.loosecolour)
+          return r, gg, b, false
         end
     end
     return nil
@@ -166,12 +170,6 @@ function mod:GetOptions()
             type = 'color',
             order = 1
         },
-        midcolour = {
-            name = 'Transitional colour',
-            desc = 'The bar colour to use when you are losing or gaining threat.',
-            type = 'color',
-            order = 1
-        },
         glowcolour = {
             name = 'Glow colour',
             desc = 'The glow (border) colour to use when you have threat',
@@ -200,7 +198,6 @@ function mod:OnInitialize()
         profile = {
             enabled = 2,
             barcolour = {.2, .9, .1},
-            midcolour = {1, .5, 0},
             glowcolour = {1, 0, 0, 1},
             cccolour = {1, 1, 0, 0.6},
             loosecolour = {1, 0, 0, 1}
@@ -218,7 +215,13 @@ function mod:OnEnable()
     self:RegisterEvent("UNIT_CASTEVENT", OnCastEvent)
     self:ScheduleRepeatingTimer('TargetsUpdate', .1)
     self:ScheduleRepeatingTimer('CleanTargets', 10)
-	self:ScheduleRepeatingTimer('CheckCC', 1)
+		self:ScheduleRepeatingTimer('CheckCC', .5)
     addon.TankModule = self
-    addon.TankMode = true
+    mod:Toggle()
+end
+
+function mod:OnDisable()
+	self:UnregisterEvent("UNIT_CASTEVENT")
+	self:CancelAllTimers()
+	self:UnregisterMessage('KuiNameplates_PostCritUpdate')
 end

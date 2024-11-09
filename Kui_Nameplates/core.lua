@@ -66,6 +66,8 @@ local defaults = {
             targetglow  = true,
             bartexture  = DEFAULT_BAR,
             targetglowcolour = { .3, .7, 1, 1 },
+            targetarrows = true,
+            targetarrowssize = 28,
             hheight     = 10,
             thheight    = 7,
             width       = 100,
@@ -487,6 +489,7 @@ end
 
 addon.configChangedFuncs.targetglowcolour = function(frame, val)
     frame.targetGlow:SetVertexColor(unpack(val))
+    if frame.TargetArrows then frame.TargetArrows:SetVertexColor(unpack(val)) end
 end
 
 addon.configChangedFuncs.targetarrows = function(frame, val)
@@ -494,6 +497,13 @@ addon.configChangedFuncs.targetarrows = function(frame, val)
         -- create arrows if needed
         addon:configChangedTargetArrows()
     end
+    for _,f in addon.frameList do
+        addon:UpdateTargetArrows(f.kui)
+    end
+end
+
+addon.configChangedFuncs.targetarrowssize = function(frame, val)
+    if frame.TargetArrows then frame.TargetArrows:SetSize(val) end
 end
 
 addon.configChangedFuncs.strata = function(frame, val)

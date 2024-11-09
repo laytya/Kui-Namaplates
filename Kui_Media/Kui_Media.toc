@@ -1,0 +1,13 @@
+## Interface: 11200
+## Author: laytya
+## Title: Kui |cff9966ffMedia|r
+## Version: 0.1
+## Notes: Add some textures to use w/ KUI-Nameplates
+
+
+
+lib\LibStub\LibStub.lua
+lib\CallbackHandler-1.0\CallbackHandler-1.0.lua
+lib\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
+
+textures.lua
