@@ -199,7 +199,7 @@ local function OnCastEvent()
 			}
 			
 			mod:OnCastbarUpdate(frame)
-		elseif eventType == "CAST" or eventType == "FAIL" 
+		elseif (eventType == "CAST" or eventType == "FAIL" )
 						and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
 			frame.castbar.spellInfo = nil
 			OnCastbarHide(frame)
