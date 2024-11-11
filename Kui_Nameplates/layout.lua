@@ -701,6 +701,7 @@ function addon:NameOnlyEnable(f)
     self:UpdateName(f, false)
     self:UpdateTargetGlow(f, false)
     self:UpdateTargetArrows(f)
+    self:UpdateRaidIcon(f)
 end
 
 function addon:NameOnlyDisable(f)
@@ -715,6 +716,7 @@ function addon:NameOnlyDisable(f)
     self:UpdateName(f, false)
     self:UpdateTargetGlow(f, false)
     self:UpdateTargetArrows(f)
+    self:UpdateRaidIcon(f)
 end
 
 --------------------------------------------------------------- KNP functions --
@@ -837,11 +839,7 @@ function addon:InitFrame(frame)
     end
 
     -- raid icon ---------------------------------------------------------------
-    f.icon:SetParent(f.overlay)
-    f.icon:SetWidth(addon.sizes.tex.raidicon)
-    f.icon:SetHeight(addon.sizes.tex.raidicon)
-    f.icon:ClearAllPoints()
-    f.icon:SetPoint('LEFT', f.health, 'RIGHT', 15, 1)
+    addon:UpdateRaidIcon(f)
 
     ----------------------------------------------------------------- Scripts --
     -- used by these scripts

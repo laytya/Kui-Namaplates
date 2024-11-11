@@ -26,7 +26,7 @@ function mod:TargetsUpdate()
 end
 
 function mod:Toggle()
-    addon.TankMode = self.db.profile.enabled == 1
+    addon.TankMode = self.db.profile.enabled ~= 2
     --[[	if self.db.profile.enabled == 1 then
 		-- smart tank mode, listen for spec changes
 		self:RegisterEvent('PLAYER_TALENT_UPDATE', 'Update')
@@ -104,7 +104,22 @@ function mod:CheckCC()
     end
 end
 
-
+local function getTankColor(tank)
+    if tank then
+        if mod.db.profile.enabled == 3 then
+            return unpack(mod.db.profile.loosecolour)
+        else
+            return unpack(mod.db.profile.barcolour)
+        end    
+    else
+        if mod.db.profile.enabled == 3 then
+            return unpack(mod.db.profile.barcolour)
+        else
+            return unpack(mod.db.profile.loosecolour) 
+        end  
+    end
+    
+end
 
 function mod:UpdateHealthbarColor(f)
     if not f.guid or not guidsTargets[f.guid] then
@@ -119,10 +134,10 @@ function mod:UpdateHealthbarColor(f)
           return r, gg, b, true
         elseif (g.cast and (g.cast == player or g.prev == player)) or g.current == player or
             (not g.cast and (not g.current and g.prev == player)) then
-						r, gg, b = unpack(mod.db.profile.barcolour)
+						r, gg, b = getTankColor(true)
             return r, gg, b, true
         else
-					r, gg, b = unpack(mod.db.profile.loosecolour)
+					r, gg, b = getTankColor(false)
           return r, gg, b, false
         end
     end
@@ -161,7 +176,7 @@ function mod:GetOptions()
             name = 'Tank mode',
             desc = 'Change the colour of a plate\'s health bar and border when you have threat on its unit.',
             type = 'select',
-            values = {'Enabled', 'Disabled'},
+            values = {'Enabled', 'Disabled', 'Healer'},
             order = 0
         },
         barcolour = {

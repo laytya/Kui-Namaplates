@@ -349,3 +349,19 @@ do
     end
 
 end
+
+-- raid icon ###################################################################
+local PositionRaidIcon = {
+    function(f) return f.icon:SetPoint('RIGHT',f.overlay,'LEFT',-8,0) end,
+    function(f) return f.icon:SetPoint('BOTTOM',f.overlay,'TOP',0,12) end,
+    function(f) return f.icon:SetPoint('LEFT',f.overlay,'RIGHT',8,0) end,
+    function(f) return f.icon:SetPoint('TOP',f.overlay,'BOTTOM',0,-8) end,
+}
+function addon:UpdateRaidIcon(f)
+    f.icon:SetParent(f.overlay)
+    f.icon:SetHeight(addon.sizes.tex.raidicon)
+    f.icon:SetWidth(addon.sizes.tex.raidicon)
+
+    f.icon:ClearAllPoints()
+    PositionRaidIcon[addon.db.profile.general.raidicon_side](f)
+end

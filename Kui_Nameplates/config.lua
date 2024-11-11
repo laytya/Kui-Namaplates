@@ -119,44 +119,61 @@ do
                         name = 'Auto toggle in combat',
                         desc = 'Automatically toggle on/off hostile nameplates upon entering/leaving combat',
                         type = 'toggle',
-                        order = 0
+                        order =1
                     },
                     highlight = {
                         name = 'Highlight',
                         desc = 'Highlight plates on mouse over (when not targeted)',
                         type = 'toggle',
-                        order = 1
+                        order = 10
+                    },
+                    raidicon_size = {
+                        name = 'Raid icon size',
+                        desc = 'Size of the raid marker texture on nameplates (skull, cross, etc)',
+                        order = 15,
+                        type = 'range',
+                        bigStep = 1,
+                        min = 1,
+                        softMin = 10,
+                        softMax = 100
+                    },
+                    raidicon_side = {
+                        name = 'Raid icon position',
+                        desc = 'Which side of the nameplate the raid icon should be displayed on',
+                        type = 'select',
+                        values = { 'LEFT', 'TOP', 'RIGHT', 'BOTTOM' },
+                        order = 16
                     },
                     fixaa = {
                         name = 'Fix aliasing',
                         desc = 'Attempt to make plates appear sharper. Has a positive effect on FPS, but will make plates appear a bit "loose", especially at low frame rates. Works best when uiscale is disabled and at larger resolutions (lower resolutions automatically downscale the interface regardless of uiscale setting).\n\n|cffff0000UI reload required to take effect.',
                         type = 'toggle',
-                        order = 3
+                        order = 30
                     },
                     leftie = {
                         name = 'Use leftie layout',
                         desc = 'Use left-aligned text layout (similar to the pre-223 layout). Note that this layout truncates long names. But maybe you prefer that.\n\n|cffff0000UI reload required to take effect.',
                         type = 'toggle',
-                        order = 4,
+                        order = 40,
                     },
                     glowshadow = {
                         name = 'Use glow as shadow',
                         desc = 'The frame glow is used to indicate threat. It becomes black when a unit has no threat status. Disabling this option will make it transparent instead.',
                         type = 'toggle',
-                        order = 5,
+                        order = 50,
                         width = 'double'
                     },
                     targetglow = {
                         name = 'Show target glow',
                         desc = 'Make your target\'s nameplate glow',
                         type = 'toggle',
-                        order = 6
+                        order = 60
                     },
                     
                     targetglowcolour = {
                         name = 'Target glow colour',
                         type = 'color',
-                        order = 7,
+                        order = 70,
                         hasAlpha = true,
                         disabled = function(info)
                             return not addon.db.profile.general.targetglow
@@ -166,11 +183,11 @@ do
                         name = 'Target arrows',
                         desc = 'Show target arrows',
                         type = 'toggle',
-                        order = 8
+                        order = 80
                     },
                     targetarrowssize = {
                         name = 'Target arrows size',
-                        order = 9,
+                        order = 90,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -180,7 +197,7 @@ do
                     hheight = {
                         name = 'Health bar height',
                         desc = 'Note that these values do not affect the size or shape of the click-box, which cannot be changed.',
-                        order = 10,
+                        order = 100,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -190,7 +207,7 @@ do
                     thheight = {
                         name = 'Trivial health bar height',
                         desc = 'Height of the health bar of trivial (small, low maximum health) units.',
-                        order = 11,
+                        order = 110,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -199,7 +216,7 @@ do
                     },
                     width = {
                         name = 'Frame width',
-                        order = 12,
+                        order = 120,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -208,7 +225,7 @@ do
                     },
                     twidth = {
                         name = 'Trivial frame width',
-                        order = 13,
+                        order = 130,
                         type = 'range',
                         step = 1,
                         min = 1,
@@ -221,28 +238,28 @@ do
                         type = 'select',
                         dialogControl = 'LSM30_Statusbar',
                         values = AceGUIWidgetLSMlists.statusbar,
-                        order = 15,
+                        order = 150,
                     },
                     strata = { 
                         name = 'Frame strata',
                         desc = 'The frame strata used by all frames, which determines what "layer" of the UI the frame is on. Untargeted frames are displayed at frame level 0 of this strata. Targeted frames are bumped to frame level 10.\n\nThis does not and can not affect the click-box of the frames, only their visibility.',
                         type = 'select',
                         values = StrataSelectList,
-                        order = 17
+                        order = 170
                     },
 		    clickThrough = { 
                         name = 'Click Through',
                         desc = 'Click Through functionality: On, Off or Off + Right-Click Mouse Look',
                         type = 'select',
                         values = ClickThroughList,
-                        order = 18
+                        order = 180
                     },
 					
 					reactioncolours = {
 						name = 'Reaction colours',
 						type = 'group',
 						inline = true,
-						order = 20,
+						order = 200,
 						args = {
 							hatedcol = {
 								name = 'Hostile',
