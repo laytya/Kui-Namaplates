@@ -29,7 +29,6 @@ local critters = {
    ['Cleo'] = true,
    ['Core Rat'] = true,
    ['Cow'] = true,
-   ['Cow'] = true,
    ['Cured Deer'] = true,
    ['Cured Gazelle'] = true,
    ['Deeprun Rat'] = true,

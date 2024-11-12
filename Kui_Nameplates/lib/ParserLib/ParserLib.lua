@@ -1830,14 +1830,6 @@ function lib:LoadPatternCategory(category)
 			"POWERGAINSELFSELF",
 			"POWERGAINSELFOTHER",
 		}
-	elseif category == "BuffOther" then	list = {
-		"AURAAPPLICATIONADDEDOTHERHELPFUL",
-		"AURAADDEDOTHERHELPFUL",
-		}
-	elseif category == "BuffSelf" then	list = {
-			"AURAADDEDSELFHELPFUL",
-			"AURAAPPLICATIONADDEDSELFHELPFUL",
-		}
 	elseif category == "DrainSelf" then	list = {	
 			"SPELLPOWERLEECHSELFOTHER",
 			"SPELLPOWERDRAINSELFOTHER",

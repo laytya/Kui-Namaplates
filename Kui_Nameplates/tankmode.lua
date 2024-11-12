@@ -4,6 +4,10 @@
 -- All rights reserved
 ]] local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
 
+local AceCore = LibStub("AceCore-3.0")
+local new, del = AceCore.new, AceCore.del
+local wipe, truncate = AceCore.wipe, AceCore.truncate
+
 if not addon.superwow then
     return
 end
@@ -16,8 +20,32 @@ function mod:OnEnable()
     self:Toggle()
 end
 
-local guidsTargets = {}
+local guidsTargets = new()
+mod.threatApi = 'TWTv4='
+mod.tankModeApi = 'TMTv1='
+mod.UDTS = 'TWT_UDTSv4'
+mod.treaths = new()
+mod.tankModeThreats = new()
+mod.tankName = ''
 
+local strlen = string.len
+local find = string.find
+local substr = string.sub
+local parseint = tonumber
+local tinsert = table.insert
+
+local function explode(str, delimiter)
+    local result = new()
+    local from = 1
+    local delim_from, delim_to = find(str, delimiter, from, 1, true)
+    while delim_from do
+        tinsert(result, substr(str, from, delim_from - 1))
+        from = delim_to + 1
+        delim_from, delim_to = find(str, delimiter, from, true)
+    end
+    tinsert(result, substr(str, from))
+    return result
+end
 --------------------------------------------------------- tank mode functions --
 function mod:TargetsUpdate()
     for _, frame in pairs(addon.frameList) do
@@ -36,7 +64,7 @@ function mod:Toggle()
 		self:UnregisterEvent('PLAYER_SPECIALIZATION_CHANGED')
 	end
 ]]
-
+    mod:SetEnabledState(addon.TankMode)
 end
 
 function mod:GuidsTargets()
@@ -162,6 +190,85 @@ local function OnCastEvent()
     end
 end
 
+local function handleThreatPacket(packet)
+    local playersString = substr(packet, find(packet, mod.threatApi) + strlen(mod.threatApi), strlen(packet))
+    if mod.threats then 
+        del(mod.threats) 
+        mod.threats = new() 
+    end
+    
+    mod.tankName = ''
+    local players = explode(playersString, ';')
+    for _, tData in players do
+        local msgEx = explode(tData, ':')
+        -- udts handling
+        if msgEx[1] and msgEx[2] and msgEx[3] and msgEx[4] and msgEx[5] then
+            local player = msgEx[1]
+            local tank = msgEx[2] == '1'
+            local threat = parseint(msgEx[3])
+            local perc = parseint(msgEx[4])
+            local melee = msgEx[5] == '1'
+            local t = {
+                threat = threat,
+                tank = tank,
+                perc = perc,
+                melee = melee
+            }
+            if mod.threats[player] then
+                mod.threats[player] = t
+            else
+                tinsert(mod.threats, t)
+            end
+            if tank then
+                mod.tankName = player
+            end
+        end
+    end
+end
+
+local function handleTankModePacket(packet)
+    local playersString = substr(packet, find(packet, mod.tankModeApi) + strlen(mod.tankModeApi), strlen(packet))
+    del( mod.tankModeThreats)
+    mod.tankModeThreats = new()
+    local players = explode(playersString, ';')
+    for _, tData in players do
+        local msgEx = explode(tData, ':')
+        if msgEx[1] and msgEx[2] and msgEx[3] and msgEx[4] then
+            local creature = msgEx[1]
+            local guid = msgEx[2]
+            local name = msgEx[3]
+            local perc = parseint(msgEx[4])
+            mod.tankModeThreats[guid] = {
+                creature = creature,
+                name = name,
+                perc = perc
+            }
+        end
+    end
+end
+
+local function OnChatMsgAddon()
+    
+    if find(arg2, mod.threatApi, 1, true) then
+        local threatData = arg2
+        if find(threatData, '#') and find(threatData, mod.tankModeApi) then
+            local packetEx = explode(threatData, '#')
+            if packetEx[1] and packetEx[2] then
+                threatData = packetEx[1]
+                handleTankModePacket(packetEx[2])
+            end
+        end
+
+        return handleThreatPacket(threatData)
+    end
+end
+
+function mod:UnitDetailedThreatSituation()
+    if (GetNumRaidMembers() ~= 0 or GetNumPartyMembers() ~= 0) and UnitExists('target') and UnitCanAttack("player", 'target') and 
+        UnitAffectingCombat('player') and UnitAffectingCombat('target') then
+        SendAddonMessage(mod.UDTS .. '_TM' , "limit=5", "PARTY") 
+    end 
+end
 ---------------------------------------------------- Post db change functions --
 mod.configChangedFuncs = {
     runOnce = {}
@@ -228,15 +335,18 @@ function mod:OnEnable()
     --self:RegisterMessage('KuiNameplates_PostUpdate', 'PostUpdate')
 
     self:RegisterEvent("UNIT_CASTEVENT", OnCastEvent)
+    self:RegisterEvent("CHAT_MSG_ADDON", OnChatMsgAddon)
     self:ScheduleRepeatingTimer('TargetsUpdate', .1)
     self:ScheduleRepeatingTimer('CleanTargets', 10)
 		self:ScheduleRepeatingTimer('CheckCC', .5)
+    self:ScheduleRepeatingTimer('UnitDetailedThreatSituation', 1)
     addon.TankModule = self
     mod:Toggle()
 end
 
 function mod:OnDisable()
 	self:UnregisterEvent("UNIT_CASTEVENT")
+    self:UnregisterEvent("CHAT_MSG_ADDON")
 	self:CancelAllTimers()
 	self:UnregisterMessage('KuiNameplates_PostCritUpdate')
 end
