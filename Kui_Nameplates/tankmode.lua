@@ -2,7 +2,9 @@
 -- Kui_Nameplates
 -- By Kesava at curse.com
 -- All rights reserved
-]] local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
+]] 
+
+local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
 
 local AceCore = LibStub("AceCore-3.0")
 local new, del = AceCore.new, AceCore.del
@@ -24,9 +26,12 @@ local guidsTargets = new()
 mod.threatApi = 'TWTv4='
 mod.tankModeApi = 'TMTv1='
 mod.UDTS = 'TWT_UDTSv4'
-mod.treaths = new()
 mod.tankModeThreats = new()
 mod.tankName = ''
+mod.myThreat = 0
+mod.tankThreat = 0
+mod.myMelee = false
+mod.myName = ''
 
 local strlen = string.len
 local find = string.find
@@ -67,6 +72,23 @@ function mod:Toggle()
     mod:SetEnabledState(addon.TankMode)
 end
 
+local function getTankColor(tank)
+    if tank then
+        if mod.db.profile.enabled == 3 then
+            return unpack(mod.db.profile.loosecolour)
+        else
+            return unpack(mod.db.profile.barcolour)
+        end    
+    else
+        if mod.db.profile.enabled == 3 then
+            return unpack(mod.db.profile.barcolour)
+        else
+            return unpack(mod.db.profile.loosecolour) 
+        end  
+    end
+    
+end
+
 function mod:GuidsTargets()
     printT(guidsTargets)
 end
@@ -96,6 +118,10 @@ function mod:CleanTargets(msg, f)
 end
 
 function mod:PostCritUpdate(msg, f)
+    if f.agroText and f.target and mod.myThreat > 0 then
+        local r,g,b  = getTankColor(mod.tankName == mod.myName )
+        f:SetAgroText(mod.myThreat, {r,g,b})
+    end
     if not f.guid or not guidsTargets[f.guid] then
         return
     end
@@ -107,6 +133,17 @@ function mod:PostCritUpdate(msg, f)
         end
         g.current = target
     end
+end
+
+function mod:PostTarget(msg, f)
+    local _, frame
+    for _, frame in pairs(addon.frameList) do
+        self:Hide(nil, frame.kui)
+    end
+    mod.tankName = ''
+    mod.myThreat = 0
+    mod.tankThreat = 0
+    mod.myMelee = false
 end
 
 local ccSpells = {"Polymorph", "Shackle Undead", "Freezing Trap", "Hibernate", "Gouge", "Sap", "Magic Dust"}
@@ -132,22 +169,7 @@ function mod:CheckCC()
     end
 end
 
-local function getTankColor(tank)
-    if tank then
-        if mod.db.profile.enabled == 3 then
-            return unpack(mod.db.profile.loosecolour)
-        else
-            return unpack(mod.db.profile.barcolour)
-        end    
-    else
-        if mod.db.profile.enabled == 3 then
-            return unpack(mod.db.profile.barcolour)
-        else
-            return unpack(mod.db.profile.loosecolour) 
-        end  
-    end
     
-end
 
 function mod:UpdateHealthbarColor(f)
     if not f.guid or not guidsTargets[f.guid] then
@@ -192,11 +214,6 @@ end
 
 local function handleThreatPacket(packet)
     local playersString = substr(packet, find(packet, mod.threatApi) + strlen(mod.threatApi), strlen(packet))
-    if mod.threats then 
-        del(mod.threats) 
-        mod.threats = new() 
-    end
-    
     mod.tankName = ''
     local players = explode(playersString, ';')
     for _, tData in players do
@@ -208,28 +225,22 @@ local function handleThreatPacket(packet)
             local threat = parseint(msgEx[3])
             local perc = parseint(msgEx[4])
             local melee = msgEx[5] == '1'
-            local t = {
-                threat = threat,
-                tank = tank,
-                perc = perc,
-                melee = melee
-            }
-            if mod.threats[player] then
-                mod.threats[player] = t
-            else
-                tinsert(mod.threats, t)
-            end
             if tank then
                 mod.tankName = player
+                mod.tankThreat = perc
             end
-        end
-    end
+            if player == mod.myName then
+                mod.myThreat = perc
+                mod.myMelee = melee
+             end
+          end
+     end
+
 end
 
 local function handleTankModePacket(packet)
     local playersString = substr(packet, find(packet, mod.tankModeApi) + strlen(mod.tankModeApi), strlen(packet))
-    del( mod.tankModeThreats)
-    mod.tankModeThreats = new()
+    mod.tankModeThreats = wipe( mod.tankModeThreats )
     local players = explode(playersString, ';')
     for _, tData in players do
         local msgEx = explode(tData, ':')
@@ -268,6 +279,39 @@ function mod:UnitDetailedThreatSituation()
         UnitAffectingCombat('player') and UnitAffectingCombat('target') then
         SendAddonMessage(mod.UDTS .. '_TM' , "limit=5", "PARTY") 
     end 
+end
+
+local function SetAgroText(self, agro, agrocolor)
+    if agro == nil then
+        -- hide the warning instantly
+        self.agroText:SetText()
+        self.agroText:Hide()
+    else
+        agrocolor = agrocolor and agrocolor or {1, 0, 0}
+        self.agroText:SetText(agro)
+        self.agroText:SetTextColor(unpack(agrocolor))
+        self.agroText:Show()
+    end
+end
+
+function mod:CreateAgroText(msg, frame)
+    printT("CreateAgroText")
+    frame.agroText = frame:CreateFontString(frame.overlay, {
+        size = 'spellname',
+        outline = 'OUTLINE'
+    })
+    frame.agroText:Hide()
+    frame.agroText:SetPoint('BOTTOMRIGHT', frame.health, 'TOPRIGHT', 0, 1)
+
+      -- handlers
+    frame.SetAgroText = SetAgroText
+end
+
+function mod:Hide(msg, frame)
+    if frame.agroText then
+        frame.agroText:SetText()
+        frame.agroText:Hide()
+    end
 end
 ---------------------------------------------------- Post db change functions --
 mod.configChangedFuncs = {
@@ -325,13 +369,16 @@ function mod:OnInitialize()
             loosecolour = {1, 0, 0, 1}
         }
     })
-
+    mod.myName = UnitName('player')
     addon:InitModuleOptions(self)
     mod:SetEnabledState(true)
 end
 
 function mod:OnEnable()
+    self:RegisterMessage('KuiNameplates_PostCreate', 'CreateAgroText')
+    self:RegisterMessage('KuiNameplates_PostHide', 'Hide')
     self:RegisterMessage('KuiNameplates_PostCritUpdate', 'PostCritUpdate')
+    self:RegisterMessage('KuiNameplates_PostTarget', 'PostTarget')
     --self:RegisterMessage('KuiNameplates_PostUpdate', 'PostUpdate')
 
     self:RegisterEvent("UNIT_CASTEVENT", OnCastEvent)
@@ -342,6 +389,12 @@ function mod:OnEnable()
     self:ScheduleRepeatingTimer('UnitDetailedThreatSituation', 1)
     addon.TankModule = self
     mod:Toggle()
+    local _, frame
+    for _, frame in pairs(addon.frameList) do
+        if not frame.agroText then
+            self:CreateAgroText(nil, frame.kui)
+        end
+    end
 end
 
 function mod:OnDisable()
@@ -349,4 +402,11 @@ function mod:OnDisable()
     self:UnregisterEvent("CHAT_MSG_ADDON")
 	self:CancelAllTimers()
 	self:UnregisterMessage('KuiNameplates_PostCritUpdate')
+    self:UnregisterMessage('KuiNameplates_PostCreate')
+    self:UnregisterMessage('KuiNameplates_PostTarget')
+    self:UnregisterMessage('KuiNameplates_PostHide')
+    local _, frame
+    for _, frame in pairs(addon.frameList) do
+        self:Hide(nil, frame.kui)
+    end
 end

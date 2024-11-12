@@ -58,9 +58,9 @@ else ]]
 		end
 	else
 		if f.castbar.icon then
-	--		Sea.io.print(icon)
+
 			f.castbar.icon:SetTexture(icon)
-			f.castbar.icon.bg:Hide()
+			f.castbar.icon.bg:Show()
 			f.castbar.icon:Show()
 		end
 
@@ -133,7 +133,7 @@ function mod:OnCastbarUpdate(f, elapsed)
 		local perc = (v.timeEnd - GetTime()) / (v.timeEnd - v.timeStart)
 		local width = f.castbar.bar:GetWidth()
 		local sp = width * perc
-	--	Sea.io.print(perc," ", width," ", sp)
+
 		sp = v.inverse and sp or -sp
 		f.castbar.spark:SetPoint("CENTER", f.castbar.bar:GetRegions(), v.inverse and "LEFT" or "RIGHT", sp, 0)
 		f.castbar:SetAlpha(f.currentAlpha)
@@ -288,7 +288,7 @@ function mod:CreateCastbar(msg, frame)
 	end
 
 	if self.db.profile.display.spellicon then
-		frame.castbar.icon = frame.castbar:CreateTexture(nil, 'ARTWORK', nil, 7)
+		frame.castbar.icon = frame.castbar:CreateTexture(nil, 'ARTWORK', nil, 3)
 		frame.castbar.icon:SetTexCoord(.1, .9, .1, .9)
 
 		frame.castbar.icon.bg = frame.castbar:CreateTexture(nil, 'ARTWORK', nil, 0)

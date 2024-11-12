@@ -6,70 +6,61 @@
 
 local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
 local mod = addon:NewModule('CastWarnings', 'AceEvent-3.0')
-mod.uc = LibStub:GetLibrary("UnitCasting-1.1") 
+mod.uc = LibStub:GetLibrary("UnitCasting-1.1")
 local kui = LibStub('Kui-1.0')
 mod.uiName = 'Cast warnings'
 
+local function FadeFrame(self, from, to, duration, end_delay, callback)
+    kui.frameFadeRemoveFrame(self)
 
+    self:Show()
+    self:SetAlpha(from)
 
--- combat log events to listen to for cast warnings/healing
-local warningEvents = {
-	['SPELL_CAST_START']    = true,
-	['SPELL_CAST_SUCCESS']  = true,
-	['SPELL_INTERRUPT']     = true,
-	['SPELL_HEAL']          = true,
-	['SPELL_PERIODIC_HEAL'] = true
-}
+    kui.frameFade(self, {
+        mode = 'OUT',
+        startAlpha = from,
+        endAlpha = to,
+        timeToFade = duration,
+        fadeHoldTime = end_delay,
+        finishedFunc = function(self)
+            if to == 0 then
+                self:Hide()
+            else
+                self:SetAlpha(to)
+            end
 
-local function FadeFrame(self,from,to,duration,end_delay,callback)
-	kui.frameFadeRemoveFrame(self)
-
-	self:Show()
-	self:SetAlpha(from)
-
-	kui.frameFade(self, {
-			mode = 'OUT',
-			startAlpha = from,
-			endAlpha = to,
-			timeToFade = duration,
-			fadeHoldTime = end_delay,
-			finishedFunc = function(self)
-					if to == 0 then
-							self:Hide()
-					else
-							self:SetAlpha(to)
-					end
-
-					if callback then
-							callback(self)
-					end
-			end
-	})
+            if callback then
+                callback(self)
+            end
+        end
+    })
 end
 ------------------------------------------------------------- Frame functions --
 local function SetCastWarning(self, spellName, spellSchool)
-	self.castWarning:Stop()
+    self.castWarning:Stop()
 
-	if spellName == nil then
-			-- hide the warning instantly
-			self.castWarning:SetText()
-			self.castWarning:Hide()
-	else
-			spellSchool = spellSchool or	{1, 1, 1}
+    if spellName == nil then
+        -- hide the warning instantly
+        self.castWarning:SetText()
+        self.castWarning:Hide()
+    else
+        spellSchool = spellSchool or {1, 1, 1}
 
-			self.castWarning:SetText(spellName)
-			self.castWarning:SetTextColor(unpack(spellSchool))
-			self.castWarning:Fade()
-	end
+        self.castWarning:SetText(spellName)
+        self.castWarning:SetTextColor(unpack(spellSchool))
+        self.castWarning:Fade()
+    end
 end
 
 local function SetIncomingWarning(self, amount)
-	if amount == 0 then return end
+    if amount == 0 then
+        return
+    end
     self.incWarning:Stop()
 
     if amount > 0 then
         -- healing
-        amount = '+'..amount
+        amount = '+' .. amount
         self.incWarning:SetTextColor(0, 1, 0)
     else
         -- damage (nyi)
@@ -81,206 +72,217 @@ end
 
 -------------------------------------------------------------- Event handlers --
 function mod:UNIT_CASTEVENT()
-	local caster, target, eventType, spellId, start, duration = arg1, arg2, arg3, arg4, GetTime(), arg5 / 1000
-	if eventType == "MAINHAND" or eventType == "OFFHAND" then return end
-	local frame = addon:GetNameplate(caster)
-	local name, guid = UnitExists(caster)
-	
-	if not guid then return end
+    local caster, target, eventType, spellId, start, duration = arg1, arg2, arg3, arg4, GetTime(), arg5 / 1000
+    if eventType == "MAINHAND" or eventType == "OFFHAND" then
+        return
+    end
+    local frame = addon:GetNameplate(caster)
+    local name, guid = UnitExists(caster)
 
-	if warningEvents[event] then
-		if	event == 'SPELL_HEAL' or
-			event == 'SPELL_PERIODIC_HEAL'
-		then
-			-- fetch the spell's target's nameplate
-			name, guid = UnitExists(target)
-		end
-		
-		if self.db.profile.useNames and name then
-			name = name 
-		else
-			name = nil
-		end
+    if not guid then
+        return
+    end
 
-		local f = addon:GetNameplate(guid)
-		if f then
-			if not f.castWarning or f.trivial then return end
-			local spName, spSch = SpellInfo(spellId)
-			
-			if eventType == "START" or eventType == "CHANNEL"
-			then
-				f.castWarning.spellId = spellId
-				f:SetCastWarning(spName, spSch)
-				--f:SetIncomingWarning(amount)
-			elseif (eventType == "CAST" or eventType == "FAIL" )
-				and f.castWarning.spellId and f.castWarning.spellId == spellId then
-				-- hide the warning
-				f:SetCastWarning(nil)
-			end
-		end
-	end
+    if warningEvents[event] then
+        if event == 'SPELL_HEAL' or event == 'SPELL_PERIODIC_HEAL' then
+            -- fetch the spell's target's nameplate
+            name, guid = UnitExists(target)
+        end
+
+        if self.db.profile.useNames and name then
+            name = name
+        else
+            name = nil
+        end
+
+        local f = addon:GetNameplate(guid)
+        if f then
+            if not f.castWarning or f.trivial then
+                return
+            end
+            local spName, spSch = SpellInfo(spellId)
+
+            if eventType == "START" or eventType == "CHANNEL" then
+                f.castWarning.spellId = spellId
+                f:SetCastWarning(spName, spSch)
+                -- f:SetIncomingWarning(amount)
+            elseif (eventType == "CAST" or eventType == "FAIL") and f.castWarning.spellId and f.castWarning.spellId ==
+                spellId then
+                -- hide the warning
+                f:SetCastWarning(nil)
+            end
+        end
+    end
 end
 local function getFrame(guid)
-	if LoggingCombat and LoggingCombat("RAW") == 1 then
-		guid = guid
-	else
-		guid = addon:GetKnownGUID(guid) -- Player
-	end
-	local f
-	if guid then
-		f = addon:GetNameplate(guid)
-	else
-		f = addon:GetTargetNameplate()
-		if f and f.name.text ~= info.caster then
-			return nil
-		end
-	end
-	return f
+    if LoggingCombat and LoggingCombat("RAW") == 1 then
+        guid = guid
+    else
+        guid = addon:GetKnownGUID(guid) -- Player
+    end
+    local f
+    if guid then
+        f = addon:GetNameplate(guid)
+    else
+        f = addon:GetTargetNameplate()
+        if f and f.name.text ~= info.caster then
+            return nil
+        end
+    end
+    return f
 end
 
 local function OnHeal(event, info)
-	local f = getFrame(info.target)
-	if f and f.castWarning and not f.IN_NAMEONLY then
-		f:SetIncomingWarning(info.amount)
-	end
+    local f = getFrame(info.target)
+    if f and f.castWarning and not f.IN_NAMEONLY then
+        f:SetIncomingWarning(info.amount)
+    end
 end
 
 local function OnStartCast(event, info)
-	local f = getFrame(info.caster)
-	
-	if f and f.castWarning and not f.IN_NAMEONLY then 
-		f:SetCastWarning(info.spell, info.school)
-	end
+    local f = getFrame(info.caster)
+
+    if f and f.castWarning and not f.IN_NAMEONLY then
+        f:SetCastWarning(info.spell, info.school)
+    end
 end
 
 local function OnEndCast(event, info)
-	local name = info.caster
-	if LoggingCombat and LoggingCombat("RAW") == 1 then
-		name = pcall(UnitName,name)
-	end
+    local name = info.caster
+    if LoggingCombat and LoggingCombat("RAW") == 1 then
+        name = pcall(UnitName, name)
+    end
 
-	local frames = addon:GetNameplates(name)
-	for _, frame in pairs(frames) do
-		if frame and frame.castWarning and ( frame.castWarning:IsShown() and frame.castWarning:GetText() == info.skill) then
-			frame:SetCastWarning(nil)
-		end
-	end
+    local frames = addon:GetNameplates(name)
+    for _, frame in pairs(frames) do
+        if frame and frame.castWarning and (frame.castWarning:IsShown() and frame.castWarning:GetText() == info.skill) then
+            frame:SetCastWarning(nil)
+        end
+    end
 end
 
 ---------------------------------------------------------------------- Create --
 function mod:CreateCastWarnings(msg, frame)
     -- casting spell name
     frame.castWarning = frame:CreateFontString(frame.overlay, {
-			size = 'spellname', outline = 'OUTLINE' })
-	frame.castWarning:Hide()
-	frame.castWarning:SetPoint('BOTTOM', frame.name, 'TOP', 0, 1)
+        size = 'spellname',
+        outline = 'OUTLINE'
+    })
+    frame.castWarning:Hide()
+    frame.castWarning:SetPoint('BOTTOM', frame.name, 'TOP', 0, 1)
 
-	frame.castWarning.Fade = function(self)
-			FadeFrame(self,1,0,3)
-	end
-	frame.castWarning.Stop = function(self)
-			kui.frameFadeRemoveFrame(self)
-	end
+    frame.castWarning.Fade = function(self)
+        FadeFrame(self, 1, 0, 3)
+    end
+    frame.castWarning.Stop = function(self)
+        kui.frameFadeRemoveFrame(self)
+    end
 
-	-- incoming healing
-	frame.incWarning = frame:CreateFontString(frame.overlay, {
-			size = 'small', outline = 'OUTLINE' })
-	frame.incWarning:Hide()
-	frame.incWarning:SetPoint('TOP', frame.name, 'BOTTOM', 0, -3)
+    -- incoming healing
+    frame.incWarning = frame:CreateFontString(frame.overlay, {
+        size = 'small',
+        outline = 'OUTLINE'
+    })
+    frame.incWarning:Hide()
+    frame.incWarning:SetPoint('TOP', frame.name, 'BOTTOM', 0, -3)
 
-	frame.incWarning.Fade = function(self,full)
-			if full then
-					FadeFrame(self,.5,0,.5)
-			else
-					FadeFrame(self,1,.5,.5,.5, function(self)
-							self:Fade(true)
-					end)
-			end
-	end
-	frame.incWarning.Stop = function(self)
-			kui.frameFadeRemoveFrame(self)
-	end
+    frame.incWarning.Fade = function(self, full)
+        if full then
+            FadeFrame(self, .5, 0, .5)
+        else
+            FadeFrame(self, 1, .5, .5, .5, function(self)
+                self:Fade(true)
+            end)
+        end
+    end
+    frame.incWarning.Stop = function(self)
+        kui.frameFadeRemoveFrame(self)
+    end
 
-	-- handlers
-	frame.SetCastWarning = SetCastWarning
-	frame.SetIncomingWarning = SetIncomingWarning
+    -- handlers
+    frame.SetCastWarning = SetCastWarning
+    frame.SetIncomingWarning = SetIncomingWarning
 end
 
 function mod:Hide(msg, frame)
-	if frame.castWarning then
-		frame.castWarning:Stop()
-		frame.castWarning:SetText()
-		frame.castWarning:Hide()
+    if frame.castWarning then
+        frame.castWarning:Stop()
+        frame.castWarning:SetText()
+        frame.castWarning:Hide()
 
-		frame.incWarning:Stop()
-		frame.incWarning:SetText()
-		frame.incWarning:Hide()
-end
+        frame.incWarning:Stop()
+        frame.incWarning:SetText()
+        frame.incWarning:Hide()
+    end
 end
 
 ---------------------------------------------------- Post db change functions --
-mod.configChangedFuncs = { runOnce = {} }
+mod.configChangedFuncs = {
+    runOnce = {}
+}
 mod.configChangedFuncs.runOnce.warnings = function(val)
-	if val then
-		mod:Enable()
-	else
-		mod:Disable()
-	end
+    if val then
+        mod:Enable()
+    else
+        mod:Disable()
+    end
 end
 
 -------------------------------------------------------------------- Register --
 function mod:GetOptions()
-	return {
-		warnings = {
-			name = 'Show cast warnings',
-			desc = 'Display cast and healing warnings on plates',
-			type = 'toggle',
-			order = 1,
-			disabled = false
-		},
-		useNames = {
-			name = "Use names for warnings",
-			desc = 'Use character names to decide which frame to display warnings on. May increase memory usage and may cause warnings to be displayed on incorrect frames when there are many units with the same name. Reccommended on for PvP, off for PvE.',
-			type = 'toggle',
-			order = 2
-		}
-	}
+    return {
+        warnings = {
+            name = 'Show cast warnings',
+            desc = 'Display cast and healing warnings on plates',
+            type = 'toggle',
+            order = 1,
+            disabled = false
+        },
+        useNames = {
+            name = "Use names for warnings",
+            desc = 'Use character names to decide which frame to display warnings on. May increase memory usage and may cause warnings to be displayed on incorrect frames when there are many units with the same name. Reccommended on for PvP, off for PvE.',
+            type = 'toggle',
+            order = 2
+        }
+    }
 end
 
 function mod:OnInitialize()
-	self.db = addon.db:RegisterNamespace(self.moduleName, {
-		profile = {
-			warnings = false,
-			useNames = false
-		}
-	})
+    self.db = addon.db:RegisterNamespace(self.moduleName, {
+        profile = {
+            warnings = false,
+            useNames = false
+        }
+    })
 
-	addon:InitModuleOptions(self)
-	mod:SetEnabledState(self.db.profile.warnings)
+    addon:InitModuleOptions(self)
+    mod:SetEnabledState(self.db.profile.warnings)
 end
 
 function mod:OnEnable()
     self:RegisterMessage('KuiNameplates_PostCreate', 'CreateCastWarnings')
     self:RegisterMessage('KuiNameplates_PostHide', 'Hide')
-    
-    --self:RegisterEvent('UNIT_CASTEVENT')
-		mod.uc.RegisterCallback(self, "NewCast", OnStartCast)
-		mod.uc.RegisterCallback(self, "NewHeal", OnHeal)
-		mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndCast)
 
-    local _,frame
+    -- self:RegisterEvent('UNIT_CASTEVENT')
+    mod.uc.RegisterCallback(self, "NewCast", OnStartCast)
+    mod.uc.RegisterCallback(self, "NewHeal", OnHeal)
+    mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndCast)
+
+    local _, frame
     for _, frame in pairs(addon.frameList) do
-    	if not frame.castWarning then
-    		self:CreateCastWarnings(nil, frame.kui)
-    	end
-	end
+        if not frame.castWarning then
+            self:CreateCastWarnings(nil, frame.kui)
+        end
+    end
 end
 
 function mod:OnDisable()
-	--self:UnregisterEvent('UNIT_CASTEVENT')
-	self.uc.UnregisterAllCallbacks(self)
-	local _,frame
-	for _, frame in pairs(addon.frameList) do
-		self:Hide(nil, frame.kui)
-	end
+    -- self:UnregisterEvent('UNIT_CASTEVENT')
+		self:UnregisterMessage('KuiNameplates_PostCreate')
+    self:UnregisterMessage('KuiNameplates_PostHide')
+    self.uc.UnregisterAllCallbacks(self)
+    local _, frame
+    for _, frame in pairs(addon.frameList) do
+        self:Hide(nil, frame.kui)
+    end
 end

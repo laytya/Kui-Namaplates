@@ -291,8 +291,8 @@ do
         self.r:SetAlpha(1)
     end
     local function Arrows_UpdatePosition(self)
-        self.l:SetPoint('RIGHT',self.parent.bg,'LEFT',3,0) --TARGET_ARROWS_INSET
-        self.r:SetPoint('LEFT',self.parent.bg,'RIGHT',-3,0)
+        self.l:SetPoint('RIGHT',self.parent.bg,'LEFT',7,0) --TARGET_ARROWS_INSET
+        self.r:SetPoint('LEFT',self.parent.bg,'RIGHT',-7,0)
     end
     local function Arrows_SetSize(self,size)
         self.l:SetHeight(size)
