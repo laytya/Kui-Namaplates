@@ -3,9 +3,6 @@
 -- By Kesava at curse.com
 -- All rights reserved
 ]]
-do
---return
-end
 
 local kui = LibStub('Kui-1.0')
 local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
@@ -13,6 +10,8 @@ local mod = addon:NewModule('CastBar', 'AceEvent-3.0')
 mod.uc = LibStub:GetLibrary("UnitCasting-1.1")
 
 mod.uiName = 'Cast bars'
+
+local superwow = SUPERWOW_VERSION and (tonumber(SUPERWOW_VERSION) > 1.4) or false
 
 local format , floor, fmod = format , math.floor, math.mod
 local function ResetFade(f)
@@ -150,7 +149,7 @@ local function OnStartCast(event, info)
 	
 	local frame
 	local guid
-	if LoggingCombat and LoggingCombat("RAW") == 1 then
+	if superwow then
 		guid = info.caster
 	else
 		guid = addon:GetKnownGUID(info.caster) -- Player
