@@ -10,6 +10,8 @@ mod.uc = LibStub:GetLibrary("UnitCasting-1.1")
 local kui = LibStub('Kui-1.0')
 mod.uiName = 'Cast warnings'
 
+local superwow = SUPERWOW_VERSION and (tonumber(SUPERWOW_VERSION) > 1.4) or false
+
 local function FadeFrame(self, from, to, duration, end_delay, callback)
     kui.frameFadeRemoveFrame(self)
 
@@ -148,9 +150,12 @@ local function OnStartCast(event, info)
 end
 
 local function OnEndCast(event, info)
-    local name = info.caster
-    if LoggingCombat and LoggingCombat("RAW") == 1 then
-        name = pcall(UnitName, name)
+    local name, exist, good = info.caster
+    if superwow then
+        good, exist, name = pcall(UnitName, info.caster)
+        if not good or not exist then 
+            name = info.caster
+        end
     end
 
     local frames = addon:GetNameplates(name)

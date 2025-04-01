@@ -14,7 +14,7 @@ Dependencies: CompostLib (optional) or Compost-2.0 (optional).
 -- 	local parser = ParserLib:GetInstance(version)
 -- 	where the version is the variable 'vmajor' you see here.
 ---------------------------------------------------------------------------
-local vmajor, vminor = "1.1", tonumber(string.sub("$Revision: 15186 $", 12, -3))
+local vmajor, vminor = "1.1", tonumber(string.sub("$Revision: 16001 $", 12, -3))
 
 local stubvarname = "TekLibStub"
 local libvarname = "ParserLib"
@@ -26,6 +26,7 @@ if libobj and not libobj:NeedsUpgraded(vmajor, vminor) then return end
 
 local lua51 = loadstring("return function(...) return ... end") and true or false
 local string_gmatch = lua51 and string.gmatch or string.gfind
+local superwow = SUPERWOW_VERSION and (tonumber(SUPERWOW_VERSION) > 1.4) or false
 
 local function print(msg, r, g, b)
 	ChatFrame1:AddMessage(string.format("<%s-%s-%s> %s", libvarname, vmajor, vminor, msg), r, g, b)
@@ -200,7 +201,11 @@ function lib:RegisterEvent(addonID, event, handler)
 	self:PreLoadPatternInfo(event);
 	
 	table.insert(self.clients[event], { ["id"]=addonID, ["func"]=handler } );
-	self.frame:RegisterEvent(event);
+	if superwow  then 
+		self.frame:RegisterEvent("RAW_COMBATLOG");
+	else
+		self.frame:RegisterEvent(event);
+	end
 
 end
 
@@ -231,8 +236,19 @@ function lib:UnregisterEvent(addonID, event)
 	
 	if empty then
 		-- self:Print("Unregistering event " .. event) -- debug
-		self.frame:UnregisterEvent(event)
+		if not superwow then
+			self.frame:UnregisterEvent(event)
+		end
 		self.clients[event] = nil
+	end
+	if superwow then
+		empty = true
+		for i, v in pairs(self.clients) do
+			empty = false
+		end
+		if empty then
+			self.frame:UnregisterEvent("RAW_COMBATLOG")
+		end
 	end
 end
 
@@ -255,11 +271,16 @@ function lib:UnregisterAllEvents(addonID)
 		
 		if empty then
 			-- self:Print("Unregistering event " .. event) -- debug
-			self.frame:UnregisterEvent(event);
+			if not superwow then
+				self.frame:UnregisterEvent(event);
+			end
 			self.clients[event] = nil;
 		end
 		
 	end	
+	if superwow then
+		self.frame:UnregisterEvent("RAW_COMBATLOG")
+	end
 
 end
 
@@ -521,13 +542,23 @@ function lib:OnLoad()
 	
 end
 	
-function lib:OnEvent(e, a1)
-
+function lib:OnEvent(e, a1, a2)
 	if not e then e = event end
 	if not a1 then a1 = arg1 end
-
-	-- self:Print("Event: |cff3333ff"..e.."|r") -- debug
 	
+	if superwow and e ~= "RAW_COMBATLOG" then
+		return
+	end
+
+	if e == "RAW_COMBATLOG" then
+		e = arg1
+		a1 = arg2
+	end
+	
+	if not self.clients[e] then return end
+	
+
+
 	-- Titan Honor+ was changing the global events... just change it back.
 	if e == "CHAT_MSG_HONORPLUS" then e = "CHAT_MSG_COMBAT_HONOR_GAIN" end
 	
@@ -660,7 +691,7 @@ function lib:FindPattern(message, patternList)
 
 	for i, v in pairs(patternList) do
 	
--- 		timer = GetTime() -- timer
+-- 				timer = GetTime() -- timer
 		if not self.patternTable[v] then self.patternTable[v] = self:LoadPatternInfo(v) end -- loaded by registering already
 -- 		self.timer.ParseMessage_FindPattern_LoadPatternInfo = GetTime() - timer + self.timer.ParseMessage_FindPattern_LoadPatternInfo -- timer
 		
@@ -679,7 +710,7 @@ function lib:FindPattern(message, patternList)
 -- 		self.timer.ParseMessage_FindPattern_Regexp = GetTime() - timer + self.timer.ParseMessage_FindPattern_Regexp -- timer
 		
 		if found then 
-			-- self:Print(message.." = " .. v .. ":" .. pt.pattern)  -- debug
+--			self:Print(message.." = " .. v .. ":" .. pt.pattern)  -- debug
 			return v	
 		end
 
@@ -944,6 +975,13 @@ function lib:Curry(pattern)
 	end
 end
 
+function lib:GetName(unit)
+	if superwow and unit then
+		local _, exist, guid = pcall(UnitExists, unit)
+		if exist == 1 then return UnitName(guid) end 
+	end
+	return unit
+end
 
 function lib:PrintTable(args)
 	for k, v in pairs(args) do
@@ -990,7 +1028,13 @@ function lib:TestPatterns(sendToClients)
 	for _, event in pairs(self.supportedEvents) do
 		for _, pattern in pairs(self:LoadPatternList(event)) do
 			msg = messages[pattern].message
-			if sendToClients then self:OnEvent(event, msg)	end
+			if sendToClients then 
+				if superwow then
+					self:OnEvent("RAW_COMBATLOG", event, msg)
+				else
+					self:OnEvent(event, msg)	
+				end
+			end
 			if self:ParseMessage(msg, event) then
 				info = self.info
 				for i, v in ipairs(messages[pattern]) do
@@ -1440,10 +1484,10 @@ function lib:LoadPatternList(eventName)
 	elseif eventName == "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF" then
 		if not self.eventTable["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"] then
 			self.eventTable["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"] = {
-				"SPELLRESISTOTHEROTHER",
-				"SPELLRESISTSELFOTHER",
-				"DAMAGESHIELDOTHEROTHER",
-				"DAMAGESHIELDSELFOTHER",
+						"SPELLRESISTOTHEROTHER",
+						"SPELLRESISTSELFOTHER",
+						"DAMAGESHIELDOTHEROTHER",
+						"DAMAGESHIELDSELFOTHER",
 			}
 			table.sort(self.eventTable["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"] , PatternCompare)
 		end
@@ -1452,10 +1496,10 @@ function lib:LoadPatternList(eventName)
 	elseif eventName == "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS" then
 		if not self.eventTable["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS"] then
 			self.eventTable["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS"] = {
-				"SPELLRESISTOTHEROTHER",
-				"SPELLRESISTOTHERSELF",
-				"DAMAGESHIELDOTHEROTHER",
-				"DAMAGESHIELDOTHERSELF",
+						"SPELLRESISTOTHEROTHER",
+						"SPELLRESISTOTHERSELF",
+						"DAMAGESHIELDOTHEROTHER",
+						"DAMAGESHIELDOTHERSELF",
 			}
 			table.sort(self.eventTable["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS"] , PatternCompare)
 		end		

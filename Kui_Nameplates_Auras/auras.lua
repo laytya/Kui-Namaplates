@@ -486,7 +486,8 @@ function mod:UPDATE_MOUSEOVER_UNIT(event, frame)
 end
 
 local function getDebuff(spellIcon, unit)
-	if not unit or not UnitExists(unit) then return nil, nil end
+	local good, exist, guid = pcall(UnitExists, unit)
+	if not good or not exist then return nil, nil end
 	local filter = UnitIsFriend(unit, 'player')
 	for i = 1, 32 do
 		local spellId, count
