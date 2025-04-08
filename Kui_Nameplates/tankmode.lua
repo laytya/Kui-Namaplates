@@ -295,7 +295,7 @@ local function SetAgroText(self, agro, agrocolor)
 end
 
 function mod:CreateAgroText(msg, frame)
-    --printT("CreateAgroText")
+   
     frame.agroText = frame:CreateFontString(frame.overlay, {
         size = 'spellname',
         outline = 'OUTLINE'
