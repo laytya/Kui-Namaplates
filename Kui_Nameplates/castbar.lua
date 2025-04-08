@@ -393,13 +393,6 @@ function mod:GetOptions()
 					type = 'color',
 					order = 0
 				},
-	--[[			shieldbarcolour = {
-					name = 'Uninterruptible colour',
-					desc = 'The colour of the cast bar and shield during UNinterruptible casts.',
-					type = 'color',
-					order = 5
-				},
-	]]
 				cbheight = {
 					name = 'Height',
 					desc = 'The height of castbars on nameplates. Also affects the size of the spell icon.',
@@ -425,7 +418,7 @@ function mod:OnInitialize()
 				spellicon       = true,
 				cbheight        = 4,
 				barcolour       = { .43, .47, .55, 1 },
---				shieldbarcolour = { .8,  .1,  .1,  1 },
+
 			}
 		}
 	})
@@ -433,8 +426,6 @@ function mod:OnInitialize()
 	addon:RegisterSize('frame', 'cbheight', self.db.profile.display.cbheight)
 	addon:RegisterSize('frame', 'icon', 
 		addon.db.profile.general.hheight + addon.defaultSizes.frame.cbheight + 1)
---	addon:RegisterSize('tex', 'shieldw', 10)
---	addon:RegisterSize('tex', 'shieldh', 12)
 
 	addon:InitModuleOptions(self)
 	mod:SetEnabledState(self.db.profile.enabled)
