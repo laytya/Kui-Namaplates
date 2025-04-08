@@ -17,7 +17,8 @@ addon.defaultSizes = { frame = {}, font = {}, tex = {} }
 addon.frameList = {}
 addon.numFrames = 0
 addon.inCombat = nil
-addon.superwow = SpellInfo
+addon.superwow = SUPERWOW_VERSION and (tonumber(SUPERWOW_VERSION) > 1.4) or false
+
 
 -- sizes of frame elements
 -- TODO these should be set in create.lua

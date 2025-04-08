@@ -11,8 +11,6 @@ mod.uc = LibStub:GetLibrary("UnitCasting-1.1")
 
 mod.uiName = 'Cast bars'
 
-local superwow = SUPERWOW_VERSION and (tonumber(SUPERWOW_VERSION) > 1.4) or false
-
 local format , floor, fmod = format , math.floor, math.mod
 local function ResetFade(f)
 	kui.frameFadeRemoveFrame(f.castbar)
@@ -22,7 +20,7 @@ local function ResetFade(f)
 end
 
 ------------------------------------------------------------- Script handlers --
-local function OnCastbarShow(f, spell,icon)
+local function OnCastbarShow(f, spell,icon, colour)
 	if not mod.enabledState then return end
 
 --	local f = self:GetParent():GetParent().kui
@@ -37,10 +35,14 @@ local function OnCastbarShow(f, spell,icon)
 		f.castbar.bar:SetStatusBarColor(unpack(mod.db.profile.display.shieldbarcolour))
 		f.castbar.shield:Show()
 else ]]
-		f.castbar.bar:SetStatusBarColor(unpack(mod.db.profile.display.barcolour))
+		
 	--	f.castbar.shield:Hide()
 	--end
---	
+	if colour then 
+		f.castbar.bar:SetStatusBarColor(unpack(colour))
+	else
+		f.castbar.bar:SetStatusBarColor(unpack(mod.db.profile.display.barcolour))
+	end
 	if f.trivial then
 		-- hide text & icon
 		if f.castbar.icon then
@@ -118,6 +120,14 @@ function mod:OnCastbarUpdate(f, elapsed)
 	    end
 	end
 	if v ~= nil and GetTime() < v.timeEnd then
+		if v.spell == "INTERUPTED" then
+			f.castbar.bar:SetMinMaxValues(0,1)
+			f.castbar.bar:SetValue(1)
+			f.castbar.spark:Hide()
+			if f.castbar.curr then 	f.castbar.curr:SetText('') end
+			OnCastbarShow(f,v.spell, v.icon, {1,0,0})
+			f.castbar:Show()
+		else
 
 		f.castbar.bar:SetMinMaxValues(0, v.timeEnd - v.timeStart)
 		if v.inverse then
@@ -135,12 +145,15 @@ function mod:OnCastbarUpdate(f, elapsed)
 
 		sp = v.inverse and sp or -sp
 		f.castbar.spark:SetPoint("CENTER", f.castbar.bar:GetRegions(), v.inverse and "LEFT" or "RIGHT", sp, 0)
+			f.castbar.spark:Show()
 		f.castbar:SetAlpha(f.currentAlpha)
 		if not f.castbar:IsShown() then
 			OnCastbarShow(f, v.spell, v.icon)
 			f.castbar:Show()
 		end
+		end
 	else 
+		if v ~= nil then v= nil end
 		OnCastbarHide(f)
 	end
 end
@@ -149,7 +162,7 @@ local function OnStartCast(event, info)
 	
 	local frame
 	local guid
-	if superwow then
+	if addon.superwow then
 		guid = info.caster
 	else
 		guid = addon:GetKnownGUID(info.caster) -- Player
@@ -198,8 +211,11 @@ local function OnCastEvent()
 			}
 			
 			mod:OnCastbarUpdate(frame)
-		elseif (eventType == "CAST" or eventType == "FAIL" )
-						and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
+		elseif (eventType == "FAIL") and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
+			frame.castbar.spellInfo.spell = "INTERUPTED"
+			frame.castbar.spellInfo.timeEnd = GetTime() + 1
+			mod:OnCastbarUpdate(frame)
+		elseif (eventType == "CAST" )and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
 			frame.castbar.spellInfo = nil
 			OnCastbarHide(frame)
 		end
