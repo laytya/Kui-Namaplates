@@ -19,6 +19,55 @@ local function ResetFade(f)
 	f.castbar:SetAlpha(1)
 end
 
+local interrupts = {
+  ["Shield Bash"] = true;
+  ["Pummel"] = true;
+  ["Kick"] = true;
+  ["Earth Shock"] = true;
+  ["Concussion Blow"] = true;
+  ["Charge Stun"] = true;
+  ["Intercept Stun"] = true;
+  ["Hammer of Justice"] = true;
+  ["Cheap Shot"] = true;
+  ["Gouge"] = true;
+  ["Kidney Shot"] = true;
+  ["Silence"] = true;
+  ["Counterspell"] = true;
+  ["Spell lock"] = true;
+  ["Counterspell - Silenced"] = true;
+  ["Bash"] = true;
+  ["Fear"] = true;
+  ["Howl of Terror"] = true;
+  ["Psychic Scream"] = true;
+  ["Intimidating Shout"] = true;
+  ["Starfire Stun"] = true;
+  ["Revenge Stun"] = true;
+  ["Improved Concussive Shot"] = true;
+  ["Impact"] = true;
+  ["Pyroclasm"] = true;
+  ["Blackout"] = true;
+  ["Stun"] = true;
+  ["Mace Stun Effect"] = true;
+  ["Earthshaker"] = true;
+  ["Repentance"] = true;
+  ["Scatter Shot"] = true;
+  ["Blind"] = true;
+  ["Hibernate"] = true;
+  ["Wyvern Sting"] = true;
+  ["Rough Copper Bomb"] = true;
+  ["Large Copper Bomb"] = true;
+  ["Small Bronze Bomb"] = true;
+  ["Big Bronze Bomb"] = true;
+  ["Big Iron Bomb"] = true;
+  ["Mithril Frag Bomb"] = true;
+  ["Hi-Explosive Bomb"] = true;
+  ["Dark Iron Bomb"] = true;
+  ["Iron Grenade"] = true;
+  ["M73 Frag Grenade"] = true;
+  ["Thorium Grenade"] = true;
+  ["Goblin Mortar"] = true;
+  ["Polymorph"] = true;
+}
 ------------------------------------------------------------- Script handlers --
 local function OnCastbarShow(f, spell,icon, colour)
 	if not mod.enabledState then return end
@@ -120,7 +169,7 @@ function mod:OnCastbarUpdate(f, elapsed)
 	    end
 	end
 	if v ~= nil and GetTime() < v.timeEnd then
-		if v.spell == "INTERUPTED" then
+		if v.spell == "INTERUPTED" or v.spell == "FAILED" then
 			f.castbar.bar:SetMinMaxValues(0,1)
 			f.castbar.bar:SetValue(1)
 			f.castbar.spark:Hide()
@@ -212,7 +261,7 @@ local function OnCastEvent()
 			
 			mod:OnCastbarUpdate(frame)
 		elseif (eventType == "FAIL") and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
-			frame.castbar.spellInfo.spell = "INTERUPTED"
+			if frame.castbar.spellInfo.spell ~= "INTERUPTED" then frame.castbar.spellInfo.spell = "FAILED" end
 			frame.castbar.spellInfo.timeEnd = GetTime() + 1
 			mod:OnCastbarUpdate(frame)
 		elseif (eventType == "CAST" )and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
@@ -220,6 +269,16 @@ local function OnCastEvent()
 			OnCastbarHide(frame)
 		end
 	end
+	frame = addon:GetNameplate(target)
+	if frame and frame.castbar then
+		local spell, rank, icon = SpellInfo(spellId)
+		if (eventType == "CAST") and frame.castbar.spellInfo and interrupts[spell] then
+			frame.castbar.spellInfo.spell = "INTERUPTED"
+			frame.castbar.spellInfo.timeEnd = GetTime() + 1
+			OnCastbarHide(frame)
+		end
+	end
+
 end
 
 ---------------------------------------------------------------------- create --
