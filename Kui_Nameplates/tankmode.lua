@@ -169,7 +169,7 @@ function mod:CheckCC()
     end
 end
 
-    
+
 
 function mod:UpdateHealthbarColor(f)
     if not f.guid or not guidsTargets[f.guid] then
@@ -178,17 +178,17 @@ function mod:UpdateHealthbarColor(f)
     if UnitAffectingCombat("player") and UnitAffectingCombat(f.guid) and not UnitCanAssist("player", f.guid) then
         local g = guidsTargets[f.guid]
         local _, player = UnitExists("player")
-				local r, gg, b
+        local r, gg, b
         if g.cc then
-					r, gg, b = unpack(mod.db.profile.cccolour)
-          return r, gg, b, true
+            r, gg, b = unpack(mod.db.profile.cccolour)
+            return r, gg, b, true
         elseif (g.cast and (g.cast == player or g.prev == player)) or g.current == player or
             (not g.cast and (not g.current and g.prev == player)) then
-						r, gg, b = getTankColor(true)
+            r, gg, b = getTankColor(true)
             return r, gg, b, true
         else
-					r, gg, b = getTankColor(false)
-          return r, gg, b, false
+            r, gg, b = getTankColor(false)
+            return r, gg, b, false
         end
     end
     return nil
@@ -232,9 +232,9 @@ local function handleThreatPacket(packet)
             if player == mod.myName then
                 mod.myThreat = perc
                 mod.myMelee = melee
-             end
-          end
-     end
+        end
+    end
+end
 
 end
 
@@ -379,13 +379,13 @@ function mod:OnEnable()
     self:RegisterMessage('KuiNameplates_PostHide', 'Hide')
     self:RegisterMessage('KuiNameplates_PostCritUpdate', 'PostCritUpdate')
     self:RegisterMessage('KuiNameplates_PostTarget', 'PostTarget')
-    --self:RegisterMessage('KuiNameplates_PostUpdate', 'PostUpdate')
+    -- self:RegisterMessage('KuiNameplates_PostUpdate', 'PostUpdate')
 
     self:RegisterEvent("UNIT_CASTEVENT", OnCastEvent)
     self:RegisterEvent("CHAT_MSG_ADDON", OnChatMsgAddon)
     self:ScheduleRepeatingTimer('TargetsUpdate', .1)
     self:ScheduleRepeatingTimer('CleanTargets', 10)
-		self:ScheduleRepeatingTimer('CheckCC', .5)
+    self:ScheduleRepeatingTimer('CheckCC', .5)
     self:ScheduleRepeatingTimer('UnitDetailedThreatSituation', 1)
     addon.TankModule = self
     mod:Toggle()
@@ -398,10 +398,10 @@ function mod:OnEnable()
 end
 
 function mod:OnDisable()
-	self:UnregisterEvent("UNIT_CASTEVENT")
+    self:UnregisterEvent("UNIT_CASTEVENT")
     self:UnregisterEvent("CHAT_MSG_ADDON")
-	self:CancelAllTimers()
-	self:UnregisterMessage('KuiNameplates_PostCritUpdate')
+    self:CancelAllTimers()
+    self:UnregisterMessage('KuiNameplates_PostCritUpdate')
     self:UnregisterMessage('KuiNameplates_PostCreate')
     self:UnregisterMessage('KuiNameplates_PostTarget')
     self:UnregisterMessage('KuiNameplates_PostHide')

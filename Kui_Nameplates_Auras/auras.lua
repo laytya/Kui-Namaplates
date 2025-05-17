@@ -369,27 +369,27 @@ function mod:Show(msg, frame)
 	if totem ~= nil then
 		frame.trivial = true
 		frame.totem = totem
-        frame:SetCentre()
+		frame:SetCentre()
 
-        addon:UpdateBackground(frame, frame.trivial)
-        addon:UpdateHealthBar(frame, frame.trivial)
-        addon:UpdateHealthText(frame, frame.trivial)
-        addon:UpdateAltHealthText(frame, frame.trivial)
-        addon:UpdateLevel(frame, frame.trivial)
-        addon:UpdateName(frame, frame.trivial)
-        addon:UpdateTargetGlow(frame, frame.trivial)
+		addon:UpdateBackground(frame, frame.trivial)
+		addon:UpdateHealthBar(frame, frame.trivial)
+		addon:UpdateHealthText(frame, frame.trivial)
+		addon:UpdateAltHealthText(frame, frame.trivial)
+		addon:UpdateLevel(frame, frame.trivial)
+		addon:UpdateName(frame, frame.trivial)
+		addon:UpdateTargetGlow(frame, frame.trivial)
 	else
 		frame.trivial = false
 		frame.totem = nil
 		frame:SetCentre()
 
-        addon:UpdateBackground(frame, frame.trivial)
-        addon:UpdateHealthBar(frame, frame.trivial)
-        addon:UpdateHealthText(frame, frame.trivial)
-        addon:UpdateAltHealthText(frame, frame.trivial)
-        addon:UpdateLevel(frame, frame.trivial)
-        addon:UpdateName(frame, frame.trivial)
-        addon:UpdateTargetGlow(frame, frame.trivial)
+		addon:UpdateBackground(frame, frame.trivial)
+		addon:UpdateHealthBar(frame, frame.trivial)
+		addon:UpdateHealthText(frame, frame.trivial)
+		addon:UpdateAltHealthText(frame, frame.trivial)
+		addon:UpdateLevel(frame, frame.trivial)
+		addon:UpdateName(frame, frame.trivial)
+		addon:UpdateTargetGlow(frame, frame.trivial)
 	end
 
 	-- set vertical position of the container frame
@@ -498,7 +498,7 @@ local function getDebuff(spellIcon, unit)
 		end
 		if spellIcon == spellId then
 			return spellId, count
-	end
+		end
 		
 		
 		gratuity:Erase()
@@ -543,11 +543,11 @@ function mod:UNIT_AURA(e, u, frame)
 
 	local unit = u and u or arg1
 	if not frame then
-	if unit == 'target' then
-		frame = addon:GetTargetNameplate()
-	else
-		frame = addon:GetNameplate(kui.UnitGUID(unit), nil)
-	end
+		if unit == 'target' then
+			frame = addon:GetTargetNameplate()
+		else
+			frame = addon:GetNameplate(kui.UnitGUID(unit), nil)
+		end
 	end
 	if not frame or not frame.auras or frame.name.text ~= UnitName(unit) then return end
 	if frame.trivial and not self.db.profile.showtrivial then return end
@@ -595,26 +595,26 @@ function mod:UNIT_AURA(e, u, frame)
 						local spellId = B:GetSpellIcon(spell)
 						if spellId then
 							local button = frame.auras:GetAuraButton(spellId, 1, 0, 0)
+							frame.auras:Show()
+							button:Show()
+							button.used = true
+						end
+					end
+				end
+			end
+		end
+		for k, buff in pairs(buffs) do
+			local te = unitIsPlayer and buff.drTimeEnd or buff.timeEnd
+			local duration, expirationTime = te - buff.timeStart, te - GetTime()
+
+			local button = frame.auras:GetAuraButton(buff.icon, buff.stacks, duration, expirationTime)
 			frame.auras:Show()
 			button:Show()
 			button.used = true
 		end
 	end
-		end
-	end
-		end
-	for k, buff in pairs(buffs) do
-		local te = unitIsPlayer and buff.drTimeEnd or buff.timeEnd
-			local duration, expirationTime = te - buff.timeStart, te - GetTime()
-
-		local button = frame.auras:GetAuraButton(buff.icon, buff.stacks, duration, expirationTime)
-		frame.auras:Show()
-		button:Show()
-		button.used = true
-	end
-	end
 	for _, button in pairs(frame.auras.buttons) do
-	-- hide buttons that weren't used this update
+		-- hide buttons that weren't used this update
 		if not button.used then
 			button:Hide()
 		end
@@ -628,16 +628,16 @@ local function OnNewBuff(event, info)
 	local guid = (addon.superwow and LoggingCombat("RAW") == 1 ) and info.caster or addon:GetKnownGUID(info.caster)
 	local targetFrame = addon:GetTargetNameplate()
 	local moframe = addon:GetMouseoverNameplate()
-	 -- Player
+	-- Player
 	if guid then
 		if targetFrame and targetFrame.guid == guid then
 			frame = targetFrame
 			unit = "target"
-		elseif moframe and moframe.guid ==  guid then
-			frame =  moFrame
+		elseif moframe and moframe.guid == guid then
+			frame = moFrame
 			unit = "mouseover"
 		else
-		frame = addon:GetNameplate(guid)
+			frame = addon:GetNameplate(guid)
 			if (addon.superwow and LoggingCombat("RAW") == 1 ) then unit =  info.caster end
 		end
 	else
@@ -684,8 +684,8 @@ local function OnEndBuff(event, info)
 		if targetFrame and targetFrame.guid == guid then
 			frame = targetFrame
 			unit = "target"
-		elseif moframe and moframe.guid ==  guid then
-			frame =  moFrame
+		elseif moframe and moframe.guid == guid then
+			frame = moFrame
 			unit = "mouseover"
 		else
 			frame = addon:GetNameplate(guid)
