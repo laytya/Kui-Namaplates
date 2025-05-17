@@ -1,9 +1,0 @@
-[submodule "Kui_Nameplates/lib/LibStub"]
-	path = Kui_Nameplates/lib/LibStub
-	url = https://github.com/laytya/LibStub
-[submodule "Kui_Nameplates/lib/CallbackHandler-1.0"]
-	path = Kui_Nameplates/lib/CallbackHandler-1.0
-	url = https://github.com/laytya/CallbackHandler-1.0
-[submodule "Kui_Nameplates/lib/Ace3"]
-	path = Kui_Nameplates/lib/Ace3
-	url = https://github.com/laytya/Ace3v
