@@ -11,7 +11,7 @@ local len, format, byte = string.len, string.format, string.byte
 local floor, ceil, mod = math.floor, math.ceil, math.mod
 local superwow = SpellInfo
 --------------------------------------------------------------- media / files --
-local media = "Interface\\AddOns\\Kui_Media\\"
+local media = "Interface\\AddOns\\Kui_Plate_Package\\Kui_Media\\"
 kui.m = {
 	t = {
 		-- borders

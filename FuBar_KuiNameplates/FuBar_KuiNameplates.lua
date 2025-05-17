@@ -6,7 +6,7 @@ local KNPFu = KNPFu
 --Fubar plugin settings
 KNPFu.version = "1.0"
 KNPFu.date = "29/06/2018"
-KNPFu.hasIcon = "Interface\\AddOns\\FuBar_KuiNameplates\\icon"
+KNPFu.hasIcon = "Interface\\AddOns\\Kui_Plate_Package\\FuBar_KuiNameplates\\icon"
 KNPFu.canHideText = true
 KNPFu.hasNoColor = true
 KNPFu.clickableTooltip = false
@@ -46,7 +46,7 @@ function KNPFu:OnMenuRequest(level,value)
 								AddonConfigFrame:Hide()
 							else
 								InterfaceOptionsFrame_OpenToCategory('kuinameplates')
-						end 
+							end
 				  end),
 				
 				'disabled', false,
@@ -59,7 +59,7 @@ function KNPFu:OnMenuRequest(level,value)
 			'hasArrow', true,
 			'value', "fubar"
 		)
-		
+
 		
 	elseif level > 1 and (value == "fubar" or value == "position") then
 		level = value == "position" and 2 or level

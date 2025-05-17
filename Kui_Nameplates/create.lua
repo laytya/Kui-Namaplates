@@ -15,7 +15,7 @@ function addon:CreateBackground(frame, f)
     -- frame glow
     --f.bg:SetParent(f)
     f.bg = f:CreateTexture(nil, 'ARTWORK')
-    f.bg:SetTexture('Interface\\AddOns\\Kui_Nameplates\\media\\FrameGlow')
+    f.bg:SetTexture('Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\FrameGlow')
     f.bg:SetTexCoord(0, .469, 0, .625)
     f.bg:SetVertexColor(0, 0, 0, .9)
 
@@ -254,7 +254,7 @@ end
 ----------------------------------------------------------------- Target glow --
 function addon:CreateTargetGlow(f)
     f.targetGlow = f.overlay:CreateTexture(nil, 'ARTWORK')
-    f.targetGlow:SetTexture('Interface\\AddOns\\Kui_Nameplates\\media\\target-glow')
+    f.targetGlow:SetTexture('Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\target-glow')
     f.targetGlow:SetTexCoord(0, .593, 0, .875)
     f.targetGlow:SetPoint('TOP', f.overlay, 'BOTTOM', 0, 1)
     f.targetGlow:SetVertexColor(unpack(self.db.profile.general.targetglowcolour))
@@ -309,8 +309,8 @@ do
         end
 
         if f.target then
-            f.TargetArrows.l:SetTexture("Interface\\AddOns\\Kui_Nameplates\\media\\targetarrows3")
-            f.TargetArrows.r:SetTexture("Interface\\AddOns\\Kui_Nameplates\\media\\targetarrows3")
+            f.TargetArrows.l:SetTexture("Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\targetarrows3")
+            f.TargetArrows.r:SetTexture("Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\targetarrows3")
             f.TargetArrows:SetVertexColor(unpack(self.db.profile.general.targetglowcolour))
             f.TargetArrows:SetSize(self.db.profile.general.targetarrowssize)
             f.TargetArrows:Show()

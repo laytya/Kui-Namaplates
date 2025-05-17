@@ -164,9 +164,9 @@ function mod:OnCastbarUpdate(f, elapsed)
 	else
 		v = mod.uc.GetCast(f.name.text)
 		vv = mod.uc.GetHeal(f.name.text)
-	        if v == nil and vv ~= nil then
-		    v = vv
-	    end
+		if v == nil and vv ~= nil then
+			v = vv
+		end
 	end
 	if v ~= nil and GetTime() < v.timeEnd then
 		if v.spell == "INTERUPTED" or v.spell == "FAILED" then
@@ -178,28 +178,28 @@ function mod:OnCastbarUpdate(f, elapsed)
 			f.castbar:Show()
 		else
 
-		f.castbar.bar:SetMinMaxValues(0, v.timeEnd - v.timeStart)
-		if v.inverse then
-			f.castbar.bar:SetValue(fmod((v.timeEnd - GetTime()), v.timeEnd - v.timeStart))
-		else
-			f.castbar.bar:SetValue(fmod((GetTime() - v.timeStart), v.timeEnd - v.timeStart))
-		end
-		if f.castbar.curr then
-			f.castbar.curr:SetText(format("%.1f",getTimerLeft(v.timeEnd)))
-		end
-		
-		local perc = (v.timeEnd - GetTime()) / (v.timeEnd - v.timeStart)
-		local width = f.castbar.bar:GetWidth()
-		local sp = width * perc
+			f.castbar.bar:SetMinMaxValues(0, v.timeEnd - v.timeStart)
+			if v.inverse then
+				f.castbar.bar:SetValue(fmod((v.timeEnd - GetTime()), v.timeEnd - v.timeStart))
+			else
+				f.castbar.bar:SetValue(fmod((GetTime() - v.timeStart), v.timeEnd - v.timeStart))
+			end
+			if f.castbar.curr then
+				f.castbar.curr:SetText(format("%.1f",getTimerLeft(v.timeEnd)))
+			end
+			
+			local perc = (v.timeEnd - GetTime()) / (v.timeEnd - v.timeStart)
+			local width = f.castbar.bar:GetWidth()
+			local sp = width * perc
 
-		sp = v.inverse and sp or -sp
-		f.castbar.spark:SetPoint("CENTER", f.castbar.bar:GetRegions(), v.inverse and "LEFT" or "RIGHT", sp, 0)
+			sp = v.inverse and sp or -sp
+			f.castbar.spark:SetPoint("CENTER", f.castbar.bar:GetRegions(), v.inverse and "LEFT" or "RIGHT", sp, 0)
 			f.castbar.spark:Show()
-		f.castbar:SetAlpha(f.currentAlpha)
-		if not f.castbar:IsShown() then
-			OnCastbarShow(f, v.spell, v.icon)
-			f.castbar:Show()
-		end
+			f.castbar:SetAlpha(f.currentAlpha)
+			if not f.castbar:IsShown() then
+				OnCastbarShow(f, v.spell, v.icon)
+				f.castbar:Show()
+			end
 		end
 	else 
 		if v ~= nil then v= nil end
@@ -264,7 +264,7 @@ local function OnCastEvent()
 			if frame.castbar.spellInfo.spell ~= "INTERUPTED" then frame.castbar.spellInfo.spell = "FAILED" end
 			frame.castbar.spellInfo.timeEnd = GetTime() + 1
 			mod:OnCastbarUpdate(frame)
-		elseif (eventType == "CAST" )and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
+		elseif (eventType == "CAST") and frame.castbar.spellInfo and frame.castbar.spellInfo.spellId == spellId then
 			frame.castbar.spellInfo = nil
 			OnCastbarHide(frame)
 		end
@@ -313,13 +313,13 @@ function mod:CreateCastbar(msg, frame)
 	frame.castbar.spark = frame.castbar.bar:CreateTexture(nil, 'ARTWORK')
 	frame.castbar.spark:SetDrawLayer('ARTWORK', 6)
 	frame.castbar.spark:SetVertexColor(1,1,.8)
-	frame.castbar.spark:SetTexture('Interface\\AddOns\\Kui_Nameplates\\media\\spark')
+	frame.castbar.spark:SetTexture('Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\spark')
 	frame.castbar.spark:SetPoint('CENTER', frame.castbar.bar:GetRegions(), 'RIGHT', 1, 0)
 	frame.castbar.spark:SetWidth(6); frame.castbar.spark:SetHeight(addon.sizes.frame.cbheight + 6)
 
 	--[[ uninterruptible cast shield -----------------------------------------
 	frame.castbar.shield = frame.castbar.bar:CreateTexture(nil, 'ARTWORK')
-	frame.castbar.shield:SetTexture('Interface\\AddOns\\Kui_Nameplates\\media\\Shield')
+	frame.castbar.shield:SetTexture('Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\Shield')
 	frame.castbar.shield:SetTexCoord(0, .53125, 0, .625)
 
 	frame.castbar.shield:SetWidth(addon.sizes.tex.shieldw); frame.castbar.shield:SetHeight(addon.sizes.tex.shieldh)
@@ -500,8 +500,8 @@ function mod:OnEnable()
 	if addon.superwow then
 		self:RegisterEvent("UNIT_CASTEVENT", OnCastEvent)
 	else
-	    mod.uc.RegisterCallback(self, "NewCast", OnStartCast)
-	    mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndCast)
+		mod.uc.RegisterCallback(self, "NewCast", OnStartCast)
+		mod.uc.RegisterCallback(self, "EndCastOrBuff", OnEndCast)
 	end
 
 

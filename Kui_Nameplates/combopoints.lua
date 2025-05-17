@@ -118,7 +118,7 @@ function mod:CreateComboPoints(msg, frame)
 		-- create individual combo point icons
 		local cp = frame.combopoints:CreateTexture(nil, 'ARTWORK')
 		cp:SetDrawLayer('ARTWORK', 2)
-		cp:SetTexture('Interface\\AddOns\\Kui_Nameplates\\media\\combopoint-round')
+		cp:SetTexture('Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\combopoint-round')
 		cp:SetWidth(addon.sizes.tex.combopoints)
 		cp:SetHeight(addon.sizes.tex.combopoints)
 
@@ -136,7 +136,7 @@ function mod:CreateComboPoints(msg, frame)
 		local glow = frame.combopoints:CreateTexture(nil, 'ARTWORK')
 
 		glow:SetDrawLayer('ARTWORK',1)
-		glow:SetTexture('Interface\\AddOns\\Kui_Nameplates\\media\\combopoint-glow')
+		glow:SetTexture('Interface\\AddOns\\Kui_Plate_Package\\Kui_Nameplates\\media\\combopoint-glow')
 		glow:SetWidth(addon.sizes.tex.combopoints+8)
 		glow:SetHeight(addon.sizes.tex.combopoints+8)
 		glow:SetPoint('CENTER',cp)
