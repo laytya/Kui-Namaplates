@@ -1,0 +1,35 @@
+## Interface: 11200
+## Author: laytya, Kesava, wrapped by dev-dyl
+## Title: Kui |cff9966ffPlate Package|r
+## Notes: Wrapped Kui Nameplate Addon in one package.
+## SavedVariables: KuiPackageGDB, KuiSpellListCustom
+
+
+
+# Kui_Nameplates\Kui_Nameplates.toc
+Kui_Nameplates\lib\LibStub\LibStub.luaKui_Nameplates\lib\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Kui_Nameplates\lib\Kui\Kui.luaKui_Nameplates\lib\Ace3\AceCore-3.0\AceCore-3.0.luaKui_Nameplates\lib\Ace3\AceAddon-3.0\AceAddon-3.0.luaKui_Nameplates\lib\Ace3\AceEvent-3.0\AceEvent-3.0.luaKui_Nameplates\lib\Ace3\AceHook-3.0\AceHook-3.0.luaKui_Nameplates\lib\Ace3\AceTimer-3.0\AceTimer-3.0.xmlKui_Nameplates\lib\Ace3\AceConsole-3.0\AceConsole-3.0.luaKui_Nameplates\lib\Ace3\AceDB-3.0\AceDB-3.0.luaKui_Nameplates\lib\Ace3\AceDBOptions-3.0\AceDBOptions-3.0.luaKui_Nameplates\lib\Ace3\AceGUI-3.0\AceGUI-3.0.xmlKui_Nameplates\lib\Ace3\AceConfig-3.0\AceConfig-3.0.xmlKui_Nameplates\lib\Ace3\AceTimer-3.0\AceTimer-3.0.luaKui_Nameplates\lib\LibSharedMedia-3.0\LibSharedMedia-3.0.luaKui_Nameplates\lib\Ace3\AceGUI-3.0-SharedMediaWidgets\widget.xmlKui_Nameplates\lib\Ace3\AceGUI-3.0\widgets\widgets.xmlKui_Nameplates\lib\LibBabble-Spell-3.0\lib.xmlKui_Nameplates\lib\ParserLib\ParserLib.luaKui_Nameplates\lib\UnitCasting-1.1\lib.xml
+Kui_Nameplates\core.luaKui_Nameplates\config.luaKui_Nameplates\create.luaKui_Nameplates\layout.lua
+Kui_Nameplates\tankmode.luaKui_Nameplates\castbar.luaKui_Nameplates\castwarnings.luaKui_Nameplates\combopoints.lua
+Kui_Nameplates\critters.luaKui_Nameplates\custom.lua
+
+
+# Kui_Media\Kui_Media.tocKui_Media\lib\LibStub\LibStub.luaKui_Media\lib\CallbackHandler-1.0\CallbackHandler-1.0.luaKui_Media\lib\LibSharedMedia-3.0\LibSharedMedia-3.0.luaKui_Media\Kui_Media\textures.lua
+
+
+# Kui_Nameplates_Auras\Kui_Nameplates_Auras.toc
+Kui_Nameplates_Auras\lib\embeds.xml
+Kui_Nameplates_Auras\data.lua
+Kui_Nameplates_Auras\auras.lua
+
+
+# FuBar_KuiNameplates\FuBar_KuiNameplates.toc
+
+# Remove the # if you want to use FuBar
+
+#FuBar_KuiNameplates\embeds.xml
+
+#FuBar_KuiNameplates\FuBar_KNPLocale-enUS.lua
+#FuBar_KuiNameplates\FuBar_KNPLocale-ruRU.lua
+#FuBar_KuiNameplates\FuBar_KuiNameplates.lua
+

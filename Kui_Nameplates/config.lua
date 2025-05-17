@@ -247,7 +247,7 @@ do
                         values = StrataSelectList,
                         order = 170
                     },
-		    clickThrough = { 
+		            clickThrough = { 
                         name = 'Click Through',
                         desc = 'Click Through functionality: On, Off or Off + Right-Click Mouse Look',
                         type = 'select',

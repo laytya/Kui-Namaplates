@@ -109,8 +109,8 @@ end
 function mod:PostShow(msg, frame)
    if critters[frame.name.text] and tonumber(frame.level:GetText()) == 1 then
       kn:NameOnlyEnable(frame)
-      return
-   end
+         return
+      end
 end
 
 ------------------------------------------------------------------------ Hide --

@@ -467,9 +467,9 @@ function FuBarPlugin:SetIcon(path)
 		return
 	end
 	if type(path) ~= "string" then
-		path = format("Interface\\AddOns\\%s\\icon", self.folderName)
+		path = format("Interface\\AddOns\\Kui_Plate_Package\\%s\\icon", self.folderName)
 	elseif not string.find(path, '^Interface[\\/]') then
-		path = format("Interface\\AddOns\\%s\\%s", self.folderName, path)
+		path = format("Interface\\AddOns\\Kui_Plate_Package\\%s\\%s", self.folderName, path)
 	end
 	if string.sub(path, 1, 16) == "Interface\\Icons\\" then
 		self.iconFrame:SetTexCoord(0.05, 0.95, 0.05, 0.95)

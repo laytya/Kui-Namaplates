@@ -544,7 +544,7 @@ end
 
 ------------------------------------------------------------------------ init --
 function addon:OnInitialize()
-    self.db = LibStub('AceDB-3.0'):New('KuiNameplatesGDB', defaults)
+    self.db = LibStub('AceDB-3.0'):New('KuiPackageGDB', defaults)
 	self.ac = LibStub('AceConfig-3.0')
 	self.acd = LibStub('AceConfigDialog-3.0')
     -- enable ace3 profiles

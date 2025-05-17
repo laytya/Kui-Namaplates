@@ -1,4 +1,4 @@
-local MAJOR, MINOR = 'UnitCasting-1.1', 11
+local MAJOR, MINOR = 'UnitCasting-1.1', 12
 local uc = LibStub:NewLibrary(MAJOR, MINOR)
 if not uc then
 	-- already registered
@@ -57,21 +57,21 @@ uc.UniqueDebuffs = {}
 
 -- written by kuurtzen (& modernist)
 
-local Cast = {}
-local casts = {}
-local Heal = {}
-local heals = {}
-local InstaBuff = {}
-local iBuffs = {}
+local Cast          = {}
+local casts         = {}
+local Heal          = {}
+local heals         = {}
+local InstaBuff     = {}
+local iBuffs        = {}
 local buff          = {}
 local buffList      = {}
 local dreturns      = {}
 local dreturnsList  = {}
 local buffQueue     = {}
 local buffQueueList = {}
-Cast.__index = spellCast
-Heal.__index = Heal
-InstaBuff.__index = InstaBuff
+Cast.__index        = spellCast
+Heal.__index        = Heal
+InstaBuff.__index   = InstaBuff
 buff.__index        = buff
 buffQueue.__index   = buffQueue
 dreturns.__index    = dreturns
@@ -135,11 +135,11 @@ buff.create = function(tar, spell, s, buffType, factor, time)
 	acnt.timeStart = time
 	if not buffType.duration then print('buff with nil duration: ' .. spell) end
 	buffType.duration = buffType.duration and buffType.duration or 0
-	acnt.drTimeEnd       = time + buffType.duration * factor
-	acnt.timeEnd         = time + buffType.duration
-	acnt.prio            = buffType.prio and buffType.prio or 0
-	acnt.border          = buffType.type and uc.RGBBorderDebuffsColors[buffType.type] or { .1, .1, .1 } -- border rgb values depending on type of buff/debuff
-	acnt.display         = buffType.display == nil and true or buffType.display
+	acnt.drTimeEnd    = time + buffType.duration * factor
+	acnt.timeEnd      = time + buffType.duration
+	acnt.prio         = buffType.prio and buffType.prio or 0
+	acnt.border       = buffType.type and uc.RGBBorderDebuffsColors[buffType.type] or { .1, .1, .1 } -- border rgb values depending on type of buff/debuff
+	acnt.display      = buffType.display == nil and true or buffType.display
 	return acnt
 end
 
@@ -176,7 +176,7 @@ local removeExpiredTableEntries = function(time, tab)
 			if tab == buffList or tab == heals then
 				uc.callbacks:Fire("EndCastOrBuff", 1, v)
 			end
-		elseif tab == buffList and time  > v.drTimeEnd then
+		elseif tab == buffList and time > v.drTimeEnd then
 			uc.callbacks:Fire("EndDRBuff", 1, v)
 		end
 		i = i + 1
@@ -390,7 +390,7 @@ local function processQueuedBuff(tar, b, start)
 			local n = buff.create(v.target, v.buffName, 1, v.buffData, drf, time)
 			table.insert(buffList, n)
 			if start then
-			uc.callbacks:Fire("NewBuff", 1, n)
+				uc.callbacks:Fire("NewBuff", 1, n)
 			end
 			table.remove(buffQueueList, k)
 			return n
@@ -604,8 +604,8 @@ local function catchSpellcast(spell, rank, onself)
 			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
 				unit, target = UnitExists("target")
 			else
-			target = GetUnitName("target")
-		end
+				target = GetUnitName("target")
+			end
 		end
 		queueBuff(target, spell, info, duration)
 	end
@@ -643,9 +643,9 @@ function uc:SpellTargetUnit(unit)
 			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
 				_, v.target = UnitExists(unit)
 			else
-			v.target = UnitName(unit)
+				v.target = UnitName(unit)
+			end
 		end
-	end
 	end
 end
 
@@ -656,9 +656,9 @@ function uc:TargetUnit(unit)
 			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
 				_, v.target = UnitExists(unit)
 			else
-			v.target = UnitName(unit)
+				v.target = UnitName(unit)
+			end
 		end
-	end
 	end
 end
 
@@ -669,9 +669,9 @@ function uc:OnMouseDown()
 			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
 				_, v.target = UnitExists("mouseover")
 			else
-			v.target = UnitName("mouseover")
+				v.target = UnitName("mouseover")
+			end
 		end
-	end
 	end
 end
 
