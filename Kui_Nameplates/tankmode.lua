@@ -9,6 +9,8 @@ local addon = LibStub('AceAddon-3.0'):GetAddon('KuiNameplates')
 local AceCore = LibStub("AceCore-3.0")
 local new, del = AceCore.new, AceCore.del
 local wipe, truncate = AceCore.wipe, AceCore.truncate
+local strsplit = AceCore.strsplit
+local strlower, unpack = string.lower, unpack
 
 if not addon.superwow then
     return
@@ -23,6 +25,8 @@ function mod:OnEnable()
 end
 
 local guidsTargets = new()
+local offTanks 
+
 mod.threatApi = 'TWTv4='
 mod.tankModeApi = 'TMTv1='
 mod.UDTS = 'TWT_UDTSv4'
@@ -38,6 +42,7 @@ local find = string.find
 local substr = string.sub
 local parseint = tonumber
 local tinsert = table.insert
+local playerGuid
 
 local function explode(str, delimiter)
     local result = new()
@@ -72,21 +77,40 @@ function mod:Toggle()
     mod:SetEnabledState(addon.TankMode)
 end
 
-local function getTankColor(tank)
+local function getTankColor(tank, offtank)
     if tank then
         if mod.db.profile.enabled == 3 then
             return unpack(mod.db.profile.loosecolour)
         else
+            if offtank then
+                return unpack(mod.db.profile.offtcolour)
+            else
             return unpack(mod.db.profile.barcolour)
+        end    
         end    
     else
         if mod.db.profile.enabled == 3 then
             return unpack(mod.db.profile.barcolour)
         else
+            if offtank then
+                return unpack(mod.db.profile.offtcolour)
+            else
             return unpack(mod.db.profile.loosecolour) 
         end  
     end
+    end
     
+end
+local function checkOffTanks(target)
+    printT(offTanks)
+    if target and offTanks then
+        local targetName = strlower(UnitName(target))
+        for _, offtank in pairs(offTanks) do
+            if targetName == strlower( offtank) then
+                 return true
+            end
+        end
+    end
 end
 
 function mod:GuidsTargets()
@@ -118,21 +142,30 @@ function mod:CleanTargets(msg, f)
 end
 
 function mod:PostCritUpdate(msg, f)
-    if f.agroText and f.target and mod.myThreat > 0 then
+    local t 
+    if f.guid and guidsTargets[f.guid] then
+        t = guidsTargets[f.guid]
+        local _, target = UnitExists(f.guid .. "target")
+        if target ~= t.current then
+            if t.current then
+                t.prev = t.current
+            end
+            t.current = target
+        end
+    end
+    if f.agroText then
+        if f.target and mod.myThreat > 0 and ((offTanks and t.current == playerGuid) or not offTanks) then
         local r,g,b  = getTankColor(mod.tankName == mod.myName )
         f:SetAgroText(mod.myThreat, {r,g,b})
+        elseif offTanks and t and t.current  then
+            local r,g,b  = getTankColor(checkOffTanks( t.current) or t.current == playerGuid)
+            f:SetAgroText(UnitName( t.current), {r,g,b})
+        else
+            f:SetAgroText()
     end
-    if not f.guid or not guidsTargets[f.guid] then
-        return
     end
-    local g = guidsTargets[f.guid]
-    local _, target = UnitExists(f.guid .. "target")
-    if target ~= g.current then
-        if g.current then
-            g.prev = g.current
-        end
-        g.current = target
-    end
+       
+    
 end
 
 function mod:PostTarget(msg, f)
@@ -177,17 +210,17 @@ function mod:UpdateHealthbarColor(f)
     end
     if UnitAffectingCombat("player") and UnitAffectingCombat(f.guid) and not UnitCanAssist("player", f.guid) then
         local g = guidsTargets[f.guid]
-        local _, player = UnitExists("player")
+        
 				local r, gg, b
         if g.cc then
 					r, gg, b = unpack(mod.db.profile.cccolour)
           return r, gg, b, true
-        elseif (g.cast and (g.cast == player or g.prev == player)) or g.current == player or
-            (not g.cast and (not g.current and g.prev == player)) then
+        elseif (g.cast and (g.cast == playerGuid or g.prev == playerGuid)) or g.current == playerGuid or
+            (not g.cast and (not g.current and g.prev == playerGuid)) then
 						r, gg, b = getTankColor(true)
             return r, gg, b, true
         else
-					r, gg, b = getTankColor(false)
+            r, gg, b = getTankColor(false, checkOffTanks(g.current))
           return r, gg, b, false
         end
     end
@@ -282,13 +315,14 @@ function mod:UnitDetailedThreatSituation()
 end
 
 local function SetAgroText(self, agro, agrocolor)
-    if agro == nil then
+    if agro == nil or agro == '' then
         -- hide the warning instantly
         self.agroText:SetText()
         self.agroText:Hide()
     else
+        agro = type(agro) == 'number' and math.floor(agro) or agro
         agrocolor = agrocolor and agrocolor or {1, 0, 0}
-        self.agroText:SetText(math.floor(agro))
+        self.agroText:SetText(agro)
         self.agroText:SetTextColor(unpack(agrocolor))
         self.agroText:Show()
     end
@@ -319,6 +353,15 @@ mod.configChangedFuncs = {
 }
 mod.configChangedFuncs.runOnce.enabled = function()
     mod:Toggle()
+end
+
+mod.configChangedFuncs.runOnce.offtanks = function( val)
+    --mod.db.profile.offtanks = val
+    if val and val ~= "" then
+         offTanks = { strsplit(',', val) }
+    else
+        offTanks = del(offTanks)
+    end
 end
 -------------------------------------------------------------------- Register --
 function mod:GetOptions()
@@ -355,6 +398,20 @@ function mod:GetOptions()
             type = 'color',
             hasAlpha = true,
             order = 2
+        },
+        offtcolour = {
+            name = 'Offtank targets colour',
+            desc = 'The colour to use when offtank have threat',
+            type = 'color',
+            hasAlpha = true,
+            order = 2
+        },
+        offtanks = {
+            name = 'List of Offtanks',
+            desc = 'Write here list of Offtanks, separated by ","',
+            type = 'input',
+            order = 6,
+            width = "double"
         }
     }
 end
@@ -366,7 +423,8 @@ function mod:OnInitialize()
             barcolour = {.2, .9, .1},
             glowcolour = {1, 0, 0, 1},
             cccolour = {1, 1, 0, 0.6},
-            loosecolour = {1, 0, 0, 1}
+            loosecolour = {1, 0, 0, 1},
+            offtcolour = {1, 0.7, 0, 1}
         }
     })
     mod.myName = UnitName('player')
@@ -388,12 +446,17 @@ function mod:OnEnable()
 		self:ScheduleRepeatingTimer('CheckCC', .5)
     self:ScheduleRepeatingTimer('UnitDetailedThreatSituation', 1)
     addon.TankModule = self
+    local _ 
+    _, playerGuid= UnitExists("player")
     mod:Toggle()
     local _, frame
     for _, frame in pairs(addon.frameList) do
         if not frame.agroText then
             self:CreateAgroText(nil, frame.kui)
         end
+    end
+    if mod.db.profile.offtanks and mod.db.profile.offtanks ~= '' then
+        offTanks = { strsplit(',', mod.db.profile.offtanks) }
     end
 end
 

@@ -67,6 +67,7 @@ local interrupts = {
   ["Thorium Grenade"] = true;
   ["Goblin Mortar"] = true;
   ["Polymorph"] = true;
+	["Intimidation"]  = true;
 }
 ------------------------------------------------------------- Script handlers --
 local function OnCastbarShow(f, spell,icon, colour)

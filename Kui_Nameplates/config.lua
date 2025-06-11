@@ -98,28 +98,36 @@ do
         return handlers[mod]
     end
 
-    local options = {
+    addon.options = {
         name = 'Kui Nameplates',
         handler = addon:GetOptionHandler(addon),
         type = 'group',
         get = 'Get',
         set = 'Set',
         args = {
-            header = {
-                type = 'header',
-                name = '|cffff0000Many options currently require a UI reload to take effect.|r',
-                order = 0
-            },
+            
             general = {
                 name = 'General display',
                 type = 'group',
                 order = 1,
                 args = {
+            header = {
+                type = 'header',
+                name = '|cffff0000Many options currently require a UI reload to take effect.|r',
+                        order =3
+            },
+                    reload = {
+                        name = 'Reload UI',
+                        type = 'execute',
+                        width = 'triple',
+                order = 1,
+                        func = ReloadUI
+                    },
                     combat = {
                         name = 'Auto toggle in combat',
                         desc = 'Automatically toggle on/off hostile nameplates upon entering/leaving combat',
                         type = 'toggle',
-                        order =1
+                        order =5
                     },
                     highlight = {
                         name = 'Highlight',
@@ -422,14 +430,14 @@ do
                     },
                     friendly = {
                         name = 'Friendly health format',
-                        desc = 'The health display pattern for friendly units.  p - percentage, d - deficit, c - current, m - max',
+                        desc = 'The health display pattern for friendly units.  p - percentage, d - deficit, c - current, m - max, b - no value',
                         type = 'input',
                         pattern = '([<=]:[dmcpb];)',
                         order = 5
                     },
                     hostile = {
                         name = 'Hostile health format',
-                        desc = 'The health display pattern for hostile or neutral units. p - percentage, d - deficit, c - current, m - max',
+                        desc = 'The health display pattern for hostile or neutral units. p - percentage, d - deficit, c - current, m - max, b - no value',
                         type = 'input',
                         pattern = '([<=]:[dmcpb];)',
                         order = 6
@@ -489,13 +497,7 @@ do
                     },
                 }
             },
-            reload = {
-                name = 'Reload UI',
-                type = 'execute',
-                width = 'triple',
-                order = 99,
-                func = ReloadUI
-            },
+            
         }
     }
 
@@ -512,10 +514,10 @@ do
         if not module.GetOptions then return end
         local opts = module:GetOptions()
         local name = module.uiName or module.moduleName
-
+        if not self.optionsPanel then self.optionsPanel = {} end
         self:CreateConfigChangedListener(module)
 
-        options.args[name] = {
+        addon.options.args[name] = {
             name = name,
             handler = self:GetOptionHandler(module),
             type = 'group',
@@ -524,24 +526,29 @@ do
             set = 'Set',
             args = opts
         }
+        self.optionsPanel[name] = AceConfigDialog:AddToBlizOptions("KuiNameplates", name, "KuiNameplates", name)
     end
 	
 	function addon:InitDBOptions(dbOptions, name)
-		 options.args[name] = dbOptions
+        addon.options.args[name] = dbOptions
+        self.optionsPanel[name] = AceConfigDialog:AddToBlizOptions("KuiNameplates", name, "KuiNameplates", name)
 	end
 
-    AceConfig.RegisterOptionsTable(addon, 'kuinameplates', options, "knp")
-    addon.optionsPanel = AceConfigDialog:AddToBlizOptions('kuinameplates', 'Kui Nameplates')
+    function addon:ChatCommand(input)
+        InterfaceOptionsFrame_OpenToCategory("KuiNameplates", "Profiles")
+        InterfaceOptionsFrame_OpenToCategory("KuiNameplates")
 end
 
---------------------------------------------------------------- Slash command --
-SLASH_KUINAMEPLATES1 = '/kuinameplates'
-SLASH_KUINAMEPLATES2 = '/knp'
+    function addon:SetupOptions()
 
-function SlashCmdList.KUINAMEPLATES()
-    
-    --addon.acd:Open('kuinameplates')
-	
-	InterfaceOptionsFrame_OpenToCategory('kuinameplates')
+        AceConfig.RegisterOptionsTable(self, "KuiNameplates", addon.options)
+        self.optionsPanel.kuinameplates = AceConfigDialog:AddToBlizOptions('KuiNameplates', 'Kui Nameplates','KuiNameplates','general')
+        self.optionsPanel.fade = AceConfigDialog:AddToBlizOptions("KuiNameplates", "Frame fading", "KuiNameplates", "fade")
+        self.optionsPanel.text = AceConfigDialog:AddToBlizOptions("KuiNameplates", "Text", "KuiNameplates", "text")
+        self.optionsPanel.hp = AceConfigDialog:AddToBlizOptions("KuiNameplates", "Health display", "KuiNameplates", "hp")
+        self.optionsPanel.fonts = AceConfigDialog:AddToBlizOptions("KuiNameplates", "Fonts", "KuiNameplates", "fonts")
+        self:RegisterChatCommand("kuinameplates", "ChatCommand")
+        self:RegisterChatCommand("knp", "ChatCommand")
+    end
 
 end

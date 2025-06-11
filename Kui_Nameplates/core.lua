@@ -3,7 +3,7 @@
 -- By Kesava at curse.com
 -- All rights reserved
 ]]
-local addon = LibStub('AceAddon-3.0'):NewAddon('KuiNameplates', 'AceEvent-3.0', 'AceTimer-3.0', "AceHook-3.0")
+local addon = LibStub('AceAddon-3.0'):NewAddon('KuiNameplates', 'AceEvent-3.0', 'AceTimer-3.0', "AceHook-3.0","AceConsole-3.0")
 local kui = LibStub('Kui-1.0')
 local LSM = LibStub('LibSharedMedia-3.0')
 
@@ -547,6 +547,9 @@ function addon:OnInitialize()
     self.db = LibStub('AceDB-3.0'):New('KuiNameplatesGDB', defaults)
 	self.ac = LibStub('AceConfig-3.0')
 	self.acd = LibStub('AceConfigDialog-3.0')
+
+    if not self.optionsPanel then self.optionsPanel = {} end
+    self:SetupOptions()
     -- enable ace3 profiles
 	local optionstable = LibStub('AceDBOptions-3.0'):GetOptionsTable(self.db)
 	addon:InitDBOptions(optionstable, "Profiles")

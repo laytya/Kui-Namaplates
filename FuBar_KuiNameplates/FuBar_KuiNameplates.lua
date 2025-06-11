@@ -45,7 +45,8 @@ function KNPFu:OnMenuRequest(level,value)
 							if AddonConfigFrame then
 								AddonConfigFrame:Hide()
 							else
-								InterfaceOptionsFrame_OpenToCategory('kuinameplates')
+								InterfaceOptionsFrame_OpenToCategory("KuiNameplates", "Profiles")
+        				InterfaceOptionsFrame_OpenToCategory("KuiNameplates")
 						end 
 				  end),
 				
@@ -104,6 +105,7 @@ function KNPFu:OnClick()
 	if AddonConfigFrame then
 		AddonConfigFrame:Hide()
 	else
-		InterfaceOptionsFrame_OpenToCategory('kuinameplates')
+		InterfaceOptionsFrame_OpenToCategory("KuiNameplates", "Profiles")
+    InterfaceOptionsFrame_OpenToCategory("KuiNameplates")
 	end
 end
