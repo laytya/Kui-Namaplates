@@ -102,7 +102,6 @@ local function getTankColor(tank, offtank)
     
 end
 local function checkOffTanks(target)
-    printT(offTanks)
     if target and offTanks then
         local targetName = strlower(UnitName(target))
         for _, offtank in pairs(offTanks) do
@@ -114,7 +113,7 @@ local function checkOffTanks(target)
 end
 
 function mod:GuidsTargets()
-    printT(guidsTargets)
+    --printT(guidsTargets)
 end
 
 function mod:TrackTargets(msg, f)
