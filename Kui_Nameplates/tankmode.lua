@@ -152,7 +152,7 @@ function mod:PostCritUpdate(msg, f)
             t.current = target
         end
     end
-    if f.agroText then
+    if f.agroText and UnitAffectingCombat("player") and UnitAffectingCombat(f.guid) then
         if f.target and mod.myThreat > 0 and ((offTanks and t.current == playerGuid) or not offTanks) then
         local r,g,b  = getTankColor(mod.tankName == mod.myName )
         f:SetAgroText(mod.myThreat, {r,g,b})
