@@ -1,22 +1,22 @@
 --[[
 Name: Tablet-2.0
-Revision: $Rev: 211 $
+Revision: $Rev: 17874 $
 Author(s): ckknight (ckknight@gmail.com)
 Website: http://ckknight.wowinterface.com/
-Documentation: http://www.wowace.com/index.php/Tablet-2.0
-SVN: http://svn.wowace.com/wowace/trunk/TabletLib/Tablet-2.0
+Documentation: http://wiki.wowace.com/index.php/Tablet-2.0
+SVN: http://svn.wowace.com/root/trunk/TabletLib/Tablet-2.0
 Description: A library to provide an efficient, featureful tooltip-style display.
 Dependencies: AceLibrary, (optional) Dewdrop-2.0
-License: LGPL v2.1
 ]]
 
 local MAJOR_VERSION = "Tablet-2.0"
-local MINOR_VERSION = tonumber(("$Revision: 211 $"):sub(12, -3))
+local MINOR_VERSION = "$Revision: 17874 $"
 
 if not AceLibrary then error(MAJOR_VERSION .. " requires AceLibrary") end
 if not AceLibrary:IsNewVersion(MAJOR_VERSION, MINOR_VERSION) then return end
 
 local DEBUG = false
+
 
 local SCROLL_UP = "Scroll up"
 local SCROLL_DOWN = "Scroll down"
@@ -46,6 +46,20 @@ if GetLocale() == "deDE" then
 	COLOR_DESC = "Hintergrundfarbe setzen."
 	LOCK = "Sperren"
 	LOCK_DESC = "Sperrt die aktuelle Position vom Tooltip. Alt+Rechts-klick f\195\188rs Men\195\188 oder Alt+Verschieben f\195\188rs verschieben wenn es gesperrt ist."
+elseif  GetLocale() == "ruRU" then
+	SCROLL_UP = "Прокрутка вверх"
+	SCROLL_DOWN = "Прокрутка вниз"
+	HINT = "Совет"
+	DETACH = "Отделить"
+	DETACH_DESC = "Отделить планшет от его источника."
+	SIZE = "Размер"
+	SIZE_DESC = "Масштаб планшета."
+	CLOSE_MENU = "Закрыть меню"
+	CLOSE_MENU_DESC = "Закрыть меню."
+	COLOR = "Цвет фона"
+	COLOR_DESC = "Установить цвет фона."
+	LOCK = "Зафиксировать"
+	LOCK_DESC = "Зафиксировать планшет в его текущем позиции. Alt+ПКМ для меню или Alt+перетаскивание для перетаскивания когда планшет зафиксирован."
 elseif GetLocale() == "koKR" then
 	SCROLL_UP = "위로 스크롤"
 	SCROLL_DOWN = "아래로 스크롤"
@@ -75,19 +89,19 @@ elseif GetLocale() == "zhCN" then
 	LOCK = "锁定"
 	LOCK_DESC = "锁定菜单当前位置. alt+右键 将显示选项, alt+拖动 可以移动已锁定的菜单."
 elseif GetLocale() == "zhTW" then
-	SCROLL_UP = "向上翻捲"
-	SCROLL_DOWN = "向上翻捲"
+	SCROLL_UP = "向上翻轉"
+	SCROLL_DOWN = "向上翻轉"
 	HINT = "提示"
 	DETACH = "分離"
 	DETACH_DESC = "分離選單為獨立提示。"
 	SIZE = "尺寸"
 	SIZE_DESC = "縮放選單顯示尺寸。"
 	CLOSE_MENU = "關閉選單"
-	CLOSE_MENU_DESC = "關閉選單。"
+	CLOSE_MENU_DESC = "關閉選單"
 	COLOR = "背景顏色"
-	COLOR_DESC = "設定選單背景顏色。"
+	COLOR_DESC = "設置選單背景顏色。"
 	LOCK = "鎖定"
-	LOCK_DESC = "鎖定選單目前位置設定。Alt-右鍵將顯示選項，Alt-拖動可以移動已鎖定的選單。"
+	LOCK_DESC = "鎖定選單目前位置. Alt+右鍵 將顯示選項，Alt+拖動 可以移動已鎖定的選單。"
 elseif GetLocale() == "frFR" then
 	SCROLL_UP = "Parcourir vers le haut"
 	SCROLL_DOWN = "Parcourir vers le bas"
@@ -102,34 +116,6 @@ elseif GetLocale() == "frFR" then
 	COLOR_DESC = "Permet de d\195\169finir la couleur du fond."
 	LOCK = "Bloquer"
 	LOCK_DESC = "Bloque le tableau \195\160 sa position actuelle. Alt+clic-droit pour le menu ou Alt+glisser pour le d\195\169placer quand il est bloqu\195\169."
-elseif GetLocale() == "esES" then
-	SCROLL_UP = "Desplazar hacia arriba"
-	SCROLL_DOWN = "Desplazar hacia abajo"
-	HINT = "Consejo"
-	DETACH = "Separar"
-	DETACH_DESC = "Separa el tooltip de su fuente."
-	SIZE = "Tama\195\177o"
-	SIZE_DESC = "Escala el tooltip"
-	CLOSE_MENU = "Cerrar men\195\186"
-	CLOSE_MENU_DESC = "Cierra el men\195\186"
-	COLOR = "Color de fondo"
-	COLOR_DESC = "Establece el color de fondo"
-	LOCK = "Bloquear"
-	LOCK_DESC = "Bloquea el tooltip  en su posici\195\179n actual. Clic+Alt para el men\195\186 y arrastra+Alt para arrastrarlo cuando est\195\161 bloqueado"
-elseif GetLocale() == "ruRU" then
-	SCROLL_UP = "Прокрутка вверх"
-	SCROLL_DOWN = "Прокрутка вниз"
-	HINT = "Совет"
-	DETACH = "Отделить"
-	DETACH_DESC = "Отделить планшет от его источника."
-	SIZE = "Размер"
-	SIZE_DESC = "Масштаб планшета."
-	CLOSE_MENU = "Закрыть меню"
-	CLOSE_MENU_DESC = "Закрыть меню."
-	COLOR = "Цвет фона"
-	COLOR_DESC = "Установить цвет фона."
-	LOCK = "Зафиксировать"
-	LOCK_DESC = "Зафиксировать планшет в его текущем позиции. Alt+ПКМ для меню или Alt+перетаскивание для перетаскивания когда планшет зафиксирован."
 end
 
 local start = GetTime()
@@ -146,13 +132,13 @@ if DEBUG then
 			local oldFunction = value
 			memories[name] = 0
 			times[name] = 0
-			return function(self, ...)
-				local pos = #tree
-				tree[#tree+1] = name
-				treeMemories[#treeMemories+1] = 0
-				treeTimes[#treeTimes+1] = 0
+			return function(self, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38, a39, a40, a41, a42, a43, a44, a45, a46, a47, a48, a49, a50, a51, a52, a53, a54, a55, a56, a57, a58, a59, a60)
+				local pos = table.getn(tree)
+				table.insert(tree, name)
+				table.insert(treeMemories, 0)
+				table.insert(treeTimes, 0)
 				local t, mem = GetTime(), gcinfo()
-				local r1, r2, r3, r4, r5, r6, r7, r8 = oldFunction(self, ...)
+				local r1, r2, r3, r4, r5, r6, r7, r8 = oldFunction(self, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38, a39, a40, a41, a42, a43, a44, a45, a46, a47, a48, a49, a50, a51, a52, a53, a54, a55, a56, a57, a58, a59, a60)
 				mem, t = gcinfo() - mem, GetTime() - t
 				if pos > 0 then
 					treeMemories[pos] = treeMemories[pos] + mem
@@ -178,86 +164,128 @@ else
 	end
 end
 
-local function GetMainFrame()
-	if UIParent:IsShown() then
-		return UIParent
-	end
-	local f = GetUIPanel("fullscreen")
-	if f and f:IsShown() then
-		return f
-	end
-	return nil
-end
-GetMainFrame = wrap(GetMainFrame, "GetMainFrame")
-
 local MIN_TOOLTIP_SIZE = 200
-local TESTSTRING_EXTRA_WIDTH = 8
+local TESTSTRING_EXTRA_WIDTH = 5
 local Tablet = {}
-local Dewdrop = nil
+local function getsecond(_, value)
+	return value
+end
+local Dewdrop
+local sekeys
 local CleanCategoryPool
 local pool = {}
 
+local lua51 = loadstring("return function(...) return ... end") and true or false
+local table_setn = lua51 and function() end or table.setn
+
 local function del(t)
-	setmetatable(t, nil)
-	for k in pairs(t) do
-		t[k] = nil
+	if t then
+		for k in pairs(t) do
+			t[k] = nil
+		end
+		setmetatable(t, nil)
+		table_setn(t, 0)
+		table.insert(pool, t)
 	end
-	t[''] = true
-	t[''] = nil
-	pool[t] = true
-	return nil
 end
 
+local new
+
 local function copy(parent)
-	local t = next(pool)
-	if not t then
-		t = {}
+	local t
+	if table.getn(pool) > 0 then
+		t = table.remove(pool)
 	else
-		pool[t] = nil
+		t = {}
 	end
 	if parent then
 		for k,v in pairs(parent) do
 			t[k] = v
 		end
+		table_setn(t, table.getn(parent))
 		setmetatable(t, getmetatable(parent))
 	end
 	return t
 end
 
-local function new(...)
-	local t = next(pool)
-	if not t then
-		t = {}
+function new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
+	local t
+	if table.getn(pool) > 0 then
+		t = table.remove(pool)
 	else
-		pool[t] = nil
+		t = {}
 	end
-	
-	for i = 1, select('#', ...), 2 do
-		local k = select(i, ...)
-		if k then
-			t[k] = select(i+1, ...)
-		else
-			break
-		end
-	end
+	if k1 then t[k1] = v1
+	if k2 then t[k2] = v2
+	if k3 then t[k3] = v3
+	if k4 then t[k4] = v4
+	if k5 then t[k5] = v5
+	if k6 then t[k6] = v6
+	if k7 then t[k7] = v7
+	if k8 then t[k8] = v8
+	if k9 then t[k9] = v9
+	if k10 then t[k10] = v10
+	if k11 then t[k11] = v11
+	if k12 then t[k12] = v12
+	if k13 then t[k13] = v13
+	if k14 then t[k14] = v14
+	if k15 then t[k15] = v15
+	if k16 then t[k16] = v16
+	if k17 then t[k17] = v17
+	if k18 then t[k18] = v18
+	if k19 then t[k19] = v19
+	if k20 then t[k20] = v20
+	if k21 then t[k21] = v21
+	if k22 then t[k22] = v22
+	if k23 then t[k23] = v23
+	if k24 then t[k24] = v24
+	if k25 then t[k25] = v25
+	if k26 then t[k26] = v26
+	if k27 then t[k27] = v27
+	if k28 then t[k28] = v28
+	if k29 then t[k29] = v29
+	if k30 then t[k30] = v30
+	end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end
 	return t
 end
-
 local tmp
 tmp = setmetatable({}, {__index = function(self, key)
 	local t = {}
-	tmp[key] = function(...)
+	tmp[key] = function(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
 		for k in pairs(t) do
 			t[k] = nil
 		end
-		for i = 1, select('#', ...), 2 do
-			local k = select(i, ...)
-			if k then
-				t[k] = select(i+1, ...)
-			else
-				break
-			end
-		end
+		if k1 then t[k1] = v1
+		if k2 then t[k2] = v2
+		if k3 then t[k3] = v3
+		if k4 then t[k4] = v4
+		if k5 then t[k5] = v5
+		if k6 then t[k6] = v6
+		if k7 then t[k7] = v7
+		if k8 then t[k8] = v8
+		if k9 then t[k9] = v9
+		if k10 then t[k10] = v10
+		if k11 then t[k11] = v11
+		if k12 then t[k12] = v12
+		if k13 then t[k13] = v13
+		if k14 then t[k14] = v14
+		if k15 then t[k15] = v15
+		if k16 then t[k16] = v16
+		if k17 then t[k17] = v17
+		if k18 then t[k18] = v18
+		if k19 then t[k19] = v19
+		if k20 then t[k20] = v20
+		if k21 then t[k21] = v21
+		if k22 then t[k22] = v22
+		if k23 then t[k23] = v23
+		if k24 then t[k24] = v24
+		if k25 then t[k25] = v25
+		if k26 then t[k26] = v26
+		if k27 then t[k27] = v27
+		if k28 then t[k28] = v28
+		if k29 then t[k29] = v29
+		if k30 then t[k30] = v30
+		end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end
 		return t
 	end
 	return tmp[key]
@@ -265,12 +293,12 @@ end})
 
 local headerSize, normalSize
 if GameTooltipHeaderText then
-	headerSize = select(2,GameTooltipHeaderText:GetFont())
+	_,headerSize = GameTooltipHeaderText:GetFont()
 else
 	headerSize = 14
 end
 if GameTooltipText then
-	normalSize = select(2,GameTooltipText:GetFont())
+	_,normalSize = GameTooltipText:GetFont()
 else
 	normalSize = 12
 end
@@ -279,42 +307,23 @@ local testString
 local TabletData = {}
 local Category = {}
 local Line = {}
-local function getTestWidth(font, size, text)
-	if not testString then
-		return MIN_TOOLTIP_SIZE + 40
-	end
-	testString:SetWidth(0)
-	testString:SetFontObject(font)
-	local a,_,b = font:GetFont()
-	testString:SetFont(a, size, b)
-	testString:SetText(text)
-	return testString:GetStringWidth()-- + TESTSTRING_EXTRA_WIDTH
-end
-getTestWidth = wrap(getTestWidth, "getTestWidth")
 do
 	local TabletData_mt = { __index = TabletData }
 	function TabletData:new(tablet)
+		if not testString then
+			testString = UIParent:CreateFontString()
+			testString:Hide()
+		end
 		local self = new()
 		self.categories = new()
 		self.id = 0
-		self.width = 0 -- (MIN_TOOLTIP_SIZE - 20)*tablet.fontSizePercent
+		self.width = 0--(MIN_TOOLTIP_SIZE - 20)*tablet.fontSizePercent
 		self.tablet = tablet
-		self.title = nil
+		self.title = "Title"
 		self.titleR, self.titleG, self.titleB = nil, nil, nil
-		self.num_lines = 0
 		setmetatable(self, TabletData_mt)
 		return self
 	end
-	TabletData.new = wrap(TabletData.new, "TabletData:new")
-	
-	function TabletData:checkMinWidth()
-		local min = self.minWidth or MIN_TOOLTIP_SIZE
-		local width = (min - 20)*self.tablet.fontSizePercent
-		if self.width < width then
-			self.width = width
-		end
-	end
-	TabletData.checkMinWidth = wrap(TabletData.checkMinWidth, "TabletData:checkMinWidth")
 
 	function TabletData:del()
 		for k, v in ipairs(self.categories) do
@@ -323,10 +332,9 @@ do
 		del(self.categories)
 		del(self)
 	end
-	TabletData.del = wrap(TabletData.del, "TabletData:del")
 
 	function TabletData:Display()
-		if self.title and (self.tablet == tooltip or self.tablet.registration.showTitleWhenDetached) then
+		if self.tablet == tooltip or self.tablet.registration.showTitleWhenDetached then
 			local info = new(
 				'hideBlankLine', true,
 				'text', self.title,
@@ -355,21 +363,18 @@ do
 		end
 
 		local tabletData = self.tabletData
+		local width
 		for k, v in ipairs(self.categories) do
-			local width
 			if v.columns <= 2 then
 				width = v.x1
 			else
-				width = (v.columns - 1)*20
-				for i = 1, v.columns do
-					width = width + v['x' .. i]
-				end
+				width = v.x1 + v.x2 + v.x3 + v.x4 + v.x5 + v.x6 + (v.columns - 1) * 20
 			end
 			if self.width < width then
 				self.width = width
 			end
 		end
-		
+
 		local good = false
 		local lastTitle = true
 		for k, v in ipairs(self.categories) do
@@ -377,7 +382,7 @@ do
 				v.hideBlankLine = true
 				lastTitle = false
 			end
-			if v:Display(self.tablet) and (not v.isTitle or not self.tablet.registration.hideWhenEmpty or next(self.categories, k)) then
+			if v:Display(self.tablet) then
 				good = true
 			end
 			if v.isTitle then
@@ -396,7 +401,7 @@ do
 				)
 				local cat = self:AddCategory(info)
 				del(info)
-				self.width = self.categories[#self.categories].x1
+				self.width = self.categories[table.getn(self.categories)].x1
 				cat:Display(self.tablet)
 			else
 				self.tablet:__Hide()
@@ -407,7 +412,6 @@ do
 			self.tablet.tmpHidden = nil
 		end
 	end
-	TabletData.Display = wrap(TabletData.Display, "TabletData:Display")
 
 	function TabletData:AddCategory(info, index)
 		local made = false
@@ -419,31 +423,27 @@ do
 		if index then
 			table.insert(self.categories, index, cat)
 		else
-			self.categories[#self.categories+1] = cat
+			table.insert(self.categories, cat)
 		end
 		if made then
 			del(info)
 		end
 		return cat
 	end
-	TabletData.AddCategory = wrap(TabletData.AddCategory, "TabletData:AddCategory")
 	
 	function TabletData:SetHint(hint)
 		self.hint = hint
 	end
-	TabletData.SetHint = wrap(TabletData.SetHint, "TabletData:SetHint")
 	
 	function TabletData:SetTitle(title)
 		self.title = title or "Title"
 	end
-	TabletData.SetTitle = wrap(TabletData.SetTitle, "TabletData:SetTitle")
 	
 	function TabletData:SetTitleColor(r, g, b)
 		self.titleR = r
 		self.titleG = g
 		self.titleB = b
 	end
-	TabletData.SetTitleColor = wrap(TabletData.SetTitleColor, "TabletData:SetTitleColor")
 end
 do
 	local Category_mt = { __index = Category }
@@ -452,7 +452,7 @@ do
 		if superCategory and not self.noInherit then
 			self.superCategory = superCategory.superCategory
 			for k, v in pairs(superCategory) do
-				if k:find("^child_") then
+				if string.find(k, "^child_") then
 					local k = strsub(k, 7)
 					if self[k] == nil then
 						self[k] = v
@@ -468,28 +468,26 @@ do
 		if not self.columns then
 			self.columns = 1
 		end
-		for i = 1, self.columns do
-			self['x' .. i] = 0
-		end
+		self.x1 = 0
+		self.x2 = 0
+		self.x3 = 0
+		self.x4 = 0
+		self.x5 = 0
+		self.x6 = 0
 		setmetatable(self, Category_mt)
 		self.lastWasTitle = nil
-		local good = self.text
-		if not good then
-			for i = 2, self.columns do
-				if self['text' .. i] then
-					good = true
-					break
-				end
-			end
-		end
-		if good then
+		if self.text or self.text2 or self.text3 or self.text4 or self.text5 or self.text6 then
 			local x = new(
 				'category', category,
 				'text', self.text,
+				'textR', self.textR or 1,
+				'textG', self.textG or 1,
+				'textB', self.textB or 1,
 				'fakeChild', true,
 				'func', self.func,
-				'onEnterFunc', self.onEnterFunc,
-				'onLeaveFunc', self.onLeaveFunc,
+				'arg1', info.arg1,
+				'arg2', self.arg2,
+				'arg3', self.arg3,
 				'hasCheck', self.hasCheck,
 				'checked', self.checked,
 				'checkIcon', self.checkIcon,
@@ -501,38 +499,12 @@ do
 				'indentation', self.indentation,
 				'noInherit', true,
 				'justify', self.justify,
-				'isTitle', self.isTitle
+				'justify2', self.justify2,
+				'justify3', self.justify3,
+				'justify4', self.justify4,
+				'justify5', self.justify5,
+				'justify6', self.justify6
 			)
-			local i = 1
-			while true do
-				local k = 'arg' .. i
-				local v = self[k]
-				if v == nil then
-					break
-				end
-				x[k] = v
-				i = i + 1
-			end
-			i = 1
-			while true do
-				local k = 'onEnterArg' .. i
-				local v = self[k]
-				if v == nil then
-					break
-				end
-				x[k] = v
-				i = i + 1
-			end
-			i = 1
-			while true do
-				local k = 'onLeaveArg' .. i
-				local v = self[k]
-				if v == nil then
-					break
-				end
-				x[k] = v
-				i = i + 1
-			end
 			if self.isTitle then
 				x.textR = self.textR or 1
 				x.textG = self.textG or 0.823529
@@ -542,36 +514,42 @@ do
 				x.textG = self.textG or 1
 				x.textB = self.textB or 1
 			end
-			for i = 2, self.columns do
-				x['text' .. i] = self['text' .. i]
-				x['text' .. i .. 'R'] = self['text' .. i .. 'R'] or self['textR' .. i] or 1
-				x['text' .. i .. 'G'] = self['text' .. i .. 'G'] or self['textG' .. i] or 1
-				x['text' .. i .. 'B'] = self['text' .. i .. 'B'] or self['textB' .. i] or 1
-				x['font' .. i] = self['font' .. i]
-				x['size' .. i] = self['size' .. i]
-				x['justify' .. i] = self['justify' .. i]
-			end
-			if self.checkIcon and self.checkIcon:find("^Interface\\Icons\\") then
-				x.checkCoordLeft = self.checkCoordLeft or 0.05
-				x.checkCoordRight = self.checkCoordRight or 0.95
-				x.checkCoordTop = self.checkCoordTop or 0.05
-				x.checkCoordBottom = self.checkCoordBottom or 0.95
-			else
-				x.checkCoordLeft = self.checkCoordLeft or 0
-				x.checkCoordRight = self.checkCoordRight or 1
-				x.checkCoordTop = self.checkCoordTop or 0
-				x.checkCoordBottom = self.checkCoordBottom or 1
-			end
-			x.checkColorR = self.checkColorR or 1
-			x.checkColorG = self.checkColorG or 1
-			x.checkColorB = self.checkColorB or 1
+			x.text2 = self.text2
+			x.text3 = self.text3
+			x.text4 = self.text4
+			x.text5 = self.text5
+			x.text6 = self.text6
+			x.text2R = self.text2R or self.textR2 or 1
+			x.text2G = self.text2G or self.textG2 or 1
+			x.text2B = self.text2B or self.textB2 or 1
+			x.text3R = self.text3R or self.textR3 or 1
+			x.text3G = self.text3G or self.textG3 or 1
+			x.text3B = self.text3B or self.textB3 or 1
+			x.text4R = self.text4R or self.textR4 or 1
+			x.text4G = self.text4G or self.textG4 or 1
+			x.text4B = self.text4B or self.textB4 or 1
+			x.text5R = self.text5R or self.textR5 or 1
+			x.text5G = self.text5G or self.textG5 or 1
+			x.text5B = self.text5B or self.textB5 or 1
+			x.text6R = self.text6R or self.textR6 or 1
+			x.text6G = self.text6G or self.textG6 or 1
+			x.text6B = self.text6B or self.textB6 or 1
+			x.font2 = self.font2
+			x.font3 = self.font3
+			x.font4 = self.font4
+			x.font5 = self.font5
+			x.font6 = self.font6
+			x.size2 = self.size2
+			x.size3 = self.size3
+			x.size4 = self.size4
+			x.size5 = self.size5
+			x.size6 = self.size6
 			self:AddLine(x)
 			del(x)
 			self.lastWasTitle = true
 		end
 		return self
 	end
-	Category.new = wrap(Category.new, "Category:new")
 
 	function Category:del()
 		local prev = garbageLine
@@ -581,44 +559,35 @@ do
 		del(self.lines)
 		del(self)
 	end
-	Category.del = wrap(Category.del, "Category:del")
 
-	function Category:AddLine(...)
+	function Category:AddLine(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
 		self.lastWasTitle = nil
 		local line
-		local k1 = ...
 		if type(k1) == "table" then
-			local k2 = select(2, ...)
-			Line:new(self, k1, k2)
+			Line:new(self, k1, v1)
 		else
-			local info = new(...)
+			local info = new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
 			Line:new(self, info)
-			info = del(info)
+			del(info)
 		end
 	end
-	Category.AddLine = wrap(Category.AddLine, "Category:AddLine")
 
-	function Category:AddCategory(...)
+	function Category:AddCategory(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
 		local lastWasTitle = self.lastWasTitle
 		self.lastWasTitle = nil
 		local info
-		local k1 = ...
 		if type(k1) == "table" then
 			info = k1
 		else
-			info = new(...)
+			info = new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
 		end
-		if lastWasTitle or #self.lines == 0 then
+		if lastWasTitle or table.getn(self.lines) == 0 then
 			info.hideBlankLine = true
 		end
 		local cat = Category:new(self.tabletData, info, self)
-		self.lines[#self.lines+1] = cat
-		if info ~= k1 then
-			info = del(info)
-		end
+		table.insert(self.lines, cat)
 		return cat
 	end
-	Category.AddCategory = wrap(Category.AddCategory, "Category:AddCategory")
 
 	function Category:HasChildren()
 		local hasChildren = false
@@ -634,7 +603,6 @@ do
 		end
 		return false
 	end
-	Category.HasChildren = wrap(Category.HasChildren, "Category:HasChildren")
 
 	local lastWasTitle = false
 	function Category:Display(tablet)
@@ -644,14 +612,13 @@ do
 		if not self.hideBlankLine and not lastWasTitle then
 			local info = new(
 				'blank', true,
-				'fakeChild', true,
-				'noInherit', true
+				'fakeChild', true
 			)
 			self:AddLine(info, 1)
 			del(info)
 		end
 		local good = false
-		if #self.lines > 0 then
+		if table.getn(self.lines) > 0 then
 			self.tabletData.id = self.tabletData.id + 1
 			self.id = self.tabletData.id
 			for k, v in ipairs(self.lines) do
@@ -663,7 +630,6 @@ do
 		lastWasTitle = self.isTitle
 		return good
 	end
-	Category.Display = wrap(Category.Display, "Category:Display")
 end
 do
 	local Line_mt = { __index = Line }
@@ -671,7 +637,7 @@ do
 		local self = copy(info)
 		if not info.noInherit then
 			for k, v in pairs(category) do
-				if k:find("^child_") then
+				if string.find(k, "^child_") then
 					local k = strsub(k, 7)
 					if self[k] == nil then
 						self[k] = v
@@ -683,14 +649,9 @@ do
 		if position then
 			table.insert(category.lines, position, self)
 		else
-			category.lines[#category.lines+1] = self
+			table.insert(category.lines, self)
 		end
 		setmetatable(self, Line_mt)
-		local n = category.tabletData.num_lines + 1
-		category.tabletData.num_lines = n
-		if n == 10 then
-			category.tabletData:checkMinWidth()
-		end
 		local columns = category.columns
 		if columns == 1 then
 			if not self.justify then
@@ -702,29 +663,138 @@ do
 			if self.wrap then
 				self.wrap2 = false
 			end
-		else
-			for i = 2, columns-1 do
-				if not self['justify' .. i] then
-					self['justify' .. i] = "CENTER"
-				end
-			end
+		elseif columns == 3 then
 			if not self.justify then
 				self.justify = "LEFT"
 			end
-			if not self['justify' .. columns] then
-				self['justify' .. columns] = "RIGHT"
+			if not self.justify2 then
+				self.justify2 = "CENTER"
+			end
+			if not self.justify3 then
+				self.justify3 = "RIGHT"
 			end
 			if self.wrap then
-				for i = 2, columns do
-					self['wrap' .. i] = false
-				end
-			else
-				for i = 2, columns do
-					if self['wrap' .. i] then
-						for j = i+1, columns do
-							self['wrap' .. i] = false
+				self.wrap2 = false
+				self.wrap3 = false
+			elseif self.wrap2 then
+				self.wrap3 = false
+			end
+		elseif columns == 4 then
+			if not self.justify then
+				self.justify = "LEFT"
+			end
+			if not self.justify2 then
+				self.justify2 = "CENTER"
+			end
+			if not self.justify3 then
+				self.justify3 = "CENTER"
+			end
+			if not self.justify4 then
+				self.justify4 = "RIGHT"
+			end
+			if self.wrap then
+				self.wrap2 = false
+				self.wrap3 = false
+				self.wrap4 = false
+			elseif self.wrap2 then
+				self.wrap3 = false
+				self.wrap4 = false
+			elseif self.wrap3 then
+				self.wrap4 = false
+			end
+		elseif columns == 5 then
+			if not self.justify then
+				self.justify = "LEFT"
+			end
+			if not self.justify2 then
+				self.justify2 = "CENTER"
+			end
+			if not self.justify3 then
+				self.justify3 = "CENTER"
+			end
+			if not self.justify4 then
+				self.justify4 = "CENTER"
+			end
+			if not self.justify5 then
+				self.justify5 = "RIGHT"
+			end
+			if self.wrap then
+				self.wrap2 = false
+				self.wrap3 = false
+				self.wrap4 = false
+				self.wrap5 = false
+			elseif self.wrap2 then
+				self.wrap3 = false
+				self.wrap4 = false
+				self.wrap5 = false
+			elseif self.wrap3 then
+				self.wrap4 = false
+				self.wrap5 = false
+			elseif self.wrap4 then
+				self.wrap5 = false
+			end
+		elseif columns == 6 then
+			if not self.justify then
+				self.justify = "LEFT"
+			end
+			if not self.justify2 then
+				self.justify2 = "CENTER"
+			end
+			if not self.justify3 then
+				self.justify3 = "CENTER"
+			end
+			if not self.justify4 then
+				self.justify4 = "CENTER"
+			end
+			if not self.justify5 then
+				self.justify5 = "CENTER"
+			end
+			if not self.justify6 then
+				self.justify6 = "RIGHT"
+			end
+			if self.wrap then
+				self.wrap2 = false
+				self.wrap3 = false
+				self.wrap4 = false
+				self.wrap5 = false
+				self.wrap6 = false
+			elseif self.wrap2 then
+				self.wrap3 = false
+				self.wrap4 = false
+				self.wrap5 = false
+				self.wrap6 = false
+			elseif self.wrap3 then
+				self.wrap4 = false
+				self.wrap5 = false
+				self.wrap6 = false
+			elseif self.wrap4 then
+				self.wrap5 = false
+				self.wrap6 = false
+			elseif self.wrap5 then
+				self.wrap6 = false
+			end
+		end
+		if self.textR2 then
+			self.text2R, self.textR2 = self.text2R or self.textR2
+			self.text2G, self.textG2 = self.text2G or self.textG2
+			self.text2B, self.textB2 = self.text2B or self.textB2
+			if self.textR3 then
+				self.text3R, self.textR3 = self.text3R or self.textR3
+				self.text3G, self.textG3 = self.text3G or self.textG3
+				self.text3B, self.textB3 = self.text3B or self.textB3
+				if self.textR4 then
+					self.text4R, self.textR4 = self.text4R or self.textR4
+					self.text4G, self.textG4 = self.text4G or self.textG4
+					self.text4B, self.textB4 = self.text4B or self.textB4
+					if self.textR5 then
+						self.text5R, self.textR5 = self.text5R or self.textR5
+						self.text5G, self.textG5 = self.text5G or self.textG5
+						self.text5B, self.textB5 = self.text5B or self.textB5
+						if self.textR5 then
+							self.text6R, self.textR6 = self.text6R or self.textR6
+							self.text6G, self.textG6 = self.text6G or self.textG6
+							self.text6B, self.textB6 = self.text6B or self.textB6
 						end
-						break
 					end
 				end
 			end
@@ -735,75 +805,66 @@ do
 		if not self.font then
 			self.font = GameTooltipText
 		end
-		for i = 2, columns do
-			if not self['font' .. i] then
-				self['font' .. i] = self.font
-			end
+		if not self.font2 then
+			self.font2 = self.font
+		end
+		if not self.font3 then
+			self.font3 = self.font
+		end
+		if not self.font4 then
+			self.font4 = self.font
+		end
+		if not self.font5 then
+			self.font5 = self.font
+		end
+		if not self.font6 then
+			self.font6 = self.font
 		end
 		if not self.size then
-			self.size = select(2,self.font:GetFont())
+			_,self.size = self.font:GetFont()
 		end
-		for i = 2, columns do
-			if not self['size' .. i] then
-				self['size' .. i] = select(2,self['font' .. i]:GetFont())
-			end
+		if not self.size2 then
+			_,self.size2 = self.font2:GetFont()
 		end
-		if self.checkIcon and self.checkIcon:find("^Interface\\Icons\\") then
-			if not self.checkCoordLeft then
-				self.checkCoordLeft = 0.05
-			end
-			if not self.checkCoordRight then
-				self.checkCoordRight = 0.95
-			end
-			if not self.checkCoordTop then
-				self.checkCoordTop = 0.05
-			end
-			if not self.checkCoordBottom then
-				self.checkCoordBottom = 0.95
-			end
-		else
-			if not self.checkCoordLeft then
-				self.checkCoordLeft = 0
-			end
-			if not self.checkCoordRight then
-				self.checkCoordRight = 1
-			end
-			if not self.checkCoordTop then
-				self.checkCoordTop = 0
-			end
-			if not self.checkCoordBottom then
-				self.checkCoordBottom = 1
-			end
+		if not self.size3 then
+			_,self.size3 = self.font3:GetFont()
 		end
-		if not self.checkColorR then
-			self.checkColorR = 1
+		if not self.size4 then
+			_,self.size4 = self.font4:GetFont()
 		end
-		if not self.checkColorG then
-			self.checkColorG = 1
+		if not self.size5 then
+			_,self.size5 = self.font5:GetFont()
 		end
-		if not self.checkColorB then
-			self.checkColorB = 1
+		if not self.size6 then
+			_,self.size6 = self.font6:GetFont()
 		end
 
 		local fontSizePercent = category.tabletData.tablet.fontSizePercent
 		local w = 0
 		self.checkWidth = 0
-		testString = category.tabletData.tablet.buttons[1].col1
 		if self.text then
 			if not self.wrap then
-				local testWidth = getTestWidth(self.font, self.size * fontSizePercent, self.text)
+				testString:SetWidth(0)
+				testString:SetFontObject(self.font)
+				local font,_,flags = testString:GetFont()
+				testString:SetFont(font, self.size * fontSizePercent, flags)
+				testString:SetText(self.text)
 				local checkWidth = self.hasCheck and self.size * fontSizePercent or 0
 				self.checkWidth = checkWidth
-				w = testWidth + self.indentation * fontSizePercent + checkWidth
+				w = testString:GetWidth() + self.indentation * fontSizePercent + checkWidth + TESTSTRING_EXTRA_WIDTH
 				if category.superCategory.x1 < w then
 					category.superCategory.x1 = w
 				end
 			else
 				if columns == 1 then
-					local testWidth = getTestWidth(self.font, self.size * fontSizePercent, self.text)
+					testString:SetWidth(0)
+					testString:SetFontObject(self.font)
+					local font,_,flags = testString:GetFont()
+					testString:SetFont(font, self.size * fontSizePercent, flags)
+					testString:SetText(self.text)
 					local checkWidth = self.hasCheck and self.size * fontSizePercent or 0
 					self.checkWidth = checkWidth
-					w = testWidth + self.indentation * fontSizePercent + checkWidth
+					w = testString:GetWidth() + self.indentation * fontSizePercent + checkWidth + TESTSTRING_EXTRA_WIDTH
 					if w > (MIN_TOOLTIP_SIZE - 20) * fontSizePercent then
 						w = (MIN_TOOLTIP_SIZE - 20) * fontSizePercent
 					end
@@ -817,8 +878,12 @@ do
 		end
 		if columns == 2 and self.text2 then
 			if not self.wrap2 then
-				local testWidth = getTestWidth(self.font2, self.size2 * fontSizePercent, self.text2)
-				w = w + 40 * fontSizePercent + testWidth
+				testString:SetWidth(0)
+				testString:SetFontObject(self.font2)
+				local font,_,flags = testString:GetFont()
+				testString:SetFont(font, self.size2 * fontSizePercent, flags)
+				testString:SetText(self.text2)
+				w = w + 40 * fontSizePercent + testString:GetWidth() + TESTSTRING_EXTRA_WIDTH
 				if category.superCategory.x1 < w then
 					category.superCategory.x1 = w
 				end
@@ -831,8 +896,12 @@ do
 		elseif columns >= 3 then
 			if self.text2 then
 				if not self.wrap2 then
-					local testWidth = getTestWidth(self.font2, self.size2 * fontSizePercent, self.text2)
-					local w = testWidth
+					testString:SetWidth(0)
+					testString:SetFontObject(self.font2)
+					local font,_,flags = testString:GetFont()
+					testString:SetFont(font, self.size2 * fontSizePercent, flags)
+					testString:SetText(self.text2)
+					local w = testString:GetWidth() + TESTSTRING_EXTRA_WIDTH
 					if category.superCategory.x2 < w then
 						category.superCategory.x2 = w
 					end
@@ -843,21 +912,80 @@ do
 					end
 				end
 			end
-			
-			for i = 3, columns do
-				local text = self['text' .. i]
-				if text then
-					local x_i = 'x' .. i
-					if not self['wrap' .. i] then
-						local testWidth = getTestWidth(self['font' .. i], self['size' .. i] * fontSizePercent, text)
-						local w = testWidth
-						if category.superCategory[x_i] < w then
-							category.superCategory[x_i] = w
+			if self.text3 then
+				if not self.wrap3 then
+					testString:SetWidth(0)
+					testString:SetFontObject(self.font3)
+					local font,_,flags = testString:GetFont()
+					testString:SetFont(font, self.size3 * fontSizePercent, flags)
+					testString:SetText(self.text3)
+					local w = testString:GetWidth() + TESTSTRING_EXTRA_WIDTH
+					if category.superCategory.x3 < w then
+						category.superCategory.x3 = w
+					end
+				else
+					local w = MIN_TOOLTIP_SIZE / 2
+					if category.superCategory.x3 < w then
+						category.superCategory.x3 = w
+					end
+				end
+			end
+			if columns >= 4 then
+				if self.text4 then
+					if not self.wrap4 then
+						testString:SetWidth(0)
+						testString:SetFontObject(self.font4)
+						local font,_,flags = testString:GetFont()
+						testString:SetFont(font, self.size4 * fontSizePercent, flags)
+						testString:SetText(self.text4)
+						w = testString:GetWidth() + TESTSTRING_EXTRA_WIDTH
+						if category.superCategory.x4 < w then
+							category.superCategory.x4 = w
 						end
 					else
 						local w = MIN_TOOLTIP_SIZE / 2
-						if category.superCategory[x_i] < w then
-							category.superCategory[x_i] = w
+						if category.superCategory.x4 < w then
+							category.superCategory.x4 = w
+						end
+					end
+				end
+				if columns >= 5 then
+					if self.text5 then
+						if not self.wrap5 then
+							testString:SetWidth(0)
+							testString:SetFontObject(self.font5)
+							local font,_,flags = testString:GetFont()
+							testString:SetFont(font, self.size5 * fontSizePercent, flags)
+							testString:SetText(self.text5)
+							w = testString:GetWidth() + TESTSTRING_EXTRA_WIDTH
+							if category.superCategory.x5 < w then
+								category.superCategory.x5 = w
+							end
+						else
+							local w = MIN_TOOLTIP_SIZE / 2
+							if category.superCategory.x5 < w then
+								category.superCategory.x5 = w
+							end
+						end
+					end
+					if columns >= 6 then
+						if self.text6 then
+							if not self.wrap6 then
+								testString:SetWidth(0)
+								testString:SetFontObject(self.font6)
+								local font,_,flags = testString:GetFont()
+								testString:SetFont(font, self.size6 * fontSizePercent, flags)
+								testString:SetText(self.text6)
+								w = testString:GetWidth() + TESTSTRING_EXTRA_WIDTH
+								if category.superCategory.x6 < w then
+									category.superCategory.x6 = w
+								end
+							else
+								local w = MIN_TOOLTIP_SIZE / 2
+								if category.superCategory.x6 < w then
+									category.superCategory.x6 = w
+								end
+							end
 						end
 					end
 				end
@@ -865,212 +993,91 @@ do
 		end
 		return self
 	end
-	Line.new = wrap(Line.new, "Line:new")
 
 	function Line:del()
 		del(self)
 	end
-	Line.del = wrap(Line.del, "Line:del")
 
 	function Line:Display(tablet)
 		tablet:AddLine(self)
 		return true
 	end
-	Line.Display = wrap(Line.Display, "Line:Display")
 end
 
-local fake_ipairs
-do
-	local function iter(tmp, i)
-		i = i + 1
-		local x = tmp[i]
-		tmp[i] = nil
-		if x then
-			return i, x
-		end
-	end
-	
-	local tmp = {}
-	function fake_ipairs(...)
-		for i = 1, select('#', ...) do
-			tmp[i] = select(i, ...)
-		end
-		return iter, tmp, 0
-	end
-	fake_ipairs = wrap(fake_ipairs, "fake_ipairs")
-end
-
-local function argunpack(t, key, i)
-	if not i then
-		i = 1
-	end
-	local k = key .. i
-	local v = t[k]
-	if v then
-		return v, argunpack(t, key, i+1)
-	end
-end	
-argunpack = wrap(argunpack, "argunpack")
-
-
-local delstring, newstring
-do
-	local cache = {}
-	function delstring(t)
-		cache[#cache+1] = t
-		t:SetText(nil)
-		t:ClearAllPoints()
-		t:Hide()
-		t:SetParent(UIParent)
-		return nil
-	end
-	delstring = wrap(delstring, "delstring")
-	function newstring(parent)
-		if #cache ~= 0 then
-			local t = cache[#cache]
-			cache[#cache] = nil
-			t:Show()
-			t:SetParent(parent)
-			return t
-		end
-		local t = parent:CreateFontString(nil, "ARTWORK")
-		return t
-	end
-	newstring = wrap(newstring, "newstring")
-end
-
-local function button_OnEnter(this, ...)
+local function button_OnEnter()
 	if type(this.self:GetScript("OnEnter")) == "function" then
-		this.self:GetScript("OnEnter")(this.self, ...)
+		this.self:GetScript("OnEnter")()
 	end
 	this.highlight:Show()
-	if this.onEnterFunc then
-		local success, ret = pcall(this.onEnterFunc, argunpack(this, 'onEnterArg'))
-		if not success then
-			geterrorhandler()(ret)
-		end
-	end
-end	
-button_OnEnter = wrap(button_OnEnter, "button_OnEnter")
+end
 
-local function button_OnLeave(this, ...)
+local function button_OnLeave()
 	if type(this.self:GetScript("OnLeave")) == "function" then
-		this.self:GetScript("OnLeave")(this.self, ...)
+		this.self:GetScript("OnLeave")()
 	end
 	this.highlight:Hide()
-	if this.onLeaveFunc then
-		local success, ret = pcall(this.onLeaveFunc, argunpack(this, 'onLeaveArg'))
-		if not success then
-			geterrorhandler()(ret)
-		end
-	end
 end
-button_OnLeave = wrap(button_OnLeave, "button_OnLeave")
-local lastMouseDown
-local function button_OnClick(this, arg1, ...)
-	if this.self:HasScript("OnClick") and type(this.self:GetScript("OnClick")) == "function" then
-		this.self:GetScript("OnClick")(this.self, arg1, ...)
-	end
-	if arg1 == "RightButton" then
-		if this.self:HasScript("OnClick") and type(this.self:GetScript("OnClick")) == "function" then
-			this.self:GetScript("OnClick")(this.self, arg1, ...)
-		end
-	elseif arg1 == "LeftButton" then
-		if this.self.preventClick == nil or GetTime() > this.self.preventClick and GetTime() < lastMouseDown + 0.5 then
-			this.self.preventClick = nil
-			this.self.updating = true
-			this.self.preventRefresh = true
-			local success, ret = pcall(this.func, argunpack(this, 'arg'))
-			if not success then
-				geterrorhandler()(ret)
-			end
-			if this.self and this.self.registration then
-				this.self.preventRefresh = false
-				this.self:children()
-				this.self.updating = false
-			end
-		end
-	end
-end
-button_OnClick = wrap(button_OnClick, "button_OnClick")
-local function button_OnMouseUp(this, arg1, ...)
-	if this.self:HasScript("OnMouseUp") and type(this.self:GetScript("OnMouseUp")) == "function" then
-		this.self:GetScript("OnMouseUp")(this.self, arg1, ...)
-	end
-	if arg1 ~= "RightButton" then
-		if this.clicked then
-			local a,b,c,d,e = this.check:GetPoint(1)
-			this.check:SetPoint(a,b,c,d-1,e+1)
-			this.clicked = false
-		end
-	end
-end
-button_OnMouseUp = wrap(button_OnMouseUp, "button_OnMouseUp")
-local function button_OnMouseDown(this, arg1, ...)
-	if this.self:HasScript("OnMouseDown") and type(this.self:GetScript("OnMouseDown")) == "function" then
-		this.self:GetScript("OnMouseDown")(this.self, arg1, ...)
-	end
-	lastMouseDown = GetTime()
-	if arg1 ~= "RightButton" then
-		local a,b,c,d,e = this.check:GetPoint(1)
-		this.check:SetPoint(a,b,c,d+1,e-1)
-		this.clicked = true
-	end
-end
-button_OnMouseDown = wrap(button_OnMouseDown, "button_OnMouseDown")
-local function button_OnDragStart(this, ...)
-	local parent = this:GetParent() and this:GetParent().tablet
-	if parent:GetScript("OnDragStart") then
-		return parent:GetScript("OnDragStart")(parent, ...)
-	end
-end
-button_OnDragStart = wrap(button_OnDragStart, "button_OnDragStart")
-local function button_OnDragStop(this, ...)
-	local parent = this:GetParent() and this:GetParent().tablet
-	if parent:GetScript("OnDragStop") then
-		return parent:GetScript("OnDragStop")(parent, ...)
-	end
-end
-button_OnDragStop = wrap(button_OnDragStop, "button_OnDragStop")
 
-local num_buttons = 0
 local function NewLine(self)
 	if self.maxLines <= self.numLines then
 		self.maxLines = self.maxLines + 1
-		num_buttons = num_buttons + 1
-		local button = CreateFrame("Button", "Tablet20Button" .. num_buttons, self.scrollChild)
-		button:SetFrameLevel(12)
+		local button = CreateFrame("Button", nil, self)
 		button.indentation = 0
 		local check = button:CreateTexture(nil, "ARTWORK")
-		local col1 = newstring(button)
-		testString = col1
+		local left = button:CreateFontString(nil, "ARTWORK")
+		local right = button:CreateFontString(nil, "ARTWORK")
+		local third = button:CreateFontString(nil, "ARTWORK")
+		local fourth = button:CreateFontString(nil, "ARTWORK")
+		local fifth = button:CreateFontString(nil, "ARTWORK")
+		local sixth = button:CreateFontString(nil, "ARTWORK")
 		local highlight = button:CreateTexture(nil, "BACKGROUND")
 		highlight:SetTexture("Interface\\QuestFrame\\UI-QuestTitleHighlight")
 		button.highlight = highlight
 		highlight:SetBlendMode("ADD")
 		highlight:SetAllPoints(button)
 		highlight:Hide()
-		self.buttons[#self.buttons+1] = button
-		button.check = check
-		button.col1 = col1
-		col1:SetWidth(0)
+		table.insert(self.buttons, button)
+		table.insert(self.checks, check)
+		table.insert(self.lefts, left)
+		table.insert(self.rights, right)
+		table.insert(self.thirds, third)
+		table.insert(self.fourths, fourth)
+		table.insert(self.fifths, fifth)
+		table.insert(self.sixths, sixth)
+		left:SetWidth(0)
 		if self.maxLines == 1 then
-			col1:SetFontObject(GameTooltipHeaderText)
-			col1:SetJustifyH("CENTER")
-			button:SetPoint("TOPLEFT", self.scrollFrame, "TOPLEFT", 3, -5)
+			left:SetFontObject(GameTooltipHeaderText)
+			right:SetFontObject(GameTooltipHeaderText)
+			third:SetFontObject(GameTooltipHeaderText)
+			fourth:SetFontObject(GameTooltipHeaderText)
+			fifth:SetFontObject(GameTooltipHeaderText)
+			sixth:SetFontObject(GameTooltipHeaderText)
+			left:SetJustifyH("CENTER")
+			button:SetPoint("TOPLEFT", self, "TOPLEFT", 8, -10)
 		else
-			col1:SetFontObject(GameTooltipText)
+			left:SetFontObject(GameTooltipText)
+			right:SetFontObject(GameTooltipText)
+			third:SetFontObject(GameTooltipText)
+			fourth:SetFontObject(GameTooltipText)
+			fifth:SetFontObject(GameTooltipText)
+			sixth:SetFontObject(GameTooltipText)
 			button:SetPoint("TOPLEFT", self.buttons[self.maxLines - 1], "BOTTOMLEFT", 0, -2)
 		end
 		button:SetScript("OnEnter", button_OnEnter)
 		button:SetScript("OnLeave", button_OnLeave)
 		button.check = check
 		button.self = self
-		button:SetPoint("RIGHT", self.scrollFrame, "RIGHT", -7, 0)
+		button:SetPoint("RIGHT", self, "RIGHT", -12, 0)
 		check.shown = false
 		check:SetPoint("TOPLEFT", button, "TOPLEFT")
-		col1:SetPoint("TOPLEFT", check, "TOPLEFT")
-		local size = select(2,GameTooltipText:GetFont())
+		left:SetPoint("TOPLEFT", check, "TOPLEFT")
+		right:SetPoint("TOPLEFT", left, "TOPRIGHT", 40 * self.fontSizePercent, 0)
+		third:SetPoint("TOPLEFT", right, "TOPRIGHT", 20 * self.fontSizePercent, 0)
+		fourth:SetPoint("TOPLEFT", third, "TOPRIGHT", 20 * self.fontSizePercent, 0)
+		fifth:SetPoint("TOPLEFT", fourth, "TOPRIGHT", 20 * self.fontSizePercent, 0)
+		sixth:SetPoint("TOPLEFT", fifth, "TOPRIGHT", 20 * self.fontSizePercent, 0)
+		right:SetJustifyH("RIGHT")
+		local _,size = GameTooltipText:GetFont()
 		check:SetHeight(size * 1.5)
 		check:SetWidth(size * 1.5)
 		check:SetTexture("Interface\\Buttons\\UI-CheckBox-Check")
@@ -1081,75 +1088,25 @@ local function NewLine(self)
 			button:Hide()
 		end
 		check:Show()
-		col1:Hide()
+		left:Hide()
+		right:Hide()
+		third:Hide()
+		fourth:Hide()
+		fifth:Hide()
+		sixth:Hide()
 	end
 end
 NewLine = wrap(NewLine, "NewLine")
 
-local function RecalculateTabletHeight(detached)
-	detached.height_ = nil
-	if detached.registration and detached.registration.positionFunc then
-		local height = detached:GetHeight()
-		if height > 0 then
-			detached.height_ = height
-		else
-			local top, bottom
-			for i = 1, detached:GetNumPoints() do
-				local a,b,c,d,e = detached:GetPoint(i)
-		
-				if a:find("^TOP") then
-					if c:find("^TOP") then
-						top = b:GetTop()
-					elseif c:find("^BOTTOM") then
-						top = b:GetBottom()
-					else
-						top = select(2,b:GetCenter())
-					end
-					if top then
-						top = top + e
-					end
-				elseif a:find("^BOTTOM") then
-					if c:find("^TOP") then
-						bottom = b:GetTop()
-					elseif c:find("^BOTTOM") then
-						bottom = b:GetBottom()
-					else
-						bottom = select(2,b:GetCenter())
-					end
-					if bottom then
-						bottom = bottom + e
-					end
-				end
-			end
-			if top and bottom then
-				detached.height_ = top - bottom
-			end
-		end
-	end
-end
-RecalculateTabletHeight = wrap(RecalculateTabletHeight, "RecalculateTabletHeight")
-
-local function GetTooltipHeight(self)
-	RecalculateTabletHeight(self)
-	if self.height_ then
-		local height = self:GetTop() and self:GetBottom() and self:GetTop() - self:GetBottom() or self:GetHeight()
-		if height == 0 then
-			height = self.height_
-		end
-		return height
-	end
-	if self.registration.maxHeight then
-		return self.registration.maxHeight
-	end
+local function GetMaxLinesPerScreen(self)
 	if self == tooltip then
-		return GetScreenHeight()*3/4
+		return floor(50 / self.fontSizePercent)
 	else
-		return GetScreenHeight()*2/3
+		return floor(30 / self.fontSizePercent)
 	end
 end
-GetTooltipHeight = wrap(GetTooltipHeight, "GetTooltipHeight")
+GetMaxLinesPerScreen = wrap(GetMaxLinesPerScreen, "GetMaxLinesPerScreen")
 
-local overFrame = nil
 local detachedTooltips = {}
 local AcquireDetachedFrame, ReleaseDetachedFrame
 local function AcquireFrame(self, registration, data, detachedData)
@@ -1167,21 +1124,14 @@ local function AcquireFrame(self, registration, data, detachedData)
 		tooltip:SetFontSizePercent(fontSizePercent)
 		tooltip:SetTransparency(transparency)
 		tooltip:SetColor(r, g, b)
-		tooltip:SetParent(GetMainFrame())
-		tooltip:SetFrameStrata(registration.strata or "TOOLTIP")
-		tooltip:SetFrameLevel(10)
-		for _,frame in fake_ipairs(tooltip:GetChildren()) do
-			frame:SetFrameLevel(12)
-		end
 	else
 		tooltip = CreateFrame("Frame", "Tablet20Frame", UIParent)
-		tooltip:SetParent(GetMainFrame())
 		self.tooltip = tooltip
 		tooltip.data = data
 		tooltip.detachedData = detachedData
 		tooltip:EnableMouse(true)
 		tooltip:EnableMouseWheel(true)
-		tooltip:SetFrameStrata(registration.strata or "TOOLTIP")
+		tooltip:SetFrameStrata("TOOLTIP")
 		tooltip:SetFrameLevel(10)
 		local backdrop = new(
 			'bgFile', "Interface\\Buttons\\WHITE8X8",
@@ -1206,92 +1156,68 @@ local function AcquireFrame(self, registration, data, detachedData)
 		tooltip.fontSizePercent = tooltip.data and tooltip.data.fontSizePercent or 1
 		tooltip.maxLines = 0
 		tooltip.buttons = {}
+		tooltip.checks = {}
+		tooltip.lefts = {}
+		tooltip.rights = {}
+		tooltip.thirds = {}
+		tooltip.fourths = {}
+		tooltip.fifths = {}
+		tooltip.sixths = {}
 		tooltip.transparency = tooltip.data and tooltip.data.transparency or 0.75
 		tooltip:SetBackdropColor(0, 0, 0, tooltip.transparency)
 		tooltip:SetBackdropBorderColor(1, 1, 1, tooltip.transparency)
+		tooltip.scroll = 0
 
-		tooltip:SetScript("OnUpdate", function(this, elapsed)
-			if not tooltip.updating and (not tooltip.enteredFrame or (overFrame and not MouseIsOver(overFrame))) then
-				tooltip.scrollFrame:SetVerticalScroll(0)
-				tooltip.slider:SetValue(0)
+		tooltip:SetScript("OnUpdate", function()
+			if not tooltip.updating and not tooltip.enteredFrame then
+				tooltip.scroll = 0
 				tooltip:Hide()
 				tooltip.registration.tooltip = nil
 				tooltip.registration = nil
-				overFrame = nil
 			end
 		end)
 
-		tooltip:SetScript("OnEnter", function(this)
+		tooltip:SetScript("OnEnter", function()
 			if tooltip.clickable then
 				tooltip.enteredFrame = true
-				overFrame = nil
 			end
 		end)
 
-		tooltip:SetScript("OnLeave", function(this)
+		tooltip:SetScript("OnLeave", function()
 			if not tooltip.updating then
 				tooltip.enteredFrame = false
 			end
 		end)
 
-		tooltip:SetScript("OnMouseWheel", function(this, arg1)
+		tooltip:SetScript("OnMouseWheel", function()
 			tooltip.updating = true
 			tooltip:Scroll(arg1 < 0)
 			tooltip.updating = false
 		end)
-		
-		local scrollFrame = CreateFrame("ScrollFrame", "Tablet20FrameScrollFrame", tooltip)
-		scrollFrame:SetFrameLevel(11)
-		local scrollChild = CreateFrame("Frame", "Tablet20FrameScrollChild", scrollFrame)
-		scrollChild.tablet = tooltip
-		scrollFrame:SetScrollChild(scrollChild)
-		tooltip.scrollFrame = scrollFrame
-		tooltip.scrollChild = scrollChild
-		scrollFrame:SetPoint("TOPLEFT", 5, -5)
-		scrollFrame:SetPoint("TOPRIGHT", -5, -5)
-		scrollFrame:SetPoint("BOTTOMLEFT", 5, 5)
-		scrollFrame:SetPoint("BOTTOMRIGHT", -5, 5)
-		scrollChild:SetWidth(1)
-		scrollChild:SetHeight(1)
-		local slider = CreateFrame("Slider", "Tablet20FrameSlider", scrollFrame)
-		tooltip.slider = slider
-		slider:SetOrientation("VERTICAL")
-		slider:SetMinMaxValues(0, 1)
-		slider:SetValueStep(0.001)
-		slider:SetValue(0)
-		slider:SetWidth(8)
-		slider:SetPoint("TOPRIGHT", 0, 0)
-		slider:SetPoint("BOTTOMRIGHT", 0, 0)
-		slider:SetBackdrop(new(
-			'bgFile', "Interface\\Buttons\\UI-SliderBar-Background",
-			'edgeFile', "Interface\\Buttons\\UI-SliderBar-Border",
-			'tile', true,
-			'edgeSize', 8,
-			'tileSize', 8,
-			'insets', new(
-				'left', 3,
-				'right', 3,
-				'top', 3,
-				'bottom', 3
-			)
-		))
-		slider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Vertical")
-		slider:SetScript("OnEnter", tooltip:GetScript("OnEnter"))
-		slider:SetScript("OnLeave", tooltip:GetScript("OnLeave"))
-		slider.tablet = tooltip
-		slider:SetScript("OnValueChanged", function(this)
-			local max = this.tablet.scrollChild:GetHeight() - this.tablet:GetHeight()
-			
-			local val = this:GetValue() * max
-			
-			if math.abs(this.tablet.scrollFrame:GetVerticalScroll() - val) < 1 then
-				return
-			end
-			
-			this.tablet.scrollFrame:SetVerticalScroll(val)
-		end)
-			
+
 		NewLine(tooltip)
+
+		tooltip.scrollUp = tooltip:CreateFontString(nil, "ARTWORK")
+		tooltip.scrollUp:SetPoint("TOPLEFT", tooltip.buttons[1], "BOTTOMLEFT", 0, -2)
+		tooltip.scrollUp:SetPoint("RIGHT", tooltip, "RIGHT", 0, -10)
+		tooltip.scrollUp:SetFontObject(GameTooltipText)
+		tooltip.scrollUp:Hide()
+		local font,_,flags = tooltip.scrollUp:GetFont()
+		tooltip.scrollUp:SetFont(font, normalSize * tooltip.fontSizePercent, flags)
+		tooltip.scrollUp:SetJustifyH("CENTER")
+		tooltip.scrollUp:SetTextColor(1, 0.823529, 0)
+		tooltip.scrollUp:SetText(" ")
+
+		tooltip.scrollDown = tooltip:CreateFontString(nil, "ARTWORK")
+		tooltip.scrollDown:SetPoint("TOPLEFT", tooltip.buttons[1], "BOTTOMLEFT", 0, -2)
+		tooltip.scrollDown:SetPoint("RIGHT", tooltip, "RIGHT", 0, -10)
+		tooltip.scrollDown:SetFontObject(GameTooltipText)
+		tooltip.scrollDown:Hide()
+		local font,_,flags = tooltip.scrollUp:GetFont()
+		tooltip.scrollDown:SetFont(font, normalSize * tooltip.fontSizePercent, flags)
+		tooltip.scrollDown:SetJustifyH("CENTER")
+		tooltip.scrollDown:SetTextColor(1, 0.823529, 0)
+		tooltip.scrollDown:SetText(" ")
 
 		function tooltip:SetOwner(o)
 			self:Hide(o)
@@ -1308,7 +1234,7 @@ local function AcquireFrame(self, registration, data, detachedData)
 			CleanCategoryPool(self)
 			for i = 1, self.numLines do
 				local button = self.buttons[i]
-				local check = button.check
+				local check = self.checks[i]
 				if not button.clicked or hide then
 					button:Hide()
 				end
@@ -1346,61 +1272,121 @@ local function AcquireFrame(self, registration, data, detachedData)
 			if not self.tmpHidden then
 				old_tooltip_Show(self)
 			end
-			
-			testString = self.buttons[1].col1
-			
+
 			local maxWidth = tabletData and tabletData.width or self:GetWidth() - 20
 			local hasWrap = false
-			local numColumns
-			
-			local height = 20
-			self:SetWidth(maxWidth + 20)
-			
-			for i = 1, self.numLines do
-				local button = self.buttons[i]
-				local col1 = button.col1
-				local col2 = button.col2
-				local check = button.check
-				button:SetWidth(maxWidth)
-				button:SetHeight(col2 and math.max(col1:GetHeight(), col2:GetHeight()) or col1:GetHeight())
-				height = height + button:GetHeight() + 2
-				if i == 1 then
-					button:SetPoint("TOPLEFT", self.scrollChild, "TOPLEFT", 5, -5)
-				else
-					button:SetPoint("TOPLEFT", self.buttons[i - 1], "BOTTOMLEFT", 0, -2)
-				end
-				if button.clicked then
-					check:SetPoint("TOPLEFT", button, "TOPLEFT", button.indentation * self.fontSizePercent + (check.width - check:GetWidth()) / 2 + 1, -1)
-				else
-					check:SetPoint("TOPLEFT", button, "TOPLEFT", button.indentation * self.fontSizePercent + (check.width - check:GetWidth()) / 2, 0)
-				end
-				button:Show()
+			local screenWidth = GetScreenWidth()
+			local scrollMax = self.numLines
+			if scrollMax > GetMaxLinesPerScreen(self) + self.scroll then
+				scrollMax = GetMaxLinesPerScreen(self) + self.scroll
 			end
-			self.scrollFrame:SetFrameLevel(11)
-			self.scrollChild:SetWidth(maxWidth)
-			self.scrollChild:SetHeight(height)
-			local maxHeight = GetTooltipHeight(self)
-			if height > maxHeight then
-				height = maxHeight
-				self.slider:Show()
+			local numColumns
+
+			local height = 20
+			if scrollMax ~= self.numLines then
+				self.scrollDown:SetWidth(maxWidth)
+				height = height + self.scrollDown:GetHeight() + 2
+			end
+			if self.scroll ~= 0 then
+				self.scrollUp:SetWidth(maxWidth)
+				height = height + self.scrollUp:GetHeight() + 2
+			end
+			self:SetWidth(maxWidth + 20)
+
+			local tmp = self.scroll + 1
+			if tmp ~= 1 then
+				tmp = tmp + 1
+			end
+			for i = 1, self.numLines do
+				if i < tmp or i > scrollMax or (i == scrollMax and i ~= self.numLines) then
+					self.buttons[i]:ClearAllPoints()
+					self.buttons[i]:Hide()
+				else
+					local button = self.buttons[i]
+					local left = self.lefts[i]
+					local right = self.rights[i]
+					local check = self.checks[i]
+					button:SetWidth(maxWidth)
+					button:SetHeight(math.max(left:GetHeight(), right:GetHeight()))
+					height = height + button:GetHeight() + 2
+					if i == self.scroll + 1 then
+						button:SetPoint("TOPLEFT", self, "TOPLEFT", 10, -10)
+					else
+						button:SetPoint("TOPLEFT", self.buttons[i - 1], "BOTTOMLEFT", 0, -2)
+					end
+					if button.clicked then
+						check:SetPoint("TOPLEFT", button, "TOPLEFT", button.indentation * self.fontSizePercent + (check.width - check:GetWidth()) / 2 + 1, -1)
+					else
+						check:SetPoint("TOPLEFT", button, "TOPLEFT", button.indentation * self.fontSizePercent + (check.width - check:GetWidth()) / 2, 0)
+					end
+					button:Show()
+				end
+			end
+			if self.scroll ~= 0 then
+				self.scrollUp:SetPoint("TOPLEFT", self, "TOPLEFT", 10, -10)
+				self.buttons[self.scroll + 2]:SetPoint("TOPLEFT", self.scrollUp, "BOTTOMLEFT", 0, -2)
+				self.scrollUp:SetText(SCROLL_UP .. " (" .. self.scroll + 2 .. " / " .. self.numLines .. ")")
+				self.scrollUp:Show()
 			else
-				self.slider:Hide()
+				self.scrollUp:Hide()
+			end
+			if scrollMax ~= self.numLines and self.buttons[scrollMax - 1] then
+				self.scrollDown:SetPoint("TOPLEFT", self.buttons[scrollMax - 1], "BOTTOMLEFT", 0, -2)
+				self.scrollDown:SetText(SCROLL_DOWN .. " (" .. scrollMax - 1 .. " / " .. self.numLines .. ")")
+				self.scrollDown:Show()
+			else
+				self.scrollDown:Hide()
 			end
 			self:SetHeight(height)
-			self.scrollFrame:SetScrollChild(self.scrollChild)
-			local val = self.scrollFrame:GetVerticalScroll()
-			local max = self.scrollChild:GetHeight() - self:GetHeight()
-			if val > max then
-				val = max
-			end
-			if val < 0 then
-				val = 0
-			end
-			self.scrollFrame:SetVerticalScroll(val)
-			self.slider:SetValue(val/max)
 		end
 		tooltip.Show = wrap(tooltip.Show, "tooltip:Show")
-		
+
+		local lastMouseDown
+		local function button_OnClick()
+			if this.self:HasScript("OnClick") and type(this.self:GetScript("OnClick")) == "function" then
+				this.self:GetScript("OnClick")()
+			end
+			if arg1 == "RightButton" then
+				if this.self:HasScript("OnClick") and type(this.self:GetScript("OnClick")) == "function" then
+					this.self:GetScript("OnClick")()
+				end
+			elseif arg1 == "LeftButton" then
+				if this.self.preventClick == nil or GetTime() > this.self.preventClick and GetTime() < lastMouseDown + 0.5 then
+					this.self.preventClick = nil
+					this.self.updating = true
+					this.self.preventRefresh = true
+					this.func(this.a1, this.a2, this.a3)
+					if this.self then
+						this.self.preventRefresh = false
+						this.self:children()
+						this.self.updating = false
+					end
+				end
+			end
+		end
+		local function button_OnMouseUp()
+			if this.self:HasScript("OnMouseUp") and type(this.self:GetScript("OnMouseUp")) == "function" then
+				this.self:GetScript("OnMouseUp")()
+			end
+			if arg1 ~= "RightButton" then
+				if this.clicked then
+					local a,b,c,d,e = this.check:GetPoint(1)
+					this.check:SetPoint(a,b,c,d-1,e+1)
+					this.clicked = false
+				end
+			end
+		end
+		local function button_OnMouseDown()
+			if this.self:HasScript("OnMouseDown") and type(this.self:GetScript("OnMouseDown")) == "function" then
+				this.self:GetScript("OnMouseDown")()
+			end
+			lastMouseDown = GetTime()
+			if arg1 ~= "RightButton" then
+				local a,b,c,d,e = this.check:GetPoint(1)
+				this.check:SetPoint(a,b,c,d+1,e-1)
+				this.clicked = true
+			end
+		end
 		function tooltip:AddLine(info)
 			local category = info.category.superCategory
 			local maxWidth = category.tabletData.width
@@ -1415,111 +1401,158 @@ local function AcquireFrame(self, registration, data, detachedData)
 				info.font = GameTooltipText
 			end
 			if not info.size then
-				info.size = select(2,info.font:GetFont())
+				_,info.size = info.font:GetFont()
 			end
 			local catStart = false
 			local columns = category and category.columns or 1
-			local x_total = 0
-			local x1, x2
+			local x1, x2, x3, x4, x5, x6
 			if category then
-				for i = 1, category.columns do
-					x_total = x_total + category['x' .. i]
-				end
-				x1, x2 = category.x1, category.x2
+				x1, x2, x3, x4, x5, x6 = category.x1, category.x2, category.x3, category.x4, category.x5, category.x6
 			else
-				x1, x2 = 0, 0
+				x1, x2, x3, x4, x5, x6 = 0, 0, 0, 0, 0, 0
+			end
+			if info.isTitle then
+				justAddedTitle = true
 			end
 
 			self.numLines = self.numLines + 1
 			NewLine(self)
-			local num = self.numLines
+			self.lefts[self.numLines]:Show()
+			self.buttons[self.numLines]:Show()
+			num = self.numLines
 
 			local button = self.buttons[num]
-			button:Show()
-			button.col1:Show()
 			button.indentation = info.indentation
-			local col1 = button.col1
-			local check = button.check
+			local left = self.lefts[num]
+			local right = self.rights[num]
+			local third = self.thirds[num]
+			local fourth = self.fourths[num]
+			local fifth = self.fifths[num]
+			local sixth = self.sixths[num]
+			local check = self.checks[num]
 			do -- if columns >= 1 then
-				col1:SetWidth(0)
-				col1:SetFontObject(info.font)
-				local font,_,flags = info.font:GetFont()
-				col1:SetFont(font, info.size * fontSizePercent, flags)
-				col1:SetText(text)
-				col1:SetJustifyH(info.justify)
-				col1:Show()
-				
+				left:SetFontObject(info.font)
+				left:SetText(text)
+				left:Show()
 				if info.textR and info.textG and info.textB then
-					col1:SetTextColor(info.textR, info.textG, info.textB)
+					left:SetTextColor(info.textR, info.textG, info.textB)
 				else
-					col1:SetTextColor(1, 0.823529, 0)
+					left:SetTextColor(1, 0.823529, 0)
 				end
+				local a,_,b = left:GetFont()
+				left:SetFont(a, info.size * fontSizePercent, b)
+				left:SetJustifyH(info.justify)
 				if columns < 2 then
-					local i = 2
-					while true do
-						local col = button['col' .. i]
-						if col then
-							button['col' .. i] = delstring(col)
-						else
-							break
-						end
-						i = i + 1
-					end
+					right:SetText(nil)
+					right:Hide()
+					right:SetPoint("TOPLEFT", left, "TOPRIGHT", 40 * fontSizePercent, 0)
+					right:SetPoint("TOPRIGHT", button, "TOPRIGHT", -5, 0)
+					third:SetText(nil)
+					third:Hide()
+					fourth:SetText(nil)
+					fourth:Hide()
+					fifth:SetText(nil)
+					fifth:Hide()
+					sixth:SetText(nil)
+					sixth:Hide()
 				else
-					local i = 2
-					while true do
-						local col = button['col' .. i]
-						if not col then
-							button['col' .. i] = newstring(button)
-							col = button['col' .. i]
-						end
-						col:SetFontObject(info['font' .. i])
-						col:SetText(info['text' .. i])
-						col:Show()
-						local r,g,b = info['text' .. i .. 'R']
-						if r then
-							g = info['text' .. i .. 'G']
-							if g then
-								b = info['text' .. i .. 'B']
-							end
-						end
-						if b then
-							col:SetTextColor(r, g, b)
+					right:SetFontObject(info.font2)
+					right:SetText(info.text2)
+					right:Show()
+					if info.text2R and info.text2G and info.text2B then
+						right:SetTextColor(info.text2R, info.text2G, info.text2B)
+					else
+						right:SetTextColor(1, 0.823529, 0)
+					end
+					local a,_,b = right:GetFont()
+					right:SetFont(a, info.size2 * fontSizePercent, b)
+					right:SetJustifyH(info.justify2)
+					if columns < 3 then
+						right:SetPoint("TOPLEFT", left, "TOPRIGHT", 40 * fontSizePercent, 0)
+						right:SetPoint("TOPRIGHT", button, "TOPRIGHT", -5, 0)
+						third:SetText(nil)
+						third:Hide()
+						fourth:SetText(nil)
+						fourth:Hide()
+						fifth:SetText(nil)
+						fifth:Hide()
+						sixth:SetText(nil)
+						sixth:Hide()
+					else
+						third:SetFontObject(info.font3)
+						third:SetText(info.text3)
+						third:Show()
+						if info.text3R and info.text3G and info.text3B then
+							third:SetTextColor(info.text3R, info.text3G, info.text3B)
 						else
-							col:SetTextColor(1, 0.823529, 0)
+							third:SetTextColor(1, 0.823529, 0)
 						end
-						local a,_,b = info.font2:GetFont()
-						col:SetFont(a, info['size' .. i] * fontSizePercent, b)
-						col:SetJustifyH(info['justify' .. i])
-						if columns == i then
-							if i == 2 then
-								col:SetPoint("TOPLEFT", col1, "TOPRIGHT", 40 * fontSizePercent, 0)
-								col:SetPoint("TOPRIGHT", button, "TOPRIGHT", -5, 0)
+						local a,_,b = third:GetFont()
+						third:SetFont(a, info.size3 * fontSizePercent, b)
+						right:ClearAllPoints()
+						right:SetPoint("TOPLEFT", left, "TOPRIGHT", 20 * fontSizePercent, 0)
+						third:SetJustifyH(info.justify3)
+						if columns < 4 then
+							fourth:SetText(nil)
+							fourth:Hide()
+							fifth:SetText(nil)
+							fifth:Hide()
+							sixth:SetText(nil)
+							sixth:Hide()
+						else
+							fourth:SetFontObject(info.font4)
+							fourth:SetText(info.text4)
+							fourth:Show()
+							if info.text4R and info.text4G and info.text4B then
+								fourth:SetTextColor(info.text4R, info.text4G, info.text4B)
 							else
-								local col2 = button.col2
-								col2:ClearAllPoints()
-								col2:SetPoint("TOPLEFT", col1, "TOPRIGHT", (20 - info.indentation) * fontSizePercent, 0)
+								fourth:SetTextColor(1, 0.823529, 0)
 							end
-							i = i + 1
-							while true do
-								local col = button['col' .. i]
-								if col then
-									button['col' .. i] = delstring(col)
+							local a,_,b = fourth:GetFont()
+							fourth:SetFont(a, info.size4 * fontSizePercent, b)
+							fourth:SetJustifyH(info.justify4)
+							if columns < 5 then
+								fifth:SetText(nil)
+								fifth:Hide()
+								sixth:SetText(nil)
+								sixth:Hide()
+							else
+								fifth:SetFontObject(info.font5)
+								fifth:SetText(info.text5)
+								fifth:Show()
+								if info.text5R and info.text5G and info.text5B then
+									fifth:SetTextColor(info.text5R, info.text5G, info.text5B)
 								else
-									break
+									fifth:SetTextColor(1, 0.823529, 0)
 								end
-								i = i + 1
+								local a,_,b = fourth:GetFont()
+								fifth:SetFont(a, info.size5 * fontSizePercent, b)
+								fifth:SetJustifyH(info.justify5)
+								if columns < 6 then
+									sixth:SetText(nil)
+									sixth:Hide()
+								else
+									sixth:SetFontObject(info.font6)
+									sixth:SetText(info.text6)
+									sixth:Show()
+									if info.text5R and info.text6G and info.text6B then
+										sixth:SetTextColor(info.text6R, info.text6G, info.text6B)
+									else
+										sixth:SetTextColor(1, 0.823529, 0)
+									end
+									local a,_,b = fourth:GetFont()
+									sixth:SetFont(a, info.size6 * fontSizePercent, b)
+									sixth:SetJustifyH(info.justify6)
+								end
 							end
-							break
 						end
-						i = i + 1
 					end
 				end
 			end
-			
-			check:SetWidth(info.size * fontSizePercent)
-			check:SetHeight(info.size * fontSizePercent)
-			check.width = info.size * fontSizePercent
+
+			check:SetWidth(info.size)
+			check:SetHeight(info.size)
+			check.width = info.size
 			if info.hasCheck then
 				check.shown = true
 				check:Show()
@@ -1531,180 +1564,101 @@ local function AcquireFrame(self, registration, data, detachedData)
 					else
 						check:SetAlpha(self.transparency)
 						check:SetTexCoord(0, 0.25, 0, 1)
-					end	
-					check:SetVertexColor(1, 1, 1)
+					end
 				else
 					if info.checkIcon then
 						check:SetTexture(info.checkIcon)
-						check:SetTexCoord(info.checkCoordLeft, info.checkCoordRight, info.checkCoordTop, info.checkCoordBottom)
-						check:SetVertexColor(info.checkColorR, info.checkColorG, info.checkColorB)
+						if string.sub(info.checkIcon, 1, 16) == "Interface\\Icons\\" then
+							check:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+						else
+							check:SetTexCoord(0, 1, 0, 1)
+						end
 					else
 						check:SetTexture("Interface\\Buttons\\UI-CheckBox-Check")
-						check:SetWidth(info.size * fontSizePercent * 1.5)
-						check:SetHeight(info.size * fontSizePercent * 1.5)
-						check.width = info.size * fontSizePercent * 1.2
+						check:SetWidth(info.size * 1.5)
+						check:SetHeight(info.size * 1.5)
+						check.width = info.size * 1.2
 						check:SetTexCoord(0, 1, 0, 1)
-						check:SetVertexColor(1, 1, 1)
 					end
 					check:SetAlpha(info.checked and 1 or 0)
 				end
-				col1:SetPoint("TOPLEFT", check, "TOPLEFT", check.width, 0)
+				left:SetPoint("TOPLEFT", check, "TOPLEFT", check.width, 0)
 			else
-				col1:SetPoint("TOPLEFT", check, "TOPLEFT")
+				left:SetPoint("TOPLEFT", check, "TOPLEFT")
 			end
-			local col2 = button.col2
 			if columns == 1 then
-				col1:SetWidth(maxWidth)
+				left:SetWidth(maxWidth)
 			elseif columns == 2 then
+				left:SetWidth(0)
+				right:SetWidth(0)
 				if info.wrap then
-					col1:SetWidth(maxWidth - col2:GetWidth() - 40 * fontSizePercent)
-					col2:SetWidth(0)
+					left:SetWidth(maxWidth - right:GetWidth() - 40 * fontSizePercent)
 				elseif info.wrap2 then
-					col1:SetWidth(0)
-					col2:SetWidth(maxWidth - col1:GetWidth() - 40 * fontSizePercent)
-				else
-					col1:SetWidth(0)
-					col2:SetWidth(0)
+					right:SetWidth(maxWidth - left:GetWidth() - 40 * fontSizePercent)
 				end
-				col2:ClearAllPoints()
-				col2:SetPoint("TOPRIGHT", button, "TOPRIGHT", 0, 0)
+				right:ClearAllPoints()
+				right:SetPoint("TOPRIGHT", button, "TOPRIGHT", 0, 0)
 				if not info.text2 then
-					col1:SetJustifyH(info.justify or "LEFT")
+					left:SetJustifyH(info.justify or "LEFT")
 				end
-			else
-				col1:SetWidth(x1 - info.checkWidth)
-				col2:SetWidth(x2)
-				local num = (category.tabletData.width - x_total) / (columns - 1)
-				col2:SetPoint("TOPLEFT", col1, "TOPRIGHT", num - info.indentation * fontSizePercent, 0)
-				local last = col2
-				for i = 3, category.columns do
-					local col = button['col' .. i]
-					col:SetWidth(category['x' .. i])
-					col:SetPoint("TOPLEFT", last, "TOPRIGHT", num, 0)
-					last = col
-				end
+			elseif columns == 3 then
+				left:SetWidth(x1 - info.checkWidth)
+				right:SetWidth(x2)
+				third:SetWidth(x3)
+				right:ClearAllPoints()
+				local num = (category.tabletData.width - x1 - x2 - x3) / 2
+				right:SetPoint("TOPLEFT", left, "TOPRIGHT", num, 0)
+				third:SetPoint("TOPLEFT", right, "TOPRIGHT", num, 0)
+			elseif columns == 4 then
+				left:SetWidth(x1 - info.checkWidth)
+				right:SetWidth(x2)
+				third:SetWidth(x3)
+				fourth:SetWidth(x4)
+				local num = (category.tabletData.width - x1 - x2 - x3 - x4) / 3
+				right:SetPoint("TOPLEFT", left, "TOPRIGHT", num, 0)
+				third:SetPoint("TOPLEFT", right, "TOPRIGHT", num, 0)
+				fourth:SetPoint("TOPLEFT", third, "TOPRIGHT", num, 0)
+			elseif columns == 5 then
+				left:SetWidth(x1 - info.checkWidth)
+				right:SetWidth(x2)
+				third:SetWidth(x3)
+				fourth:SetWidth(x4)
+				fifth:SetWidth(x5)
+				local num = (category.tabletData.width - x1 - x2 - x3 - x4 - x5) / 4
+				right:SetPoint("TOPLEFT", left, "TOPRIGHT", num, 0)
+				third:SetPoint("TOPLEFT", right, "TOPRIGHT", num, 0)
+				fourth:SetPoint("TOPLEFT", third, "TOPRIGHT", num, 0)
+				fifth:SetPoint("TOPLEFT", fourth, "TOPRIGHT", num, 0)
+			elseif columns == 6 then
+				left:SetWidth(x1 - info.checkWidth)
+				right:SetWidth(x2)
+				third:SetWidth(x3)
+				fourth:SetWidth(x4)
+				fifth:SetWidth(x5)
+				sixth:SetWidth(x6)
+				local num = (category.tabletData.width - x1 - x2 - x3 - x4 - x5 - x6) / 5
+				right:SetPoint("TOPLEFT", left, "TOPRIGHT", num, 0)
+				third:SetPoint("TOPLEFT", right, "TOPRIGHT", num, 0)
+				fourth:SetPoint("TOPLEFT", third, "TOPRIGHT", num, 0)
+				fifth:SetPoint("TOPLEFT", fourth, "TOPRIGHT", num, 0)
+				sixth:SetPoint("TOPLEFT", fifth, "TOPRIGHT", num, 0)
 			end
-			button.func = nil
-			button.onEnterFunc = nil
-			button.onLeaveFunc = nil
-			button:SetFrameLevel(12)  -- hack suggested on forum. Added 06/17/2007. (hC)
 			if not self.locked or IsAltKeyDown() then
 				local func = info.func
 				if func then
 					if type(func) == "string" then
-						if type(info.arg1) ~= "table" then
-							Tablet:error("Cannot call method " .. info.func .. " on a non-table")
-						end
+						Tablet:assert(type(info.arg1) == "table", "Cannot call method " .. info.func .. " on a non-table")
 						func = info.arg1[func]
-						if type(func) ~= "function" then
-							Tablet:error("Method " .. info.func .. " nonexistant")
-						end
-					else
-						if type(func) ~= "function" then
-							Tablet:error("func must be a function or method")
-						end
+						Tablet:assert(type(func) == "function", "Method " .. info.func .. " nonexistant")
 					end
+					Tablet:assert(type(func) == "function", "func must be a function or method")
 					button.func = func
-					local i = 1
-					while true do
-						local k = 'arg' .. i
-						if button[k] ~= nil then
-							button[k] = nil
-						else
-							break
-						end
-						i = i + 1
-					end
-					i = 1
-					while true do
-						local k = 'arg' .. i
-						local v = info[k]
-						if v == nil then
-							break
-						end
-						button[k] = v
-						i = i + 1
-					end
-					local onEnterFunc = info.onEnterFunc
-					if onEnterFunc then
-						if type(onEnterFunc) == "string" then
-							if type(info.onEnterArg1) ~= "table" then
-								Tablet:error("Cannot call method " .. info.onEnterFunc .. " on a non-table")
-							end
-							onEventFunc = info.onEnterArg1[onEnterFunc]
-							if type(onEnterFunc) ~= "function" then
-								Tablet:error("Method " .. info.onEnterFunc .. " nonexistant")
-							end
-						else
-							if type(onEnterFunc) ~= "function" then
-								Tablet:error("func must be a function or method")
-							end
-						end
-						button.onEnterFunc = onEnterFunc
-						local i = 1
-						while true do
-							local k = 'onEnterArg' .. i
-							if button[k] ~= nil then
-								button[k] = nil
-							else
-								break
-							end
-							i = i + 1
-						end
-						i = 1
-						while true do
-							local k = 'onEnterArg' .. i
-							local v = info[k]
-							if v == nil then
-								break
-							end
-							button[k] = v
-							i = i + 1
-						end
-					end
-					local onLeaveFunc = info.onLeaveFunc
-					if onLeaveFunc then
-						if type(onLeaveFunc) == "string" then
-							if type(info.onLeaveArg1) ~= "table" then
-								Tablet:error("Cannot call method " .. info.onLeaveFunc .. " on a non-table")
-							end
-							onLeaveFunc = info.onLeaveArg1[onLeaveFunc]
-							if type(onLeaveFunc) ~= "function" then
-								Tablet:error("Method " .. info.onLeaveFunc .. " nonexistant")
-							end
-						else
-							if type(onLeaveFunc) ~= "function" then
-								Tablet:error("func must be a function or method")
-							end
-						end
-						button.onLeaveFunc = onLeaveFunc
-						local i = 1
-						while true do
-							local k = 'onLeaveArg' .. i
-							if button[k] ~= nil then
-								button[k] = nil
-							else
-								break
-							end
-							i = i + 1
-						end
-						i = 1
-						while true do
-							local k = 'onLeaveArg' .. i
-							local v = info[k]
-							if v == nil then
-								break
-							end
-							button[k] = v
-							i = i + 1
-						end
-					end
+					button.a1 = info.arg1
+					button.a2 = info.arg2
+					button.a3 = info.arg3
 					button.self = self
 					button:SetScript("OnMouseUp", button_OnMouseUp)
 					button:SetScript("OnMouseDown", button_OnMouseDown)
-					button:RegisterForDrag("LeftButton")
-					button:SetScript("OnDragStart", button_OnDragStart)
-					button:SetScript("OnDragStop", button_OnDragStop)
 					button:SetScript("OnClick", button_OnClick)
 					if button.clicked then
 						button:SetButtonState("PUSHED")
@@ -1713,18 +1667,12 @@ local function AcquireFrame(self, registration, data, detachedData)
 				else
 					button:SetScript("OnMouseDown", nil)
 					button:SetScript("OnMouseUp", nil)
-					button:RegisterForDrag()
-					button:SetScript("OnDragStart", nil)
-					button:SetScript("OnDragStop", nil)
 					button:SetScript("OnClick", nil)
 					button:EnableMouse(false)
 				end
 			else
 				button:SetScript("OnMouseDown", nil)
 				button:SetScript("OnMouseUp", nil)
-				button:RegisterForDrag()
-				button:SetScript("OnDragStart", nil)
-				button:SetScript("OnDragStop", nil)
 				button:SetScript("OnClick", nil)
 				button:EnableMouse(false)
 			end
@@ -1747,20 +1695,29 @@ local function AcquireFrame(self, registration, data, detachedData)
 			if data then
 				data.fontSizePercent = percent
 			end
+			self.scrollUp:SetFont(font, normalSize * self.fontSizePercent, flags)
+			self.scrollDown:SetFont(font, normalSize * self.fontSizePercent, flags)
 			local ratio = self.fontSizePercent / lastSize
 			for i = 1, self.numLines do
-				local button = self.buttons[i]
-				local j = 1
-				while true do
-					local col = button['col' .. j]
-					if not col then
-						break
-					end
-					local font, size, flags = col:GetFont()
-					col:SetFont(font, size * ratio, flags)
-					j = j + 1
-				end
-				local check = button.check
+				local left = self.lefts[i]
+				local right = self.rights[i]
+				local third = self.thirds[i]
+				local fourth = self.fourths[i]
+				local fifth = self.fifths[i]
+				local sixth = self.sixths[i]
+				local check = self.checks[i]
+				local font, size, flags = left:GetFont()
+				left:SetFont(font, size * ratio, flags)
+				font, size, flags = right:GetFont()
+				right:SetFont(font, size * ratio, flags)
+				font, size, flags = third:GetFont()
+				third:SetFont(font, size * ratio, flags)
+				font, size, flags = fourth:GetFont()
+				fourth:SetFont(font, size * ratio, flags)
+				font, size, flags = fifth:GetFont()
+				fifth:SetFont(font, size * ratio, flags)
+				font, size, flags = sixth:GetFont()
+				sixth:SetFont(font, size * ratio, flags)
 				check.width = check.width * ratio
 				check:SetWidth(check:GetWidth() * ratio)
 				check:SetHeight(check:GetHeight() * ratio)
@@ -1768,7 +1725,6 @@ local function AcquireFrame(self, registration, data, detachedData)
 			self:SetWidth((self:GetWidth() - 51) * ratio + 51)
 			self:SetHeight((self:GetHeight() - 51) * ratio + 51)
 			if self:IsShown() and self.children then
-				self:children()
 				self:Show()
 			end
 		end
@@ -1789,8 +1745,6 @@ local function AcquireFrame(self, registration, data, detachedData)
 			end
 			self:SetBackdropColor(self.r or 0, self.g or 0, self.b or 0, alpha)
 			self:SetBackdropBorderColor(1, 1, 1, alpha)
-			self.slider:SetBackdropColor(self.r or 0, self.g or 0, self.b or 0, alpha)
-			self.slider:SetBackdropBorderColor(1, 1, 1, alpha)
 		end
 		tooltip.SetTransparency = wrap(tooltip.SetTransparency, "tooltip:SetTransparency")
 
@@ -1821,48 +1775,41 @@ local function AcquireFrame(self, registration, data, detachedData)
 		end
 
 		function tooltip:Scroll(down)
-			local val
-			local max = self.scrollChild:GetHeight() - self:GetHeight()
 			if down then
 				if IsShiftKeyDown() then
-					val = max
+					self.scroll = self.numLines - GetMaxLinesPerScreen(self)
 				else
-					val = self.scrollFrame:GetVerticalScroll() + 36
-					if val > max then
-						val = max
-					end
+					self.scroll = self.scroll + 3
 				end
 			else
 				if IsShiftKeyDown() then
-					val = 0
+					self.scroll = 0
 				else
-					val = self.scrollFrame:GetVerticalScroll() - 36
-					if val < 0 then
-						val = 0
-					end
+					self.scroll = self.scroll - 3
 				end
 			end
-			self.scrollFrame:SetVerticalScroll(val)
-			self.slider:SetValue(val/max)
+			if self.scroll > self.numLines - GetMaxLinesPerScreen(self) then
+				self.scroll = self.numLines - GetMaxLinesPerScreen(self)
+			end
+			if self.scroll < 0 then
+				self.scroll = 0
+			end
+			if self:IsShown() then
+				self:Show()
+			end
 		end
 		tooltip.Scroll = wrap(tooltip.Scroll, "tooltip:Scroll")
 
 		function tooltip.Detach(tooltip)
 			local owner = tooltip.owner
 			tooltip:Hide()
-			if not tooltip.detachedData then
-				self:error("You cannot detach if detachedData is not present")
-			end
+			self:assert(tooltip.detachedData, "You cannot detach if detachedData is not present")
 			tooltip.detachedData.detached = true
 			local detached = AcquireDetachedFrame(self, tooltip.registration, tooltip.data, tooltip.detachedData)
 
 			detached.menu, tooltip.menu = tooltip.menu, nil
-			detached.runChildren = tooltip.runChildren
 			detached.children = tooltip.children
-			detached.minWidth = tooltip.minWidth
-			tooltip.runChildren = nil
 			tooltip.children = nil
-			tooltip.minWidth = nil
 			detached:SetOwner(owner)
 			detached:children()
 			detached:Show()
@@ -1887,7 +1834,6 @@ function ReleaseDetachedFrame(self, data, detachedData)
 			detached:Hide()
 			detached.registration.tooltip = nil
 			detached.registration = nil
-			detached.detachedData = nil
 		end
 	end
 end
@@ -1899,22 +1845,21 @@ do
 	function StartCheckingAlt(func)
 		if not frame then
 			frame = CreateFrame("Frame")
-			frame:SetScript("OnEvent", function(this, _, modifier)
-				if modifier == "LALT" or modifier == "RALT" then
-					this.func()
-				end
-			end)
 		end
-		frame:RegisterEvent("MODIFIER_STATE_CHANGED")
-		frame.func = func
+		local last = IsAltKeyDown()
+		frame:SetScript("OnUpdate", function()
+			local now = IsAltKeyDown()
+			if last ~= now then
+				last = now
+				func()
+			end
+		end)
 	end
-	StartCheckingAlt = wrap(StartCheckingAlt, "StartCheckingAlt")
 	function StopCheckingAlt()
 		if frame then
-			frame:UnregisterEvent("MODIFIER_STATE_CHANGED")
+			frame:SetScript("OnUpdate", nil)
 		end
 	end
-	StopCheckingAlt = wrap(StopCheckingAlt, "StopCheckingAlt")
 end
 
 function AcquireDetachedFrame(self, registration, data, detachedData)
@@ -1935,41 +1880,9 @@ function AcquireDetachedFrame(self, registration, data, detachedData)
 			detached:SetTransparency(transparency)
 			detached:SetColor(r, g, b)
 			detached:ClearAllPoints()
-			detached:SetWidth(0)
-			detached:SetHeight(0)
-			if not registration.strata then
-				detached:SetFrameStrata("BACKGROUND")
-			end
-			if not registration.frameLevel then
-				detached:SetFrameLevel(10)
-				for _,frame in fake_ipairs(detached:GetChildren()) do
-					frame:SetFrameLevel(12)
-				end
-			end
-			detached:SetParent(registration.parent or GetMainFrame())
-			if registration.strata then
-				detached:SetFrameStrata(registration.strata)
-			end
-			if registration.frameLevel then
-				detached:SetFrameLevel(registration.frameLevel)
-				for _,frame in fake_ipairs(detached:GetChildren()) do
-					frame:SetFrameLevel(registration.frameLevel+2)
-				end
-			end
-			detached.height_ = nil
-			if registration.positionFunc then
-				registration.positionFunc(detached)
-				RecalculateTabletHeight(detached)
-			else
-				detached:SetPoint(detachedData.anchor or "CENTER", GetMainFrame(), detachedData.anchor or "CENTER", detachedData.offsetx or 0, detachedData.offsety or 0)
-			end
+			detached:SetPoint(detachedData.anchor or "CENTER", UIParent, detachedData.anchor or "CENTER", detachedData.offsetx or 0, detachedData.offsety or 0)
 			detached.registration = registration
 			registration.tooltip = detached
-			if registration.movable == false then
-				detached:RegisterForDrag()
-			else
-				detached:RegisterForDrag("LeftButton")
-			end
 			return detached
 		end
 	end
@@ -1986,7 +1899,7 @@ function AcquireDetachedFrame(self, registration, data, detachedData)
 					local a1 = arg1
 					arg1 = "LeftButton"
 					if type(detached:GetScript("OnMouseUp")) == "function" then
-						detached:GetScript("OnMouseUp")(detached, arg1)
+						detached:GetScript("OnMouseUp")()
 					end
 					arg1 = a1
 				end
@@ -1996,24 +1909,31 @@ function AcquireDetachedFrame(self, registration, data, detachedData)
 	if not tooltip then
 		AcquireFrame(self, {})
 	end
-	local detached = CreateFrame("Frame", "Tablet20DetachedFrame" .. (#detachedTooltips + 1), GetMainFrame())
-	detachedTooltips[#detachedTooltips+1] = detached
+	local detached = CreateFrame("Frame", "Tablet20DetachedFrame" .. (table.getn(detachedTooltips) + 1), UIParent)
+	table.insert(detachedTooltips, detached)
 	detached.notInUse = true
 	detached:EnableMouse(not data.locked)
 	detached:EnableMouseWheel(true)
 	detached:SetMovable(true)
-	detached:SetPoint(data.anchor or "CENTER", GetMainFrame(), data.anchor or "CENTER", data.offsetx or 0, data.offsety or 0)
+	detached:SetPoint(data.anchor or "CENTER", UIParent, data.anchor or "CENTER", data.offsetx or 0, data.offsety or 0)
 
 	detached.numLines = 0
 	detached.owner = nil
 	detached.fontSizePercent = 1
 	detached.maxLines = 0
 	detached.buttons = {}
+	detached.checks = {}
+	detached.lefts = {}
+	detached.rights = {}
+	detached.thirds = {}
+	detached.fourths = {}
+	detached.fifths = {}
+	detached.sixths = {}
 	detached.transparency = 0.75
 	detached.r = 0
 	detached.g = 0
 	detached.b = 0
-	detached:SetFrameStrata(registration and registration.strata or "BACKGROUND")
+	detached:SetFrameStrata("BACKGROUND")
 	detached:SetBackdrop(tmp.a(
 		'bgFile', "Interface\\Buttons\\WHITE8X8",
 		'edgeFile', "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -2028,245 +1948,218 @@ function AcquireDetachedFrame(self, registration, data, detachedData)
 		)
 	))
 	detached.locked = detachedData.locked
+	detached.scroll = 0
 	detached:EnableMouse(not detached.locked)
 
 	local width = GetScreenWidth()
 	local height = GetScreenHeight()
-	if registration and registration.movable == false then
-		detached:RegisterForDrag()
-	else
-		detached:RegisterForDrag("LeftButton")
-	end
-	detached:SetScript("OnDragStart", function(this)
-		detached:StartMoving()
-		detached.moving = true
+	detached:SetScript("OnMouseDown", function()
+		if arg1 == "LeftButton" then
+			detached:StartMoving()
+			detached.moving = true
+		end
 	end)
 
-	detached:SetScript("OnDragStop", function(this)
-		detached:StopMovingOrSizing()
-		detached.moving = nil
-		detached:SetClampedToScreen(1)
-		detached:SetClampedToScreen(nil)
-		local anchor
-		local offsetx
-		local offsety
-		if detached:GetTop() + detached:GetBottom() < height then
-			anchor = "BOTTOM"
-			offsety = detached:GetBottom()
-			if offsety < 0 then
-				offsety = 0
-			end
-			if offsety < MainMenuBar:GetTop() and MainMenuBar:IsVisible() then
-				offsety = MainMenuBar:GetTop()
-			end
-			local top = 0
-			if FuBar then
-				for i = 1, FuBar:GetNumPanels() do
-					local panel = FuBar:GetPanel(i)
-					if panel:GetAttachPoint() == "BOTTOM" then
-						if panel.frame:GetTop() > top then
-							top = panel.frame:GetTop()
-							break
+	detached:SetScript("OnMouseUp", function()
+		if arg1 == "LeftButton" then
+			detached:StopMovingOrSizing()
+			detached.moving = nil
+			local anchor
+			local offsetx
+			local offsety
+			if detached:GetTop() + detached:GetBottom() < height then
+				anchor = "BOTTOM"
+				offsety = detached:GetBottom()
+				if offsety < 0 then
+					offsety = 0
+				end
+				if offsety < MainMenuBar:GetTop() and MainMenuBar:IsVisible() then
+					offsety = MainMenuBar:GetTop()
+				end
+				local top = 0
+				if FuBar then
+					for i = 1, FuBar:GetNumPanels() do
+						local panel = FuBar:GetPanel(i)
+						if panel:GetAttachPoint() == "BOTTOM" then
+							if panel.frame:GetTop() > top then
+								top = panel.frame:GetTop()
+								break
+							end
 						end
 					end
 				end
-			end
-			if offsety < top then
-				offsety = top
-			end
-		else
-			anchor = "TOP"
-			offsety = detached:GetTop() - height
-			if offsety > 0 then
-				offsety = 0
-			end
-			local bottom = GetScreenHeight()
-			if FuBar then
-				for i = 1, FuBar:GetNumPanels() do
-					local panel = FuBar:GetPanel(i)
-					if panel:GetAttachPoint() == "TOP" then
-						if panel.frame:GetBottom() < bottom then
-							bottom = panel.frame:GetBottom()
-							break
+				if offsety < top then
+					offsety = top
+				end
+			else
+				anchor = "TOP"
+				offsety = detached:GetTop() - height
+				if offsety > 0 then
+					offsety = 0
+				end
+				local bottom = GetScreenHeight()
+				if FuBar then
+					for i = 1, FuBar:GetNumPanels() do
+						local panel = FuBar:GetPanel(i)
+						if panel:GetAttachPoint() == "TOP" then
+							if panel.frame:GetBottom() < bottom then
+								bottom = panel.frame:GetBottom()
+								break
+							end
 						end
 					end
 				end
+				bottom = bottom - GetScreenHeight()
+				if offsety > bottom then
+					offsety = bottom
+				end
 			end
-			bottom = bottom - GetScreenHeight()
-			if offsety > bottom then
-				offsety = bottom
+			if detached:GetLeft() + detached:GetRight() < width * 2 / 3 then
+				anchor = anchor .. "LEFT"
+				offsetx = detached:GetLeft()
+				if offsetx < 0 then
+					offsetx = 0
+				end
+			elseif detached:GetLeft() + detached:GetRight() < width * 4 / 3 then
+				if anchor == "" then
+					anchor = "CENTER"
+				end
+				offsetx = (detached:GetLeft() + detached:GetRight() - GetScreenWidth()) / 2
+			else
+				anchor = anchor .. "RIGHT"
+				offsetx = detached:GetRight() - width
+				if offsetx > 0 then
+					offsetx = 0
+				end
 			end
+			detached:ClearAllPoints()
+			detached:SetPoint(anchor, UIParent, anchor, offsetx, offsety)
+			local t = detached.detachedData
+			if t.anchor ~= anchor or math.abs(t.offsetx - offsetx) > 8 or math.abs(t.offsety - offsety) > 8 then
+				detached.preventClick = GetTime() + 0.05
+			end
+			t.anchor = anchor
+			t.offsetx = offsetx
+			t.offsety = offsety
+			detached:Show()
 		end
-		if detached:GetLeft() + detached:GetRight() < width * 2 / 3 then
-			anchor = anchor .. "LEFT"
-			offsetx = detached:GetLeft()
-			if offsetx < 0 then
-				offsetx = 0
-			end
-		elseif detached:GetLeft() + detached:GetRight() < width * 4 / 3 then
-			if anchor == "" then
-				anchor = "CENTER"
-			end
-			offsetx = (detached:GetLeft() + detached:GetRight() - GetScreenWidth()) / 2
-		else
-			anchor = anchor .. "RIGHT"
-			offsetx = detached:GetRight() - width
-			if offsetx > 0 then
-				offsetx = 0
-			end
-		end
-		detached:ClearAllPoints()
-		detached:SetPoint(anchor, GetMainFrame(), anchor, offsetx, offsety)
-		local t = detached.detachedData
-		if t.anchor ~= anchor or math.abs(t.offsetx - offsetx) > 8 or math.abs(t.offsety - offsety) > 8 then
-			detached.preventClick = GetTime() + 0.05
-		end
-		t.anchor = anchor
-		t.offsetx = offsetx
-		t.offsety = offsety
-		detached:Show()
 	end)
 
-	if Dewdrop then
-		Dewdrop:Register(detached,
-			'children', function(level, value)
-				if not detached.registration then
-					return
-				end
-				if detached.menu then
-					if type(detached.menu) == "function" then
-						detached.menu(level, value)
-					else
-						Dewdrop:FeedAceOptionsTable(detached.menu)
-					end
-					if level == 1 then
-						Dewdrop:AddLine()
-					end
-				end
+	Dewdrop:Register(detached,
+		'children', function(level, value)
+			if not detached.registration then
+				return
+			end
+			if detached.menu then
+				detached.menu(level, value)
 				if level == 1 then
-					if not detached.registration.cantAttach then
-						Dewdrop:AddLine(
-							'text', DETACH,
-							'tooltipTitle', DETACH,
-							'tooltipText', DETACH_DESC,
-							'checked', true,
-							'arg1', detached,
-							'func', "Attach",
-							'closeWhenClicked', true
-						)
-					end
-					if not detached.registration.positionFunc then
-						Dewdrop:AddLine(
-							'text', LOCK,
-							'tooltipTitle', LOCK,
-							'tooltipText', LOCK_DESC,
-							'checked', detached:IsLocked(),
-							'arg1', detached,
-							'func', "Lock",
-							'closeWhenClicked', not detached:IsLocked()
-						)
-					end
-					Dewdrop:AddLine(
-						'text', COLOR,
-						'tooltipTitle', COLOR,
-						'tooltipText', COLOR_DESC,
-						'hasColorSwatch', true,
-						'r', detached.r,
-						'g', detached.g,
-						'b', detached.b,
-						'hasOpacity', true,
-						'opacity', detached.transparency,
-						'colorFunc', function(r, g, b, a)
-							detached:SetColor(r, g, b)
-							detached:SetTransparency(a)
-						end
-					)
-					Dewdrop:AddLine(
-						'text', SIZE,
-						'tooltipTitle', SIZE,
-						'tooltipText', SIZE_DESC,
-						'hasArrow', true,
-						'hasSlider', true,
-						'sliderFunc', function(value)
-							detached:SetFontSizePercent(value)
-						end,
-						'sliderMax', 2,
-						'sliderMin', 0.5,
-						'sliderStep', 0.05,
-						'sliderIsPercent', true,
-						'sliderValue', detached:GetFontSizePercent()
-					)
-					Dewdrop:AddLine(
-						'text', CLOSE_MENU,
-						'tooltipTitle', CLOSE_MENU,
-						'tooltipText', CLOSE_MENU_DESC,
-						'func', function()
-							Dewdrop:Close()
-						end
-					)
-				end
-			end,
-			'point', function()
-				local x, y = detached:GetCenter()
-				if x < GetScreenWidth() / 2 then
-					if y < GetScreenHeight() / 2 then
-						return "BOTTOMLEFT", "BOTTOMRIGHT"
-					else
-						return "TOPLEFT", "TOPRIGHT"
-					end
-				else
-					if y < GetScreenHeight() / 2 then
-						return "BOTTOMRIGHT", "BOTTOMLEFT"
-					else
-						return "TOPRIGHT", "TOPLEFT"
-					end
+					Dewdrop:AddLine()
 				end
 			end
-		)
-	end
-
-	local scrollFrame = CreateFrame("ScrollFrame", detached:GetName() .. "ScrollFrame", detached)
-	local scrollChild = CreateFrame("Frame", detached:GetName() .. "ScrollChild", scrollFrame)
-	scrollFrame:SetFrameLevel(11)
-	scrollFrame:SetScrollChild(scrollChild)
-	scrollChild.tablet = detached
-	detached.scrollFrame = scrollFrame
-	detached.scrollChild = scrollChild
-	scrollFrame:SetPoint("TOPLEFT", 5, -5)
-	scrollFrame:SetPoint("BOTTOMRIGHT", -5, 5)
-	scrollChild:SetWidth(1)
-	scrollChild:SetHeight(1)
-	local slider = CreateFrame("Slider", detached:GetName() .. "Slider", scrollFrame)
-	detached.slider = slider
-	slider:SetOrientation("VERTICAL")
-	slider:SetMinMaxValues(0, 1)
-	slider:SetValueStep(0.001)
-	slider:SetValue(0)
-	slider:SetWidth(8)
-	slider:SetPoint("TOPRIGHT", 0, 0)
-	slider:SetPoint("BOTTOMRIGHT", 0, 0)
-	slider:SetBackdrop(new(
-		'bgFile', "Interface\\Buttons\\UI-SliderBar-Background",
-		'edgeFile', "Interface\\Buttons\\UI-SliderBar-Border",
-		'tile', true,
-		'edgeSize', 8,
-		'tileSize', 8,
-		'insets', new(
-			'left', 3,
-			'right', 3,
-			'top', 3,
-			'bottom', 3
-		)
-	))
-	slider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Vertical")
-	slider:SetScript("OnEnter", detached:GetScript("OnEnter"))
-	slider:SetScript("OnLeave", detached:GetScript("OnLeave"))
-	slider.tablet = detached
-	slider:SetScript("OnValueChanged", Tablet20FrameSlider:GetScript("OnValueChanged"))
+			if level == 1 then
+				if not detached.registration.cantAttach then
+					Dewdrop:AddLine(
+						'text', DETACH,
+						'tooltipTitle', DETACH,
+						'tooltipText', DETACH_DESC,
+						'checked', true,
+						'arg1', detached,
+						'func', "Attach",
+						'closeWhenClicked', true
+					)
+				end
+				Dewdrop:AddLine(
+					'text', LOCK,
+					'tooltipTitle', LOCK,
+					'tooltipText', LOCK_DESC,
+					'checked', detached:IsLocked(),
+					'arg1', detached,
+					'func', "Lock",
+					'closeWhenClicked', not detached:IsLocked()
+				)
+				Dewdrop:AddLine(
+					'text', COLOR,
+					'tooltipTitle', COLOR,
+					'tooltipText', COLOR_DESC,
+					'hasColorSwatch', true,
+					'r', detached.r,
+					'g', detached.g,
+					'b', detached.b,
+					'hasOpacity', true,
+					'opacity', detached.transparency,
+					'colorFunc', function(r, g, b, a)
+						detached:SetColor(r, g, b)
+						detached:SetTransparency(a)
+					end
+				)
+				Dewdrop:AddLine(
+					'text', SIZE,
+					'tooltipTitle', SIZE,
+					'tooltipText', SIZE_DESC,
+					'hasArrow', true,
+					'hasSlider', true,
+					'sliderFunc', function(value)
+						detached:SetFontSizePercent(value)
+					end,
+					'sliderMax', 2,
+					'sliderMin', 0.5,
+					'sliderStep', 0.05,
+					'sliderIsPercent', true,
+					'sliderValue', detached:GetFontSizePercent()
+				)
+				Dewdrop:AddLine(
+					'text', CLOSE_MENU,
+					'tooltipTitle', CLOSE_MENU,
+					'tooltipText', CLOSE_MENU_DESC,
+					'func', function()
+						Dewdrop:Close()
+					end
+				)
+			end
+		end,
+		'point', function()
+			local x, y = detached:GetCenter()
+			if x < GetScreenWidth() / 2 then
+				if y < GetScreenHeight() / 2 then
+					return "BOTTOMLEFT", "BOTTOMRIGHT"
+				else
+					return "TOPLEFT", "TOPRIGHT"
+				end
+			else
+				if y < GetScreenHeight() / 2 then
+					return "BOTTOMRIGHT", "BOTTOMLEFT"
+				else
+					return "TOPRIGHT", "TOPLEFT"
+				end
+			end
+		end
+	)
 
 	NewLine(detached)
 
-	detached:SetScript("OnMouseWheel", function(this, arg1)
+	detached.scrollUp = detached:CreateFontString(nil, "ARTWORK")
+	detached.scrollUp:SetPoint("TOPLEFT", detached.buttons[1], "BOTTOMLEFT", 0, -2)
+	detached.scrollUp:SetPoint("RIGHT", detached, "RIGHT", 0, -10)
+	detached.scrollUp:SetFontObject(GameTooltipText)
+	detached.scrollUp:Hide()
+	local font,_,flags = detached.scrollUp:GetFont()
+	detached.scrollUp:SetFont(font, normalSize * detached.fontSizePercent, flags)
+	detached.scrollUp:SetJustifyH("CENTER")
+	detached.scrollUp:SetTextColor(1, 0.823529, 0)
+	detached.scrollUp:SetText(" ")
+
+	detached.scrollDown = detached:CreateFontString(nil, "ARTWORK")
+	detached.scrollDown:SetPoint("TOPLEFT", detached.buttons[1], "BOTTOMLEFT", 0, -2)
+	detached.scrollDown:SetPoint("RIGHT", detached, "RIGHT", 0, -10)
+	detached.scrollDown:SetFontObject(GameTooltipText)
+	detached.scrollDown:Hide()
+	local font,_,flags = detached.scrollUp:GetFont()
+	detached.scrollDown:SetFont(font, normalSize * detached.fontSizePercent, flags)
+	detached.scrollDown:SetJustifyH("CENTER")
+	detached.scrollDown:SetTextColor(1, 0.823529, 0)
+	detached.scrollDown:SetText(" ")
+
+	detached:SetScript("OnMouseWheel", function()
 		detached:Scroll(arg1 < 0)
 	end)
 
@@ -2300,25 +2193,15 @@ function AcquireDetachedFrame(self, registration, data, detachedData)
 	function detached:Lock()
 		self:EnableMouse(self.locked)
 		self.locked = not self.locked
-		if self.detachedData then
-			self.detachedData.locked = self.locked or nil
-		end
+		self.detachedData.locked = self.locked or nil
 		self:children()
 	end
 
 	function detached.Attach(detached)
-		if not detached then
-			self:error("Detached tooltip not given.")
-		end
-		if not detached.AddLine then
-			self:error("detached argument not a Tooltip.")
-		end
-		if not detached.owner then
-			self:error("Detached tooltip has no owner.")
-		end
-		if detached.notInUse then
-			self:error("Detached tooltip not in use.")
-		end
+		self:assert(detached, "Detached tooltip not given.")
+		self:assert(detached.AddLine, "detached argument not a Tooltip.")
+		self:assert(detached.owner, "Detached tooltip has no owner.")
+		self:assert(not detached.notInUse, "Detached tooltip not in use.")
 		detached.menu = nil
 		detached.detachedData.detached = nil
 		detached:SetOwner(nil)
@@ -2342,41 +2225,22 @@ function Tablet:Close(parent)
 		self:argCheck(parent, 2, "table", "string")
 	end
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot close a tablet with an unregistered parent frame.")
-	end
+	self:assert(info, "You cannot close a tablet with an unregistered parent frame.")
 	local data = info.data
 	local detachedData = info.detachedData
 	if detachedData and detachedData.detached then
 		ReleaseDetachedFrame(self, data, detachedData)
-	elseif tooltip and tooltip.data == data then
+	elseif tooltip.data == data then
 		tooltip:Hide()
-		if tooltip.registration then
-			tooltip.registration.tooltip = nil
-			tooltip.registration = nil
-		end
+		tooltip.registration.tooltip = nil
+		tooltip.registration = nil
 	end
-	if tooltip then tooltip.enteredFrame = false end
+	tooltip.enteredFrame = false
 end
 Tablet.Close = wrap(Tablet.Close, "Tablet:Close")
 
-local function frame_children(self)
-	if not self.preventRefresh and self:GetParent() and self:GetParent():IsShown() then
-		Tablet.currentFrame = self
-		Tablet.currentTabletData = TabletData:new(self)
-		Tablet.currentTabletData.minWidth = self.minWidth
-		self:ClearLines()
-		if self.runChildren then
-			self.runChildren()
-		end
-		Tablet.currentTabletData:Display(Tablet.currentFrame)
-		self:Show(Tablet.currentTabletData)
-		Tablet.currentTabletData:del()
-		Tablet.currentTabletData = nil
-		Tablet.currentFrame = nil
-	end
-end
-frame_children = wrap(frame_children, "frame_children")
+local currentFrame
+local currentTabletData
 
 function Tablet:Open(fakeParent, parent)
 	self:argCheck(fakeParent, 2, "table", "string")
@@ -2385,18 +2249,10 @@ function Tablet:Open(fakeParent, parent)
 		parent = fakeParent
 	end
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot open a tablet with an unregistered parent frame.")
-	end
-	local detachedData = info.detachedData
-	if detachedData then
-		for _, detached in ipairs(detachedTooltips) do
-			if not detached.notInUse and detached.detachedData == detachedData then
-				return
-			end
-		end
-	end
+	self:assert(info, "You cannot open a tablet with an unregistered parent frame.")
+	self:Close()
 	local data = info.data
+	local detachedData = info.detachedData
 	local children = info.children
 	if not children then
 		return
@@ -2404,11 +2260,21 @@ function Tablet:Open(fakeParent, parent)
 	local frame = AcquireFrame(self, info, data, detachedData)
 	frame.clickable = info.clickable
 	frame.menu = info.menu
-	frame.runChildren = info.children
-	frame.minWidth = info.minWidth
-	if not frame.children or not frame.childrenVer or frame.childrenVer < MINOR_VERSION then
-		frame.childrenVer = MINOR_VERSION
-		frame.children = frame_children
+	local children = info.children
+	function frame:children()
+		if not self.preventRefresh then
+			currentFrame = self
+			currentTabletData = TabletData:new(self)
+			self:ClearLines()
+			if children then
+				children()
+			end
+			currentTabletData:Display(currentFrame)
+			self:Show(currentTabletData)
+			currentTabletData:del()
+			currentTabletData = nil
+			currentFrame = nil
+		end
 	end
 	frame:SetOwner(fakeParent)
 	frame:children()
@@ -2436,8 +2302,6 @@ function Tablet:Open(fakeParent, parent)
 	end
 	local offsetx = 0
 	local offsety = 0
-	frame:SetClampedToScreen(1)
-	frame:SetClampedToScreen(nil)
 	if frame:GetBottom() and frame:GetLeft() then
 		if frame:GetRight() > GetScreenWidth() then
 			offsetx = frame:GetRight() - GetScreenWidth()
@@ -2505,55 +2369,62 @@ function Tablet:Open(fakeParent, parent)
 	if (not detachedData or not detachedData.detached) and GetMouseFocus() == fakeParent then
 		self.tooltip.enteredFrame = true
 	end
-	overFrame = type(fakeParent) == "table" and MouseIsOver(fakeParent) and fakeParent
 end
 Tablet.Open = wrap(Tablet.Open, "Tablet:Open")
 
-function Tablet:Register(parent, ...)
+function Tablet:Register(parent, k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
 	self:argCheck(parent, 2, "table", "string")
 	if self.registry[parent] then
 		self:Unregister(parent)
 	end
 	local info
-	local k1 = ...
 	if type(k1) == "table" and k1[0] then
-		if type(self.registry[k1]) ~= "table" then
-			self:error("Other parent not registered")
-		end
+		self:assert(type(self.registry[k1]) == "table", "Other parent not registered")
 		info = copy(self.registry[k1])
-		local v1 = select(2, ...)
 		if type(v1) == "function" then
 			info.point = v1
 			info.relativePoint = nil
 		end
 	else
-		info = new(...)
+		info = new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
 	end
 	self.registry[parent] = info
-	info.data = info.data or info.detachedData or new()
+	info.data = info.data or info.detachedData or {}
 	info.detachedData = info.detachedData or info.data
 	local data = info.data
 	local detachedData = info.detachedData
 	if not self.onceRegistered[parent] and type(parent) == "table" and type(parent.SetScript) == "function" and not info.dontHook then
-		if not Dewdrop and AceLibrary:HasInstance("Dewdrop-2.0") then
+		if not Dewdrop then
 			Dewdrop = AceLibrary("Dewdrop-2.0")
 		end
 		local script = parent:GetScript("OnEnter")
-		parent:SetScript("OnEnter", function(...)
+		parent:SetScript("OnEnter", function()
 			if script then
-				script(...)
+				script()
 			end
 			if self.registry[parent] then
-				if (not data or not detachedData.detached) and (Dewdrop and not Dewdrop:IsOpen(parent)) then
+				if (not data or not detachedData.detached) and not Dewdrop:IsOpen(parent) then
 					self:Open(parent)
+					self.tooltip.enteredFrame = true
+				end
+			end
+		end)
+		local script = parent:GetScript("OnLeave")
+		parent:SetScript("OnLeave", function()
+			if script then
+				script()
+			end
+			if self.registry[parent] then
+				if self.tooltip and (not data or not detachedData or not detachedData.detached) then
+					self.tooltip.enteredFrame = false
 				end
 			end
 		end)
 		if parent:HasScript("OnMouseDown") then
 			local script = parent:GetScript("OnMouseDown")
-			parent:SetScript("OnMouseDown", function(...)
+			parent:SetScript("OnMouseDown", function()
 				if script then
-					script(...)
+					script()
 				end
 				if self.registry[parent] and self.registry[parent].tooltip and self.registry[parent].tooltip == self.tooltip then
 					self.tooltip:Hide()
@@ -2562,9 +2433,9 @@ function Tablet:Register(parent, ...)
 		end
 		if parent:HasScript("OnMouseWheel") then
 			local script = parent:GetScript("OnMouseWheel")
-			parent:SetScript("OnMouseWheel", function(...)
+			parent:SetScript("OnMouseWheel", function()
 				if script then
-					script(...)
+					script()
 				end
 				if self.registry[parent] and self.registry[parent].tooltip then
 					self.registry[parent].tooltip:Scroll(arg1 < 0)
@@ -2581,9 +2452,7 @@ Tablet.Register = wrap(Tablet.Register, "Tablet:Register")
 
 function Tablet:Unregister(parent)
 	self:argCheck(parent, 2, "table", "string")
-	if not self.registry[parent] then
-		self:error("You cannot unregister a parent frame if it has not been registered already.")
-	end
+	self:assert(self.registry[parent], "You cannot unregister a parent frame if it has not been registered already.")
 	self.registry[parent] = nil
 end
 Tablet.Unregister = wrap(Tablet.Unregister, "Tablet:Unregister")
@@ -2596,6 +2465,7 @@ Tablet.IsRegistered = wrap(Tablet.IsRegistered, "Tablet:IsRegistered")
 
 local _id = 0
 local addedCategory
+local currentCategoryInfo
 local depth = 0
 local categoryPool = {}
 function CleanCategoryPool(self)
@@ -2605,65 +2475,55 @@ function CleanCategoryPool(self)
 	end
 	_id = 0
 end
-CleanCategoryPool = wrap(CleanCategoryPool, "CleanCategoryPool")
 
-function Tablet:AddCategory(...)
-	if not self.currentFrame then
-		self:error("You must add categories in within a registration.")
-	end
-	local info = new(...)
-	local cat = self.currentTabletData:AddCategory(info)
-	info = del(info)
+function Tablet:AddCategory(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
+	self:assert(currentFrame, "You must add categories in within a registration.")
+	local info = new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20, k21, v21, k22, v22, k23, v23, k24, v24, k25, v25, k26, v26, k27, v27, k28, v28, k29, v29, k30, v30)
+	local cat = currentTabletData:AddCategory(info)
+	del(info)
 	return cat
 end
 Tablet.AddCategory = wrap(Tablet.AddCategory, "Tablet:AddCategory")
 
 function Tablet:SetHint(text)
-	if not self.currentFrame then
-		self:error("You must set hint within a registration.")
-	end
-	self.currentTabletData:SetHint(text)
+	self:assert(currentFrame, "You must set hint within a registration.")
+	self:assert(not currentCategoryInfo, "You cannot set hint in a category.")
+	currentTabletData:SetHint(text)
 end
 Tablet.SetHint = wrap(Tablet.SetHint, "Tablet:SetHint")
 
 function Tablet:SetTitle(text)
-	if not self.currentFrame then
-		self:error("You must set title within a registration.")
-	end
-	self.currentTabletData:SetTitle(text)
+	self:assert(currentFrame, "You must set title within a registration")
+	self:assert(not currentCategoryInfo, "You cannot set title in a category.")
+	currentTabletData:SetTitle(text)
 end
 Tablet.SetTitle = wrap(Tablet.SetTitle, "Tablet:SetTitle")
 
 function Tablet:SetTitleColor(r, g, b)
-	if not self.currentFrame then
-		self:error("You must set title color within a registration.")
-	end
+	self:assert(currentFrame, "You must set title color within a registration")
+	self:assert(not currentCategoryInfo, "You cannot set title color in a category.")
 	self:argCheck(r, 2, "number")
 	self:argCheck(g, 3, "number")
 	self:argCheck(b, 4, "number")
-	self.currentTabletData:SetTitleColor(r, g, b)
+	currentTabletData:SetTitleColor(r, g, b)
 end
 Tablet.SetTitleColor = wrap(Tablet.SetTitleColor, "Tablet:SetTitleColor")
 
 function Tablet:GetNormalFontSize()
 	return normalSize
 end
-Tablet.GetNormalFontSize = wrap(Tablet.GetNormalFontSize, "Tablet:GetNormalFontSize")
 
 function Tablet:GetHeaderFontSize()
 	return headerSize
 end
-Tablet.GetHeaderFontSize = wrap(Tablet.GetHeaderFontSize, "Tablet:GetHeaderFontSize")
 
 function Tablet:GetNormalFontObject()
 	return GameTooltipText
 end
-Tablet.GetNormalFontObject = wrap(Tablet.GetNormalFontObject, "Tablet:GetNormalFontObject")
 
 function Tablet:GetHeaderFontObject()
 	return GameTooltipHeaderText
 end
-Tablet.GetHeaderFontObject = wrap(Tablet.GetHeaderFontObject, "Tablet:GetHeaderFontObject")
 
 function Tablet:SetFontSizePercent(parent, percent)
 	self:argCheck(parent, 2, "table", "string")
@@ -2683,7 +2543,7 @@ function Tablet:SetFontSizePercent(parent, percent)
 	elseif type(parent) == "table" then
 		parent.fontSizePercent = percent
 	else
-		self:error("You cannot change font size with an unregistered parent frame.")
+		self:assert(false, "You cannot change font size with an unregistered parent frame.")
 	end
 end
 Tablet.SetFontSizePercent = wrap(Tablet.SetFontSizePercent, "Tablet:SetFontSizePercent")
@@ -2702,7 +2562,7 @@ function Tablet:GetFontSizePercent(parent)
 	elseif type(parent) == "table" then
 		return parent.fontSizePercent or 1
 	else
-		self:error("You cannot check font size with an unregistered parent frame.")
+		self:assert(false, "You cannot check font size with an unregistered parent frame.")
 	end
 end
 Tablet.GetFontSizePercent = wrap(Tablet.GetFontSizePercent, "Tablet:GetFontSizePercent")
@@ -2725,7 +2585,7 @@ function Tablet:SetTransparency(parent, percent)
 	elseif type(parent) == "table" then
 		parent.transparency = percent
 	else
-		self:error("You cannot change transparency with an unregistered parent frame.")
+		self:assert(false, "You cannot change transparency with an unregistered parent frame.")
 	end
 end
 Tablet.SetTransparency = wrap(Tablet.SetTransparency, "Tablet:SetTransparency")
@@ -2744,7 +2604,7 @@ function Tablet:GetTransparency(parent)
 	elseif type(parent) == "table" then
 		return parent.transparency or 0.75
 	else
-		self:error("You cannot get transparency with an unregistered parent frame.")
+		self:assert(parent, "You must provide a parent frame to check transparency")
 	end
 end
 Tablet.GetTransparency = wrap(Tablet.GetTransparency, "Tablet:GetTransparency")
@@ -2773,7 +2633,7 @@ function Tablet:SetColor(parent, r, g, b)
 		parent.g = g
 		parent.b = b
 	else
-		self:error("You cannot change color with an unregistered parent frame.")
+		self:assert(false, "You cannot change color with an unregistered parent frame.")
 	end
 end
 Tablet.SetColor = wrap(Tablet.SetColor, "Tablet:SetColor")
@@ -2792,7 +2652,7 @@ function Tablet:GetColor(parent)
 	elseif type(parent) == "table" then
 		return parent.r or 0, parent.g or 0, parent.b or 0
 	else
-		self:error("You must provide a registered parent frame to check color")
+		self:assert(parent, "You must provide a parent frame to check color")
 	end
 end
 Tablet.GetColor = wrap(Tablet.GetColor, "Tablet:GetColor")
@@ -2800,24 +2660,30 @@ Tablet.GetColor = wrap(Tablet.GetColor, "Tablet:GetColor")
 function Tablet:Detach(parent)
 	self:argCheck(parent, 2, "table", "string")
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot detach tablet with an unregistered parent frame.")
-	end
-	if not info.detachedData then
-		self:error("You cannot detach tablet without a data field.")
-	end
-	if info.tooltip and info.tooltip == tooltip and tooltip.registration then
+	self:assert(info, "You cannot detach tablet with an unregistered parent frame.")
+	self:assert(info.detachedData, "You cannot detach tablet without a data field.")
+	if info.tooltip and info.tooltip == tooltip then
 		tooltip:Detach()
 	else
 		info.detachedData.detached = true
 		local detached = AcquireDetachedFrame(self, info, info.data, info.detachedData)
-		
+
 		detached.menu = info.menu
-		detached.runChildren = info.children
-		detached.minWidth = info.minWidth
-		if not detached.children or not detached.childrenVer or detached.childrenVer < MINOR_VERSION then
-			detached.childrenVer = MINOR_VERSION
-			detached.children = frame_children
+		local children = info.children
+		function detached:children()
+			if not self.preventRefresh then
+				currentFrame = self
+				currentTabletData = TabletData:new(self)
+				self:ClearLines()
+				if children then
+					children()
+				end
+				currentTabletData:Display(currentFrame)
+				self:Show(currentTabletData)
+				currentTabletData:del()
+				currentTabletData = nil
+				currentFrame = nil
+			end
 		end
 		detached:SetOwner(parent)
 		detached:children()
@@ -2828,12 +2694,8 @@ Tablet.Detach = wrap(Tablet.Detach, "Tablet:Detach")
 function Tablet:Attach(parent)
 	self:argCheck(parent, 2, "table", "string")
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot detach tablet with an unregistered parent frame.")
-	end
-	if not info.detachedData then
-		self:error("You cannot attach tablet without a data field.")
-	end
+	self:assert(info, "You cannot detach tablet with an unregistered parent frame.")
+	self:assert(info.detachedData, "You cannot attach tablet without a data field.")
 	if info.tooltip and info.tooltip ~= tooltip then
 		info.tooltip:Attach()
 	else
@@ -2845,9 +2707,7 @@ Tablet.Attach = wrap(Tablet.Attach, "Tablet:Attach")
 function Tablet:IsAttached(parent)
 	self:argCheck(parent, 2, "table", "string")
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot check tablet with an unregistered parent frame.")
-	end
+	self:assert(info, "You cannot check tablet with an unregistered parent frame.")
 	return not info.detachedData or not info.detachedData.detached
 end
 Tablet.IsAttached = wrap(Tablet.IsAttached, "Tablet:IsAttached")
@@ -2855,9 +2715,7 @@ Tablet.IsAttached = wrap(Tablet.IsAttached, "Tablet:IsAttached")
 function Tablet:Refresh(parent)
 	self:argCheck(parent, 2, "table", "string")
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot refresh tablet with an unregistered parent frame.")
-	end
+	self:assert(info, "You cannot refresh tablet with an unregistered parent frame.")
 	local tt = info.tooltip
 	if tt and not tt.preventRefresh and tt:IsShown() then
 		tt.updating = true
@@ -2870,9 +2728,7 @@ Tablet.Refresh = wrap(Tablet.Refresh, "Tablet:Refresh")
 function Tablet:IsLocked(parent)
 	self:argCheck(parent, 2, "table", "string")
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot check tablet with an unregistered parent frame.")
-	end
+	self:assert(info, "You cannot detach tablet with an unregistered parent frame.")
 	return info.detachedData and info.detachedData.locked
 end
 Tablet.IsLocked = wrap(Tablet.IsLocked, "Tablet:IsLocked")
@@ -2880,9 +2736,7 @@ Tablet.IsLocked = wrap(Tablet.IsLocked, "Tablet:IsLocked")
 function Tablet:ToggleLocked(parent)
 	self:argCheck(parent, 2, "table", "string")
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot lock tablet with an unregistered parent frame.")
-	end
+	self:assert(info, "You cannot detach tablet with an unregistered parent frame.")
 	if info.tooltip and info.tooltip ~= tooltip then
 		info.tooltip:Lock()
 	elseif info.detachedData then
@@ -2894,9 +2748,7 @@ Tablet.ToggleLocked = wrap(Tablet.ToggleLocked, "Tablet:ToggleLocked")
 function Tablet:UpdateDetachedData(parent, detachedData)
 	self:argCheck(parent, 2, "table", "string")
 	local info = self.registry[parent]
-	if not info then
-		self:error("You cannot update tablet with an unregistered parent frame.")
-	end
+	self:assert(info, "You cannot detach tablet with an unregistered parent frame.")
 	self:argCheck(detachedData, 3, "table")
 	if info.data == info.detachedData then
 		info.data = detachedData
@@ -2913,12 +2765,10 @@ Tablet.UpdateDetachedData = wrap(Tablet.UpdateDetachedData, "Tablet:UpdateDetach
 if DEBUG then
 	function Tablet:ListProfileInfo()
 		local duration, times, memories = GetProfileInfo()
-		if not duration or not time or not memories then
-			self:error("Problems")
-		end
+		self:assert(duration and times and memories)
 		local t = new()
 		for method in pairs(memories) do
-			t[#t+1] = method
+			table.insert(t, method)
 		end
 		table.sort(t, function(alpha, bravo)
 			if memories[alpha] ~= memories[bravo] then
@@ -2937,12 +2787,13 @@ if DEBUG then
 			time = time + times[method]
 		end
 		DEFAULT_CHAT_FRAME:AddMessage(format("%s || %.3f s || %.3f%% || %d KiB", "Total", time, time / duration * 100, memory))
+		table_setn(t, 0)
 		del(t)
 	end
 	SLASH_TABLET1 = "/tablet"
 	SLASH_TABLET2 = "/tabletlib"
 	SlashCmdList["TABLET"] = function(msg)
-		AceLibrary(MAJOR_VERSION):ListProfileInfo()
+		TabletLib:GetInstance(MAJOR_VERSION):ListProfileInfo()
 	end
 end
 
@@ -2952,15 +2803,13 @@ local function activate(self, oldLib, oldDeactivate)
 		self.registry = oldLib.registry
 		self.onceRegistered = oldLib.onceRegistered
 		self.tooltip = oldLib.tooltip
-		self.currentFrame = oldLib.currentFrame
-		self.currentTabletData = oldLib.currentTabletData
 	else
 		self.registry = {}
 		self.onceRegistered = {}
 	end
-	
+
 	tooltip = self.tooltip
-	
+
 	if oldDeactivate then
 		oldDeactivate(oldLib)
 	end

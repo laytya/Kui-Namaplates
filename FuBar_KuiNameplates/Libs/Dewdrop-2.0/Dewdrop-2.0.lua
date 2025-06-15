@@ -1,6 +1,6 @@
 --[[
 Name: Dewdrop-2.0
-Revision: $Rev: 11598 $
+Revision: $Rev: 17882 $
 Author(s): ckknight (ckknight@gmail.com)
 Website: http://ckknight.wowinterface.com/
 Documentation: http://wiki.wowace.com/index.php/Dewdrop-2.0
@@ -10,23 +10,22 @@ Dependencies: AceLibrary
 ]]
 
 local MAJOR_VERSION = "Dewdrop-2.0"
-local MINOR_VERSION = "$Revision: 11598 $"
+local MINOR_VERSION = "$Revision: 17890 $"
 
 if not AceLibrary then error(MAJOR_VERSION .. " requires AceLibrary") end
 if not AceLibrary:IsNewVersion(MAJOR_VERSION, MINOR_VERSION) then return end
 
 local Dewdrop = {}
 
-local table_setn
-do
-	local version = GetBuildInfo()
-	if string.find(version, "^2%.") then
-		-- 2.0.0
-		table_setn = function() end
-	else
-		table_setn = table.setn
-	end
+local VALIDATION_ERROR = "Validation error"
+local RESET_KEYBINDING_DESC = "Hit escape to clear the keybinding."
+if GetLocale() == "deDE" then
+--	VALIDATION_ERROR = "some message here..."
 end
+
+local lua51 = loadstring("return function(...) return ... end") and true or false
+
+local table_setn = lua51 and function() end or table.setn
 
 local function new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
 	local t = {}
@@ -53,9 +52,13 @@ local function new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v
 	end end end end end end end end end end end end end end end end end end end end
 	return t
 end
+if lua51 then
+	new = loadstring("return function(...) local t = {}; for i = 1, select('#', ...), 2 do if select(i, ...) then t[select(i, ...)] = select(i+1, ...); else break; end; end; return t; end")()
+end
+
 local tmp
 do
-	local t
+	local t = {}
 	function tmp(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
 		for k in pairs(t) do
 			t[k] = nil
@@ -89,17 +92,13 @@ do
 		end
 		return t
 	end
-	local x = tmp
-	function tmp(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
-		t = {}
-		tmp = x
-		x = nil
-		return tmp(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
+	if lua51 then
+		tmp = loadstring("local t = {}; return function(...) for k in pairs(t) do t[k] = nil end; for i = 1, select('#', ...), 2 do if select(i, ...) then t[select(i, ...)] = select(i+1, ...) else break; end; end; return t; end")()
 	end
 end
 local tmp2
 do
-	local t
+	local t = {}
 	function tmp2(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
 		for k in pairs(t) do
 			t[k] = nil
@@ -127,12 +126,8 @@ do
 		end end end end end end end end end end end end end end end end end end end end
 		return t
 	end
-	local x = tmp2
-	function tmp2(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
-		t = {}
-		tmp2 = x
-		x = nil
-		return tmp2(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
+	if lua51 then
+		tmp2 = loadstring("local t = {}; return function(...) for k in pairs(t) do t[k] = nil end; for i = 1, select('#', ...), 2 do if select(i, ...) then t[select(i, ...)] = select(i+1, ...) else break; end; end; return t; end")()
 	end
 end
 local levels
@@ -297,6 +292,9 @@ local function ReleaseButton(self, level, index)
 	if button.highlight then
 		button.highlight:Hide()
 	end
+--	button.arrow:SetVertexColor(1, 1, 1)
+	button.arrow:SetHeight(16)
+	button.arrow:SetWidth(16)
 	table.remove(level.buttons, index)
 	table.insert(buttons, button)
 	for k in pairs(button) do
@@ -330,6 +328,7 @@ end
 local sliderFrame
 local editBoxFrame
 
+local numButtons = 0
 local function AcquireButton(self, level)
 	if not levels[level] then
 		return
@@ -340,7 +339,8 @@ local function AcquireButton(self, level)
 	end
 	local button
 	if table.getn(buttons) == 0 then
-		button = CreateFrame("Button")
+		numButtons = numButtons + 1
+		button = CreateFrame("Button", "Dewdrop20Button" .. numButtons, nil)
 		button:SetFrameStrata("FULLSCREEN_DIALOG")
 		button:SetHeight(16)
 		local highlight = button:CreateTexture(nil, "BACKGROUND")
@@ -363,6 +363,7 @@ local function AcquireButton(self, level)
 		radioHighlight:SetTexCoord(0.5, 0.75, 0, 1)
 		radioHighlight:Hide()
 		button:SetScript("OnEnter", function()
+			local this = this
 			if (sliderFrame and sliderFrame:IsShown() and sliderFrame.mouseDown and sliderFrame.level == this.level.num + 1) or (editBoxFrame and editBoxFrame:IsShown() and editBoxFrame.mouseDown and editBoxFrame.level == this.level.num + 1) then
 				for i = 1, this.level.num do
 					Refresh(self, levels[i])
@@ -391,7 +392,7 @@ local function AcquireButton(self, level)
 			end
 			if this.tooltipTitle or this.tooltipText then
 				GameTooltip_SetDefaultAnchor(GameTooltip, this)
-				local disabled = this.disabled
+				local disabled = not this.isTitle and this.disabled
 				if this.tooltipTitle then
 					if disabled then
 						GameTooltip:SetText(this.tooltipTitle, 0.5, 0.5, 0.5, 1)
@@ -506,7 +507,7 @@ local function AcquireButton(self, level)
 		end)
 		local arrow = button:CreateTexture(nil, "ARTWORK")
 		button.arrow = arrow
-		arrow:SetPoint("RIGHT", button, "RIGHT", 0, 0)
+		arrow:SetPoint("LEFT", button, "RIGHT", -16, 0)
 		arrow:SetWidth(16)
 		arrow:SetHeight(16)
 		arrow:SetTexture("Interface\\ChatFrame\\ChatFrameExpandArrow")
@@ -568,23 +569,38 @@ local function AcquireButton(self, level)
 		end
 		level:SetFrameStrata("FULLSCREEN_DIALOG")
 	end
+	button:SetAlpha(1)
 	return button
 end
 
+local numLevels = 0
 local function AcquireLevel(self, level)
 	if not levels[level] then
 		for i = table.getn(levels) + 1, level, -1 do
 			local i = i
-			local frame = CreateFrame("Button")
+			numLevels = numLevels + 1
+			local frame = CreateFrame("Button", "Dewdrop20Level" .. numLevels, nil)
 			if i == 1 then
-				local old_CloseWindows = CloseWindows
-				function CloseWindows(ignoreCenter)
-					local found = old_CloseWindows(ignoreCenter)
-					if levels[1]:IsShown() then
-						self:Close()
-						return 1
+				if lua51 then
+					local old_CloseSpecialWindows = CloseSpecialWindows
+					function CloseSpecialWindows()
+						local found = old_CloseSpecialWindows()
+						if levels[1]:IsShown() then
+							self:Close()
+							return 1
+						end
+						return found
 					end
-					return found
+				else
+					local old_CloseWindows = CloseWindows
+					function CloseWindows(ignoreCenter)
+						local found = old_CloseWindows(ignoreCenter)
+						if levels[1]:IsShown() then
+							self:Close()
+							return 1
+						end
+						return found
+					end
 				end
 			end
 			levels[i] = frame
@@ -598,7 +614,6 @@ local function AcquireLevel(self, level)
 			frame:SetScript("OnHide", function()
 				self:Close(level + 1)
 			end)
-			frame:SetFrameStrata("FULLSCREEN_DIALOG")
 			if frame.SetTopLevel then
 				frame:SetTopLevel(true)
 			end
@@ -645,7 +660,18 @@ local function AcquireLevel(self, level)
 			end
 		end
 	end
-	return levels[level]
+	local fullscreenFrame = GetFullScreenFrame()
+	local l = levels[level]
+	local strata, framelevel = l:GetFrameStrata(), l:GetFrameLevel()
+	if fullscreenFrame then
+		l:SetParent(fullscreenFrame)
+	else
+		l:SetParent(UIParent)
+	end
+	l:SetFrameStrata(strata)
+	l:SetFrameLevel(framelevel)
+	l:SetAlpha(1)
+	return l
 end
 
 local function checkValidate(validateFunc, func, arg1, arg2, arg3)
@@ -813,6 +839,8 @@ local function validateOptions(options, position, baseOptions, fromPass)
 					return '"validate" values must all be strings', position
 				end
 			end
+		elseif options.validate == "keybinding" then
+			-- no other checks
 		else
 			if type(options.usage) ~= "string" then
 				return '"usage" must be a string', position
@@ -884,6 +912,19 @@ local function validateOptions(options, position, baseOptions, fromPass)
 			end
 		end
 	end
+	if options.icon and type(options.icon) ~= "string" then
+		return'"icon" must be a string', position
+	end
+	if options.iconWidth or options.iconHeight then
+		if type(options.iconWidth) ~= "number" or type(options.iconHeight) ~= "number" then
+			return '"iconHeight" and "iconWidth" must be numbers', position
+		end
+	end
+	if options.iconCoordLeft or options.iconCoordRight or options.iconCoordTop or options.iconCoordBottom then
+		if type(options.iconCoordLeft) ~= "number" or type(options.iconCoordRight) ~= "number" or type(options.iconCoordTop) ~= "number" or type(options.iconCoordBottom) ~= "number" then
+			return '"iconCoordLeft", "iconCoordRight", "iconCoordTop", and "iconCoordBottom" must be numbers', position
+		end
+	end
 end
 
 local validatedOptions
@@ -908,7 +949,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 	end
 	if not validatedOptions[options] then
 		local err, position = validateOptions(options)
-		
+
 		if err then
 			if position then
 				Dewdrop:error(position .. ": " .. err)
@@ -916,7 +957,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 				Dewdrop:error(err)
 			end
 		end
-		
+
 		validatedOptions[options] = true
 	end
 	local level = levels[currentLevel]
@@ -929,7 +970,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 		end
 		table_setn(values, 0)
 	end
-	
+
 	local current = level
 	while current do
 		if current.num == difference + 1 then
@@ -938,7 +979,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 		table.insert(values, current.value)
 		current = levels[current.num - 1]
 	end
-	
+
 	local realOptions = options
 	local handler = options.handler
 	local passTable
@@ -953,7 +994,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 		handler = options.handler or handler
 		passValue = passTable and value or nil
 	end
-	
+
 	if options.type == "group" then
 		for k in pairs(options.args) do
 			table.insert(values, k)
@@ -971,7 +1012,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 					elseif not bravo_name then
 						return false
 					else
-						return alpha_name < bravo_name
+						return string.upper(alpha_name) < string.upper(bravo_name)
 					end
 				else
 					if alpha_order < 0 then
@@ -1011,8 +1052,15 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 				elseif type(disabled) == "string" then
 					disabled = handler[disabled](handler)
 				end
-				local name = v.guiName or v.name
+				local name = (v.guiIconOnly and v.icon) and "" or (v.guiName or v.name)
 				local desc = v.desc
+				local passValue = v.passValue
+				local iconHeight = v.iconHeight or 16
+				local iconWidth = v.iconWidth or 16
+				local iconCoordLeft = v.iconCoordLeft
+				local iconCoordRight = v.iconCoordRight
+				local iconCoordBottom = v.iconCoordBottom
+				local iconCoordTop = v.iconCoordTop
 				local tooltipTitle, tooltipText
 				tooltipTitle = name
 				if name ~= desc then
@@ -1058,6 +1106,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 					self:AddLine(
 						'text', name,
 						'checked', checked,
+						'isRadio', v.isRadio,
 						'func', func,
 						'arg1', arg1,
 						'arg2', arg2,
@@ -1087,7 +1136,14 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 						'arg2', arg2,
 						'disabled', disabled,
 						'tooltipTitle', tooltipTitle,
-						'tooltipText', tooltipText
+						'tooltipText', tooltipText,
+						'icon', v.icon,
+						'iconHeight', iconHeight,
+						'iconWidth', iconWidth,
+						'iconCoordLeft', iconCoordLeft,
+						'iconCoordRight', iconCoordRight,
+						'iconCoordTop', iconCoordTop,
+						'iconCoordBottom', iconCoordBottom
 					)
 				elseif v.type == "range" then
 					local sliderValue
@@ -1125,7 +1181,14 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 						'sliderArg2', sliderArg2,
 						'disabled', disabled,
 						'tooltipTitle', tooltipTitle,
-						'tooltipText', tooltipText
+						'tooltipText', tooltipText,
+						'icon', v.icon,
+						'iconHeight', iconHeight,
+						'iconWidth', iconWidth,
+						'iconCoordLeft', iconCoordLeft,
+						'iconCoordRight', iconCoordRight,
+						'iconCoordTop', iconCoordTop,
+						'iconCoordBottom', iconCoordBottom
 					)
 				elseif v.type == "color" then
 					local r,g,b,a
@@ -1173,15 +1236,22 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 							'value', k,
 							'disabled', disabled,
 							'tooltipTitle', tooltipTitle,
-							'tooltipText', tooltipText
+							'tooltipText', tooltipText,
+							'icon', v.icon,
+							'iconHeight', iconHeight,
+							'iconWidth', iconWidth,
+							'iconCoordLeft', iconCoordLeft,
+							'iconCoordRight', iconCoordRight,
+							'iconCoordTop', iconCoordTop,
+							'iconCoordBottom', iconCoordBottom
 						)
 					else
 						local editBoxText
 						if type(v.get) == "function" then
 							editBoxText = v.get(passValue)
 						elseif v.get == false then
-                            editBoxText = nil
-                        else
+							editBoxText = nil
+						else
 							if not handler[v.get] then
 								Dewdrop:error("Handler %q not available", v.get)
 							end
@@ -1201,8 +1271,8 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 						end
 						
 						local editBoxValidateFunc, editBoxValidateArg1
-						
-						if v.validate then
+
+						if v.validate and v.validate ~= "keybinding" then
 							if type(v.validate) == "function" then
 								editBoxValidateFunc = v.validate
 							else
@@ -1212,11 +1282,24 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 								editBoxValidateFunc = handler[v.validate]
 								editBoxValidateArg1 = handler
 							end
+						elseif v.validate then
+							if tooltipText then
+								tooltipText = tooltipText .. "\n\n" .. RESET_KEYBINDING_DESC
+							else
+								tooltipText = RESET_KEYBINDING_DESC
+							end
 						end
 						
 						self:AddLine(
 							'text', name,
 							'hasArrow', true,
+							'icon', v.icon,
+							'iconHeight', iconHeight,
+							'iconWidth', iconWidth,
+							'iconCoordLeft', iconCoordLeft,
+							'iconCoordRight', iconCoordRight,
+							'iconCoordTop', iconCoordTop,
+							'iconCoordBottom', iconCoordBottom,
 							'hasEditBox', true,
 							'editBoxText', editBoxText,
 							'editBoxFunc', editBoxFunc,
@@ -1224,6 +1307,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 							'editBoxArg2', editBoxArg2,
 							'editBoxValidateFunc', editBoxValidateFunc,
 							'editBoxValidateArg1', editBoxValidateArg1,
+							'editBoxIsKeybinding', v.validate == "keybinding",
 							'disabled', disabled,
 							'tooltipTitle', tooltipTitle,
 							'tooltipText', tooltipText
@@ -1236,15 +1320,38 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 						'value', k,
 						'disabled', disabled,
 						'tooltipTitle', tooltipTitle,
-						'tooltipText', tooltipText
+						'tooltipText', tooltipText,
+						'icon', v.icon,
+						'iconHeight', iconHeight,
+						'iconWidth', iconWidth,
+						'iconCoordLeft', iconCoordLeft,
+						'iconCoordRight', iconCoordRight,
+						'iconCoordTop', iconCoordTop,
+						'iconCoordBottom', iconCoordBottom
 					)
 				elseif v.type == "header" then
 					if name == "" or not name then
-						self:AddLine()
+						self:AddLine(
+							'isTitle', true,
+							'icon', v.icon,
+							'iconHeight', iconHeight,
+							'iconWidth', iconWidth,
+							'iconCoordLeft', iconCoordLeft,
+							'iconCoordRight', iconCoordRight,
+							'iconCoordTop', iconCoordTop,
+							'iconCoordBottom', iconCoordBottom
+						)
 					else
 						self:AddLine(
 							'text', name,
-							'isTitle', true
+							'isTitle', true,
+							'icon', v.icon,
+							'iconHeight', iconHeight,
+							'iconWidth', iconWidth,
+							'iconCoordLeft', iconCoordLeft,
+							'iconCoordRight', iconCoordRight,
+							'iconCoordTop', iconCoordTop,
+							'iconCoordBottom', iconCoordBottom
 						)
 					end
 				end
@@ -1255,7 +1362,7 @@ function Dewdrop:FeedAceOptionsTable(options, difference)
 		local current
 		if type(options.get) == "function" then
 			current = options.get(passValue)
-		else
+		elseif options.get ~= false then
 			if not handler[options.get] then
 				Dewdrop:error("Handler %q not available", options.get)
 			end
@@ -1351,6 +1458,14 @@ function Refresh(self, level)
 						)
 					end
 				end
+--			elseif level.parentText then
+--				self:AddLine(
+--					'text', level.parentText,
+--					'tooltipTitle', level.parentTooltipTitle,
+--					'tooltipText', level.parentTooltipText,
+--					'tooltipFunc', level.parentTooltipFunc,
+--					'isTitle', true
+--				)
 			end
 			self:FeedAceOptionsTable(baseFunc)
 			if currentLevel == 1 then
@@ -1360,6 +1475,15 @@ function Refresh(self, level)
 				)
 			end
 		else
+--			if level.parentText then
+--				self:AddLine(
+--					'text', level.parentText,
+--					'tooltipTitle', level.parentTooltipTitle,
+--					'tooltipText', level.parentTooltipText,
+--					'tooltipFunc', level.parentTooltipFunc,
+--					'isTitle', true
+--				)
+--			end
 			baseFunc(currentLevel, level.value, levels[level.num - 1] and levels[level.num - 1].value, levels[level.num - 2] and levels[level.num - 2].value, levels[level.num - 3] and levels[level.num - 3].value, levels[level.num - 4] and levels[level.num - 4].value)
 		end
 		currentLevel = nil
@@ -1374,9 +1498,10 @@ end
 
 function OpenSlider(self, parent)
 	if not sliderFrame then
-		sliderFrame = CreateFrame("Frame", nil, UIParent)
+		sliderFrame = CreateFrame("Frame", nil, nil)
 		sliderFrame:SetWidth(80)
 		sliderFrame:SetHeight(170)
+		sliderFrame:SetScale(UIParent:GetScale())
 		sliderFrame:SetBackdrop(tmp(
 			'bgFile', "Interface\\Tooltips\\UI-Tooltip-Background",
 			'edgeFile', "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -1448,37 +1573,39 @@ function OpenSlider(self, parent)
 			end
 			changed = true
 			local done = false
-			if sliderFrame.parent then
-				if sliderFrame.parent.sliderFunc then
-					local min = sliderFrame.parent.sliderMin or 0
-					local max = sliderFrame.parent.sliderMax or 1
-					local step = sliderFrame.parent.sliderStep or (max - min) / 100
-					local a1,a2,a3,a4 = sliderFrame.parent.sliderArg1, sliderFrame.parent.sliderArg2, sliderFrame.parent.sliderArg3, sliderFrame.parent.sliderArg4
-					local value = (1 - slider:GetValue()) * (max - min) + min
-					if step > 0 then
-						value = math.floor((value - min) / step + 0.5) * step + min
-						if value > max then
-							value = max
-						elseif value < min then
-							value = min
-						end
+			if sliderFrame.parent and sliderFrame.parent.sliderFunc then
+				local min = sliderFrame.parent.sliderMin or 0
+				local max = sliderFrame.parent.sliderMax or 1
+				local step = sliderFrame.parent.sliderStep or (max - min) / 100
+				local a1,a2,a3,a4 = sliderFrame.parent.sliderArg1, sliderFrame.parent.sliderArg2, sliderFrame.parent.sliderArg3, sliderFrame.parent.sliderArg4
+				local value = (1 - slider:GetValue()) * (max - min) + min
+				if step > 0 then
+					value = math.floor((value - min) / step + 0.5) * step + min
+					if value > max then
+						value = max
+					elseif value < min then
+						value = min
 					end
-					local text
-					if a1 == nil then
-						text = sliderFrame.parent.sliderFunc(value)
-					elseif a2 == nil then
-						text = sliderFrame.parent.sliderFunc(a1, value)
-					elseif a3 == nil then
-						text = sliderFrame.parent.sliderFunc(a1, a2, value)
-					elseif a4 == nil then
-						text = sliderFrame.parent.sliderFunc(a1, a2, a3, value)
-					else
-						text = sliderFrame.parent.sliderFunc(a1, a2, a3, a4, value)
-					end
-					if text then
-						sliderFrame.currentText:SetText(text)
-						done = true
-					end
+				end
+				if value == sliderFrame.lastValue then
+					return
+				end
+				sliderFrame.lastValue = value
+				local text
+				if a1 == nil then
+					text = sliderFrame.parent.sliderFunc(value)
+				elseif a2 == nil then
+					text = sliderFrame.parent.sliderFunc(a1, value)
+				elseif a3 == nil then
+					text = sliderFrame.parent.sliderFunc(a1, a2, value)
+				elseif a4 == nil then
+					text = sliderFrame.parent.sliderFunc(a1, a2, a3, value)
+				else
+					text = sliderFrame.parent.sliderFunc(a1, a2, a3, a4, value)
+				end
+				if text then
+					sliderFrame.currentText:SetText(text)
+					done = true
 				end
 			end
 			if not done then
@@ -1551,6 +1678,13 @@ function OpenSlider(self, parent)
 	if not parent.sliderMin or not parent.sliderMax then
 		return
 	end
+
+	if parent.arrow then
+--		parent.arrow:SetVertexColor(0.2, 0.6, 0)
+		parent.arrow:SetHeight(24)
+		parent.arrow:SetWidth(24)
+	end
+
 	if not parent.sliderValue then
 		parent.sliderValue = (parent.sliderMin + parent.sliderMax) / 2
 	end
@@ -1580,6 +1714,8 @@ function OpenSlider(self, parent)
 	else
 		sliderFrame.currentText:SetText(parent.sliderValue)
 	end
+
+	sliderFrame.lastValue = parent.sliderValue
 	
 	local level = parent.level
 	sliderFrame:Show()
@@ -1644,9 +1780,10 @@ end
 
 function OpenEditBox(self, parent)
 	if not editBoxFrame then
-		editBoxFrame = CreateFrame("Frame", nil, UIParent)
+		editBoxFrame = CreateFrame("Frame", nil, nil)
 		editBoxFrame:SetWidth(200)
 		editBoxFrame:SetHeight(40)
+		editBoxFrame:SetScale(UIParent:GetScale())
 		editBoxFrame:SetBackdrop(tmp(
 			'bgFile', "Interface\\Tooltips\\UI-Tooltip-Background",
 			'edgeFile', "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -1669,14 +1806,14 @@ function OpenEditBox(self, parent)
 		editBoxFrame:EnableMouse(true)
 		editBoxFrame:Hide()
 		editBoxFrame:SetPoint("CENTER", UIParent, "CENTER")
-		
+
 		local editBox = CreateFrame("EditBox", nil, editBoxFrame)
 		editBoxFrame.editBox = editBox
 		editBox:SetFontObject(ChatFontNormal)
 		editBox:SetWidth(160)
 		editBox:SetHeight(13)
 		editBox:SetPoint("CENTER", editBoxFrame, "CENTER", 0, 0)
-		
+
 		local left = editBox:CreateTexture(nil, "BACKGROUND")
 		left:SetTexture("Interface\\ChatFrame\\UI-ChatInputBorder-Left")
 		left:SetTexCoord(0, 100 / 256, 0, 1)
@@ -1689,40 +1826,45 @@ function OpenEditBox(self, parent)
 		right:SetWidth(100)
 		right:SetHeight(32)
 		right:SetPoint("RIGHT", editBox, "RIGHT", 10, 0)
-		
+
 		editBox:SetScript("OnEnterPressed", function()
 			if editBoxFrame.parent and editBoxFrame.parent.editBoxValidateFunc then
 				local a1,a2,a3,a4 = editBoxFrame.parent.editBoxValidateArg1, editBoxFrame.parent.editBoxValidateArg2, editBoxFrame.parent.editBoxValidateArg3, editBoxFrame.parent.editBoxValidateArg4
 				
+				local t = editBox.realText or editBox:GetText() or ""
 				local result
 				if a1 == nil then
-					result = editBoxFrame.parent.editBoxValidateFunc(editBox:GetText() or "")
+					result = editBoxFrame.parent.editBoxValidateFunc(t)
 				elseif a2 == nil then
-					result = editBoxFrame.parent.editBoxValidateFunc(a1, editBox:GetText() or "")
+					result = editBoxFrame.parent.editBoxValidateFunc(a1, t)
 				elseif a3 == nil then
-					result = editBoxFrame.parent.editBoxValidateFunc(a1, a2, editBox:GetText() or "")
+					result = editBoxFrame.parent.editBoxValidateFunc(a1, a2, t)
 				elseif a4 == nil then
-					result = editBoxFrame.parent.editBoxValidateFunc(a1, a2, a3, editBox:GetText() or "")
+					result = editBoxFrame.parent.editBoxValidateFunc(a1, a2, a3, t)
 				else
-					result = editBoxFrame.parent.editBoxValidateFunc(a1, a2, a3, a4, editBox:GetText() or "")
+					result = editBoxFrame.parent.editBoxValidateFunc(a1, a2, a3, a4, t)
 				end
 				if not result then
-					message("Validation error: [" .. tostring(text) .. "]")
+					UIErrorsFrame:AddMessage(VALIDATION_ERROR, 1, 0, 0)
 					return
 				end
 			end
 			if editBoxFrame.parent and editBoxFrame.parent.editBoxFunc then
 				local a1,a2,a3,a4 = editBoxFrame.parent.editBoxArg1, editBoxFrame.parent.editBoxArg2, editBoxFrame.parent.editBoxArg3, editBoxFrame.parent.editBoxArg4
+				local t
+				if editBox.realText ~= "NONE" then
+					t = editBox.realText or editBox:GetText() or ""
+				end
 				if a1 == nil then
-					editBoxFrame.parent.editBoxFunc(editBox:GetText() or "")
+					editBoxFrame.parent.editBoxFunc(t)
 				elseif a2 == nil then
-					editBoxFrame.parent.editBoxFunc(a1, editBox:GetText() or "")
+					editBoxFrame.parent.editBoxFunc(a1, t)
 				elseif a3 == nil then
-					editBoxFrame.parent.editBoxFunc(a1, a2, editBox:GetText() or "")
+					editBoxFrame.parent.editBoxFunc(a1, a2, t)
 				elseif a4 == nil then
-					editBoxFrame.parent.editBoxFunc(a1, a2, a3, editBox:GetText() or "")
+					editBoxFrame.parent.editBoxFunc(a1, a2, a3, t)
 				else
-					editBoxFrame.parent.editBoxFunc(a1, a2, a3, a4, editBox:GetText() or "")
+					editBoxFrame.parent.editBoxFunc(a1, a2, a3, a4, t)
 				end
 			end
 			self:Close(editBoxFrame.level)
@@ -1735,7 +1877,7 @@ function OpenEditBox(self, parent)
 		end)
 		local changing = false
 		local skipNext = false
-		
+
 		function editBox:SpecialSetText(text)
 			local oldText = editBox:GetText() or ""
 			if not text then
@@ -1748,23 +1890,27 @@ function OpenEditBox(self, parent)
 				skipNext = true
 			end
 		end
-		
+
 		editBox:SetScript("OnTextChanged", function()
 			if skipNext then
 				skipNext = false
 			elseif not changing and editBoxFrame.parent and editBoxFrame.parent.editBoxChangeFunc then
 				local a1,a2,a3,a4 = editBoxFrame.parent.editBoxChangeArg1, editBoxFrame.parent.editBoxChangeArg2, editBoxFrame.parent.editBoxChangeArg3, editBoxFrame.parent.editBoxChangeArg4
+				local t
+				if editBox.realText ~= "NONE" then
+					t = editBox.realText or editBox:GetText() or ""
+				end
 				local text
 				if a1 == nil then
-					text = editBoxFrame.parent.editBoxChangeFunc(editBox:GetText() or "")
+					text = editBoxFrame.parent.editBoxChangeFunc(t)
 				elseif a2 == nil then
-					text = editBoxFrame.parent.editBoxChangeFunc(a1, editBox:GetText() or "")
+					text = editBoxFrame.parent.editBoxChangeFunc(a1, t)
 				elseif a3 == nil then
-					text = editBoxFrame.parent.editBoxChangeFunc(a1, a2, editBox:GetText() or "")
+					text = editBoxFrame.parent.editBoxChangeFunc(a1, a2, t)
 				elseif a4 == nil then
-					text = editBoxFrame.parent.editBoxChangeFunc(a1, a2, a3, editBox:GetText() or "")
+					text = editBoxFrame.parent.editBoxChangeFunc(a1, a2, a3, t)
 				else
-					text = editBoxFrame.parent.editBoxChangeFunc(a1, a2, a3, a4, editBox:GetText() or "")
+					text = editBoxFrame.parent.editBoxChangeFunc(a1, a2, a3, a4, t)
 				end
 				if text then
 					editBox:SpecialSetText(text)
@@ -1783,14 +1929,105 @@ function OpenEditBox(self, parent)
 		editBox:SetScript("OnLeave", function()
 			StartCounting(self, editBoxFrame.level)
 		end)
+		editBoxFrame:SetScript("OnKeyDown", function()
+			if not editBox.keybinding then
+				return
+			end
+			local arg1 = arg1
+			local screenshotKey = GetBindingKey("SCREENSHOT")
+			if screenshotKey and arg1 == screenshotKey then
+				Screenshot()
+				return
+			end
+			
+			if arg1 == "LeftButton" then
+				arg1 = "BUTTON1"
+			elseif arg1 == "RightButton" then
+				arg1 = "BUTTON2"
+			elseif arg1 == "MiddleButton" then
+				arg1 = "BUTTON3"
+			elseif arg1 == "Button4" then
+				arg1 = "BUTTON4"
+			elseif arg1 == "Button5" then
+				arg1 = "BUTTON5"
+			end
+			if arg1 == "BUTTON1" or arg1 == "BUTTON2" or arg1 == "UNKNOWN" then
+				return
+			elseif arg1 == "SHIFT" or arg1 == "CTRL" or arg1 == "ALT" then
+				return
+			elseif arg1 == "ENTER" then
+				return editBox:GetScript("OnEnterPressed")()
+			elseif arg1 == "ESCAPE" then
+				if editBox.realText == "NONE" then
+					return editBox:GetScript("OnEscapePressed")()
+				else
+					editBox:SpecialSetText(NONE or "NONE")
+					editBox.realText = "NONE"
+					return
+				end
+			end
+			local s = GetBindingText(arg1, "KEY_")
+			local real = arg1
+			if IsShiftKeyDown() then
+				s = "SHIFT-" .. s
+				real = "SHIFT-" .. real
+			end
+			if IsControlKeyDown() then
+				s = "CTRL-" .. s
+				real = "CTRL-" .. real
+			end
+			if IsAltKeyDown() then
+				s = "ALT-" .. s
+				real = "ALT-" .. real
+			end
+			if editBox:GetText() ~= s then
+				editBox:SpecialSetText(s)
+				editBox.realText = real
+				return editBox:GetScript("OnTextChanged")()
+			end
+		end)
+		editBoxFrame:SetScript("OnMouseDown", editBoxFrame:GetScript("OnKeyDown"))
+		editBox:SetScript("OnMouseDown", editBoxFrame:GetScript("OnKeyDown"))
 	end
 	editBoxFrame.parent = parent
 	editBoxFrame.level = parent.level.num + 1
 	editBoxFrame.parentValue = parent.level.value
 	editBoxFrame:SetFrameLevel(parent.level:GetFrameLevel() + 3)
 	editBoxFrame.editBox:SetFrameLevel(editBoxFrame:GetFrameLevel() + 1)
-	editBoxFrame.editBox:SpecialSetText(parent.editBoxText)
+	editBoxFrame.editBox.realText = nil
 	
+	if parent.editBoxIsKeybinding then
+		local s = parent.editBoxText
+		editBoxFrame.editBox.realText = s
+		if s and s ~= "" then
+			local _,_,alpha,bravo = string.find("^(.+)%-(.+)$", s)
+			if not bravo then
+				alpha = nil
+				bravo = s
+			end
+			bravo = GetBindingText(bravo, "KEY_")
+			if alpha then
+				editBoxFrame.editBox:SpecialSetText(string.upper(alpha) .. "-" .. bravo)
+			else
+				editBoxFrame.editBox:SpecialSetText(bravo)
+			end
+		else
+			editBoxFrame.editBox:SpecialSetText(NONE or "NONE")
+		end
+	else
+		editBoxFrame.editBox:SpecialSetText(parent.editBoxText)
+	end
+	
+	editBoxFrame.editBox.keybinding = parent.editBoxIsKeybinding
+	editBoxFrame.editBox:EnableKeyboard(not parent.editBoxIsKeybinding)
+	editBoxFrame:EnableKeyboard(parent.editBoxIsKeybinding)
+
+	if parent.arrow then
+--		parent.arrow:SetVertexColor(0.2, 0.6, 0)
+		parent.arrow:SetHeight(24)
+		parent.arrow:SetWidth(24)
+	end
+
 	local level = parent.level
 	editBoxFrame:Show()
 	editBoxFrame:ClearAllPoints()
@@ -1888,6 +2125,15 @@ function Open(self, parent, func, level, value, point, relativePoint, cursorX, c
 		baseFunc = func
 	end
 	levels[level].value = value
+--	levels[level].parentText = parent.text and parent.text:GetText() or nil
+--	levels[level].parentTooltipTitle = parent.tooltipTitle
+--	levels[level].parentTooltipText = parent.tooltipText
+--	levels[level].parentTooltipFunc = parent.tooltipFunc
+	if parent.arrow then
+--		parent.arrow:SetVertexColor(0.2, 0.6, 0)
+		parent.arrow:SetHeight(24)
+		parent.arrow:SetWidth(24)
+	end
 	relativePoint = relativePoint or point
 	Refresh(self, levels[level])
 	if point or (cursorX and cursorY) then
@@ -2022,7 +2268,7 @@ function Dewdrop:Register(parent, k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6
 	local info = new(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10, k11, v11, k12, v12, k13, v13, k14, v14, k15, v15, k16, v16, k17, v17, k18, v18, k19, v19, k20, v20)
 	if type(info.children) == "table" then
 		local err, position = validateOptions(info.children)
-		
+
 		if err then
 			if position then
 				Dewdrop:error(position .. ": " .. err)
@@ -2131,6 +2377,14 @@ function Dewdrop:Close(level)
 	if level == 1 and levels[level] then
 		levels[level].parented = false
 	end
+	if level > 1 and levels[level-1].buttons then
+		local buttons = levels[level-1].buttons
+		for _,button in ipairs(buttons) do
+			button.arrow:SetWidth(16)
+			button.arrow:SetHeight(16)
+--			button.arrow:SetVertexColor(1, 1, 1)
+		end
+	end
 	if sliderFrame and sliderFrame.level >= level then
 		sliderFrame:Hide()
 	end
@@ -2197,13 +2451,31 @@ function Dewdrop:AddLine(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 		button.radioHighlight:SetTexture(info.checkIcon or "Interface\\Buttons\\UI-RadioButton")
 		button.check:SetWidth(16)
 		button.check:SetHeight(16)
+	elseif info.icon then
+		button.check:Show()
+		button.check:SetTexture(info.icon)
+		if info.iconWidth and info.iconHeight then
+			button.check:SetWidth(info.iconWidth)
+			button.check:SetHeight(info.iconHeight)
+		else
+			button.check:SetWidth(16)
+			button.check:SetHeight(16)
+		end
+		if info.iconCoordLeft and info.iconCoordRight and info.iconCoordTop and info.iconCoordBottom then
+			button.check:SetTexCoord(info.iconCoordLeft, info.iconCoordRight, info.iconCoordTop, info.iconCoordBottom)
+		elseif string.find(info.icon, "^Interface\\Icons\\") then
+			button.check:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+		else
+			button.check:SetTexCoord(0, 1, 0, 1)
+		end
+		button.check:SetVertexColor(1, 1, 1, 1)
 	else
 		if button.checked then
 			if info.checkIcon then
 				button.check:SetWidth(16)
 				button.check:SetHeight(16)
 				button.check:SetTexture(info.checkIcon)
-				if string.sub(info.checkIcon, 1, 16) == "Interface\\Icons\\" then
+				if string.find(info.checkIcon, "^Interface\\Icons\\") then
 					button.check:SetTexCoord(0.05, 0.95, 0.05, 0.95)
 				else
 					button.check:SetTexCoord(0, 1, 0, 1)
@@ -2278,6 +2550,7 @@ function Dewdrop:AddLine(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 			button.editBoxValidateArg2 = info.editBoxValidateArg2
 			button.editBoxValidateArg3 = info.editBoxValidateArg3
 			button.editBoxValidateArg4 = info.editBoxValidateArg4
+			button.editBoxIsKeybinding = info.editBoxIsKeybinding
 		else
 			button.value = info.value
 		end
@@ -2397,33 +2670,57 @@ local function activate(self, oldLib, oldDeactivate)
 			end
 		end)
 
-		local DropDownList1_Show = DropDownList1.Show
-		function DropDownList1.Show(DropDownList1)
-			if levels[1] and levels[1]:IsVisible() then
-				self:Close()
+		if hooksecurefunc then
+			hooksecurefunc(DropDownList1, "Show", function()
+				if levels[1] and levels[1]:IsVisible() then
+					self:Close()
+				end
+			end)
+		else
+			local DropDownList1_Show = DropDownList1.Show
+			function DropDownList1.Show(DropDownList1)
+				if levels[1] and levels[1]:IsVisible() then
+					self:Close()
+				end
+				DropDownList1_Show(DropDownList1)
 			end
-			DropDownList1_Show(DropDownList1)
 		end
 
-		local old_HideDropDownMenu = HideDropDownMenu
-		function HideDropDownMenu(num)
-			if levels[1] and levels[1]:IsVisible() then
-				self:Close()
+		if hooksecurefunc then
+			hooksecurefunc("HideDropDownMenu", function()
+				if levels[1] and levels[1]:IsVisible() then
+					self:Close()
+				end
+			end)
+		else
+			local old_HideDropDownMenu = HideDropDownMenu
+			function HideDropDownMenu(num)
+				if levels[1] and levels[1]:IsVisible() then
+					self:Close()
+				end
+				old_HideDropDownMenu(num)
 			end
-			old_HideDropDownMenu(num)
 		end
 
-		local old_CloseDropDownMenus = CloseDropDownMenus
-		function CloseDropDownMenus(num)
-			if levels[1] and levels[1]:IsVisible() then
-				self:Close()
+		if hooksecurefunc then
+			hooksecurefunc("CloseDropDownMenus", function()
+				if levels[1] and levels[1]:IsVisible() then
+					self:Close()
+				end
+			end)
+		else
+			local old_CloseDropDownMenus = CloseDropDownMenus
+			function CloseDropDownMenus(num)
+				if levels[1] and levels[1]:IsVisible() then
+					self:Close()
+				end
+				old_CloseDropDownMenus(num)
 			end
-			old_CloseDropDownMenus(num)
 		end
 	end
 	levels = {}
 	buttons = {}
-	
+
 	if oldDeactivate then
 		oldDeactivate(oldLib)
 	end
