@@ -170,6 +170,7 @@ do
         end
 
         local frame = oldBar.kuiParent.kui --:GetParent():GetParent().kui
+        local nframe = oldBar.kuiParent
         big, sml = nil, nil
 
         -- store values for external access
@@ -180,37 +181,17 @@ do
         frame.health:SetMinMaxValues(frame.health.min, frame.health.max)
         frame.health:SetValue(frame.health.curr)
 
-        --[[        
-        -- if "curr" is percentage values
-		frame.health.pmin, frame.health.pmax = oldBar:GetMinMaxValues()
-		
 		local percentOnly, vmax = false, 0
-		frame.health.percent = curr
 		
-		frame.health.min = frame.health.pmin
-		frame.health.max = UnitHealthMax("target")
-		frame.health.curr = UnitHealth("target")
-
-        frame.health:SetMinMaxValues(frame.health.pmin, frame.health.pmax)
-		frame.health:SetValue(frame.health.percent)
-]]
-        --[[
-		if  MobHealth_PPP  then
-			if MobHealth_GetTargetCurHP and frame.target then
-				frame.health.curr = MobHealth_GetTargetCurHP()
-				percentOnly = frame.health.curr == nil 
-				frame.health.max = MobHealth_GetTargetMaxHP() 
+		if  MobHealth3 and MobHealth3.GetUnitHealth  then
+            if frame.target or nframe:GetName(1) then -- superwow or nampower
+			    frame.health.curr, frame.health.max, percentOnly  = MobHealth3:GetUnitHealth((frame.target and "target") or nframe:GetName(1))
 			elseif frame.name.text then
-				local index = frame.name.text..":"..(frame.level:GetText() or 99);
-				local ppp = MobHealth_PPP( index );
-				if ppp ~= 0 then 
-					frame.health.curr = floor( curr * ppp + 0.5);
-				    frame.health.max = floor( 100 * ppp + 0.5);
-					percentOnly = false
+				local level = string.gsub((frame.level:GetText() or "0"), "%D+", "");
+				frame.health.curr, frame.health.max, percentOnly  = MobHealth3:GetUnitHealth("target", curr, 100, frame.name.text, tonumber(level or "0"))
 				end
 			end
-		end
-]]
+
 
 
         -- select correct health display pattern
