@@ -21,7 +21,7 @@ uc.tt = tt
 
 
 local f = CreateFrame 'Frame'
------------------------------------------------ 
+-----------------------------------------------
 -- Callbacks:
 -- EndDRBuff, Buff
 -- CastOrBuff, buff or cast
@@ -38,43 +38,43 @@ local f = CreateFrame 'Frame'
 uc.parser = ParserLib:GetInstance('1.1')
 
 
-uc.SpellcastsToTrack = {}
+uc.SpellcastsToTrack               = {}
 uc.ChanneledHealsSpellcastsToTrack = {}
-uc.ChanneledSpellcastsToTrack = {}
-uc.InstantSpellcastsToTrack = {}
-uc.TimeModifierBuffsToTrack = {}
-uc.InterruptsToTrack = {}
-uc.BuffsToTrack = {}
-uc.DebuffsToTrack = {}
-uc.SpellSchoolColors = {}
-uc.RGBBorderDebuffsColors = {}
-uc.BuffsToTrack = {}
-uc.DebuffRefreshingSpells = {}
-uc.InstantSpellcastsToTrack = {}
-uc.RootSnares = {}
-uc.InterruptBuffsToTrack = {}
-uc.UniqueDebuffs = {}
+uc.ChanneledSpellcastsToTrack      = {}
+uc.InstantSpellcastsToTrack        = {}
+uc.TimeModifierBuffsToTrack        = {}
+uc.InterruptsToTrack               = {}
+uc.BuffsToTrack                    = {}
+uc.DebuffsToTrack                  = {}
+uc.SpellSchoolColors               = {}
+uc.RGBBorderDebuffsColors          = {}
+uc.BuffsToTrack                    = {}
+uc.DebuffRefreshingSpells          = {}
+uc.InstantSpellcastsToTrack        = {}
+uc.RootSnares                      = {}
+uc.InterruptBuffsToTrack           = {}
+uc.UniqueDebuffs                   = {}
 
 -- written by kuurtzen (& modernist)
 
-local Cast = {}
-local casts = {}
-local Heal = {}
-local heals = {}
-local InstaBuff = {}
-local iBuffs = {}
-local buff          = {}
-local buffList      = {}
-local dreturns      = {}
-local dreturnsList  = {}
-local buffQueue     = {}
-local buffQueueList = {}
-Cast.__index = spellCast
-Heal.__index = Heal
-InstaBuff.__index = InstaBuff
-buff.__index        = buff
-buffQueue.__index   = buffQueue
-dreturns.__index    = dreturns
+local Cast                         = {}
+local casts                        = {}
+local Heal                         = {}
+local heals                        = {}
+local InstaBuff                    = {}
+local iBuffs                       = {}
+local buff                         = {}
+local buffList                     = {}
+local dreturns                     = {}
+local dreturnsList                 = {}
+local buffQueue                    = {}
+local buffQueueList                = {}
+Cast.__index                       = spellCast
+Heal.__index                       = Heal
+InstaBuff.__index                  = InstaBuff
+buff.__index                       = buff
+buffQueue.__index                  = buffQueue
+dreturns.__index                   = dreturns
 
 local _, playerName
 if SUPERWOW_VERSION and tonumber(SUPERWOW_VERSION) >= 2.0 then
@@ -135,19 +135,20 @@ buff.create = function(tar, spell, s, buffType, factor, time)
 	acnt.timeStart = time
 	if not buffType.duration then print('buff with nil duration: ' .. spell) end
 	buffType.duration = buffType.duration and buffType.duration or 0
-	acnt.drTimeEnd       = time + buffType.duration * factor
-	acnt.timeEnd         = time + buffType.duration
-	acnt.prio            = buffType.prio and buffType.prio or 0
-	acnt.border          = buffType.type and uc.RGBBorderDebuffsColors[buffType.type] or { .1, .1, .1 } -- border rgb values depending on type of buff/debuff
-	acnt.display         = buffType.display == nil and true or buffType.display
+	acnt.drTimeEnd    = time + buffType.duration * factor
+	acnt.timeEnd      = time + buffType.duration
+	acnt.prio         = buffType.prio and buffType.prio or 0
+	acnt.border       = buffType.type and uc.RGBBorderDebuffsColors[buffType.type] or
+		{ .1, .1, .1 } -- border rgb values depending on type of buff/debuff
+	acnt.display      = buffType.display == nil and true or buffType.display
 	return acnt
 end
 
 buffQueue.create = function(tar, spell, buffType, d, time)
 	local acnt = {}
 	setmetatable(acnt, buffQueue)
-	acnt.target   = tar
-	acnt.buffName = spell
+	acnt.target          = tar
+	acnt.buffName        = spell
 
 	buffType['duration'] = d
 	acnt.buffData        = buffType
@@ -176,7 +177,7 @@ local removeExpiredTableEntries = function(time, tab)
 			if tab == buffList or tab == heals then
 				uc.callbacks:Fire("EndCastOrBuff", 1, v)
 			end
-		elseif tab == buffList and time  > v.drTimeEnd then
+		elseif tab == buffList and time > v.drTimeEnd then
 			uc.callbacks:Fire("EndDRBuff", 1, v)
 		end
 		i = i + 1
@@ -280,8 +281,11 @@ local newCast = function(caster, spell, channel)
 	local info = nil
 
 	if channel then
-		if uc.ChanneledHealsSpellcastsToTrack[spell] ~= nil then info = uc.ChanneledHealsSpellcastsToTrack[spell]
-		elseif uc.ChanneledSpellcastsToTrack[spell] ~= nil then info = uc.ChanneledSpellcastsToTrack[spell] end
+		if uc.ChanneledHealsSpellcastsToTrack[spell] ~= nil then
+			info = uc.ChanneledHealsSpellcastsToTrack[spell]
+		elseif uc.ChanneledSpellcastsToTrack[spell] ~= nil then
+			info = uc.ChanneledSpellcastsToTrack[spell]
+		end
 	else
 		if uc.SpellcastsToTrack[spell] ~= nil then info = uc.SpellcastsToTrack[spell] end
 	end
@@ -348,19 +352,19 @@ local function newbuff(tar, b, s, castOn)
 	local drf = manageDR(time, tar, b, castOn)
 	local endBuff = time + uc.BuffsToTrack[b].duration
 	--if drf > 0 then
-		-- remove buff if it exists
-		for k, v in pairs(buffList) do
-			if v.caster == tar and v.spell == b then
-				if v.timeEnd >= endBuff then
-					return
-				end
-				table.remove(buffList, k)
+	-- remove buff if it exists
+	for k, v in pairs(buffList) do
+		if v.caster == tar and v.spell == b then
+			if v.timeEnd >= endBuff then
+				return
 			end
+			table.remove(buffList, k)
 		end
+	end
 
-		local n = buff.create(tar, b, s, uc.BuffsToTrack[b], drf, time)
-		table.insert(buffList, n)
-		uc.callbacks:Fire("NewBuff", 1, n)
+	local n = buff.create(tar, b, s, uc.BuffsToTrack[b], drf, time)
+	table.insert(buffList, n)
+	uc.callbacks:Fire("NewBuff", 1, n)
 	--end
 end
 
@@ -390,7 +394,7 @@ local function processQueuedBuff(tar, b, start)
 			local n = buff.create(v.target, v.buffName, 1, v.buffData, drf, time)
 			table.insert(buffList, n)
 			if start then
-			uc.callbacks:Fire("NewBuff", 1, n)
+				uc.callbacks:Fire("NewBuff", 1, n)
 			end
 			table.remove(buffQueueList, k)
 			return n
@@ -437,7 +441,6 @@ local handleCast = function(info)
 end
 
 local gainBuff = function(info)
-
 	local victim = info.victim == ParserLib_SELF and playerName or info.victim
 	-- buffs/debuffs to be displayed
 	if uc.BuffsToTrack[info.skill] then
@@ -582,30 +585,28 @@ uc.OnEvent = function(event, info)
 end
 
 local function catchSpellcast(spell, rank, onself)
-
 	local unit, duration
 	local target = ""
 	local info = uc.UniqueDebuffs[spell]
 	if info then
-
 		if info.cp then
 			duration = info.cp[GetComboPoints()]
 		elseif rank and info.r then
 			if rank == "Max" then
 				rank = table.getn(info.r)
 			else
-				rank = tonumber((string.gsub(rank, RANK, ""))) or 0 
+				rank = tonumber((string.gsub(rank, RANK, ""))) or 0
 			end
 			duration = info.r[rank]
 		else
 			duration = info.duration
 		end
 		if UnitExists("target") then
-			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+			if SUPERWOW_VERSION and tonumber(SUPERWOW_VERSION) >= 2.0 then -- SuperWOW
 				unit, target = UnitExists("target")
 			else
-			target = GetUnitName("target")
-		end
+				target = GetUnitName("target")
+			end
 		end
 		queueBuff(target, spell, info, duration)
 	end
@@ -630,8 +631,8 @@ end
 
 function uc:CastSpellByName(text, onself)
 	local _, _, spell, rank = string.find(text, '(.+)%((.+)%)')
-  spell = spell or text
-  rank = rank or "Max"
+	spell = spell or text
+	rank = rank or "Max"
 	--spell = string.gsub(text, "%(.-%)$", "")
 	catchSpellcast(spell, rank, onself)
 end
@@ -640,12 +641,12 @@ function uc:SpellTargetUnit(unit)
 	local _
 	for k, v in pairs(buffQueueList) do
 		if v.target == "" then
-			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+			if SUPERWOW_VERSION and tonumber(SUPERWOW_VERSION) >= 2.0 then -- SuperWOW
 				_, v.target = UnitExists(unit)
 			else
-			v.target = UnitName(unit)
+				v.target = UnitName(unit)
+			end
 		end
-	end
 	end
 end
 
@@ -653,12 +654,12 @@ function uc:TargetUnit(unit)
 	local _
 	for k, v in pairs(buffQueueList) do
 		if v.target == "" then
-			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+			if SUPERWOW_VERSION and tonumber(SUPERWOW_VERSION) >= 2.0 then -- SuperWOW
 				_, v.target = UnitExists(unit)
 			else
-			v.target = UnitName(unit)
+				v.target = UnitName(unit)
+			end
 		end
-	end
 	end
 end
 
@@ -666,12 +667,12 @@ function uc:OnMouseDown()
 	local _
 	for k, v in pairs(buffQueueList) do
 		if v.target == "" and arg1 == "LeftButton" and UnitExists("mouseover") then
-			if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+			if SUPERWOW_VERSION and tonumber(SUPERWOW_VERSION) >= 2.0 then -- SuperWOW
 				_, v.target = UnitExists("mouseover")
 			else
-			v.target = UnitName("mouseover")
+				v.target = UnitName("mouseover")
+			end
 		end
-	end
 	end
 end
 
@@ -684,10 +685,8 @@ function uc:SPELLCAST_STOP()
 end
 
 function uc:CompleteCast(info)
-
 	uc.callbacks:Fire("NewBuff", 1, info)
 end
-
 
 function uc:SpellStopCasting()
 	local i = 1
