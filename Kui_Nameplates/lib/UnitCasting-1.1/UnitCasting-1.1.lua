@@ -77,7 +77,7 @@ buffQueue.__index   = buffQueue
 dreturns.__index    = dreturns
 
 local _, playerName
-if (SpellInfo and LoggingCombat("RAW") == 1 ) then -- SuperWOW
+if SUPERWOW_VERSION and tonumber(SUPERWOW_VERSION) >= 2.0 then
 	_, playerName = UnitExists('player')
 else
 	playerName = UnitName('player')
